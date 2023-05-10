@@ -25,19 +25,6 @@ public class LauncherActivity extends AppCompatActivity {
             getApplicationContext().getResources().updateConfiguration(config, null); // Change locale both for static methods and jar library
         }
 
-        /*
-        Import of a tree occurring after clicking on various types of links:
-            https://www.familygem.app/share.php?tree=20190802224208
-                Eg. in a WhatsApp message
-                Clicked in Chrome in old Androids opens the choice of the app including Family Gem to directly import the tree
-                Normally opens the sharing page on the website
-            intent://www.familygem.app/condivisi/20200218134922.zip#Intent;scheme=https;end
-                Official link on the website's sharing page
-                It is the only one that seems guarantee to work, in Chrome, in the browser inside Libero, in the L90 Browser
-            https://www.familygem.app/condivisi/20190802224208.zip
-                Direct URL to the ZIP file
-                It works in old Androids, in new ones simply the file is downloaded
-        */
         Intent intent = getIntent();
         Uri uri = intent.getData();
         // By opening the app from the Recents screen, avoids re-importing a newly imported shared tree
