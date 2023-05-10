@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="primary">#3CA188</color>
+	<color name="primary_dark">#1c7a63</color>
+	<color name="primary_light">#65c9b1</color>
+	<color name="primary_grayed">#516e67</color>
+	<color name="accent">#3d6595</color>
+	<color name="accent_medium">#f7c23b</color>
+	<color name="accent_light">#fad578</color>
+	<color name="icon">#FFC42F</color>
+	<color name="background">#FAFAFA</color>
+	<color name="back_element">#FFF</color>
+	<color name="back_veiled">#CCFFFFFF</color>
+	<color name="text">#000</color>
+	<color name="gray_text">#777</color>
+	<color name="text_veiled">#AA000000</color>
+	<color name="consumed">#DDD</color>
+	<color name="male">#2986cc</color>
+	<color name="female">#c90076</color>
+	<color name="partner_screen">#CCCCCC</color>
+	<color name="partner_print">#E6E6E6</color>
+	<color name="diagram_lines_screen">#FFFFFF</color>
+	<color name="diagram_lines_print">#666666</color>
+	<color name="source">#FFCC66</color>
+	<color name="source_citation">#FFEEAA</color>
+	<color name="repository">#AA9988</color>
+	<color name="repository_citation">#DDCCBB</color>
+	<color name="white">#fffefe</color>
+	<color name="purple_200">#FFBB86FC</color>
+	<color name="purple_500">#FF6200EE</color>
+	<color name="purple_700">#FF3700B3</color>
+	<color name="teal_200">#FF03DAC5</color>
+	<color name="teal_700">#FF018786</color>
+	<color name="black">#FF000000</color>
+
+</resources>
