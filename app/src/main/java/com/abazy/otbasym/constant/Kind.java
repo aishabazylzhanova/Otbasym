@@ -9,7 +9,7 @@ public enum Kind {
     APPROXIMATE("ABT"), CALCULATED("CAL"), ESTIMATED("EST"),
     AFTER("AFT"), BEFORE("BEF"), BETWEEN_AND("BET"),
     FROM("FROM"), TO("TO"), FROM_TO("FROM"),
-    PHRASE("("); // TODO: Manage also the "INT" (interpreted) prefix.
+    PHRASE("(");
 
     public String prefix;
 
