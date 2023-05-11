@@ -98,23 +98,22 @@ public class TreesActivity extends AppCompatActivity {
                         treeView.setBackgroundColor(getResources().getColor(R.color.accent_medium));
                         ((TextView)treeView.findViewById(R.id.albero_dati)).setTextColor(getResources().getColor(R.color.text));
                         treeView.setOnClickListener(v -> {
-                            if (!NewTreeActivity.confronta(TreesActivity.this, tree, true)) {
                                 tree.grade = 10; // viene retrocesso
                                 Global.settings.save();
                                 aggiornaLista();
                                 Toast.makeText(TreesActivity.this, R.string.something_wrong, Toast.LENGTH_LONG).show();
-                            }
+
                         });
                     } else if (esaurito) {
                         treeView.setBackgroundColor(getResources().getColor(R.color.consumed));
                         ((TextView)treeView.findViewById(R.id.albero_titolo)).setTextColor(getResources().getColor(R.color.gray_text));
                         treeView.setOnClickListener(v -> {
-                            if (!NewTreeActivity.confronta(TreesActivity.this, tree, true)) {
+
                                 tree.grade = 10; // viene retrocesso
                                 Global.settings.save();
                                 aggiornaLista();
                                 Toast.makeText(TreesActivity.this, R.string.something_wrong, Toast.LENGTH_LONG).show();
-                            }
+
                         });
                     } else {
                         treeView.setBackgroundColor(getResources().getColor(R.color.back_element));
@@ -197,12 +196,6 @@ public class TreesActivity extends AppCompatActivity {
                             } else if (id == 4) { // Correggi errori
                                 findErrors(treeId, false);
 
-                            } else if (id == 6) { // Confronta con alberi esistenti
-                                if (NewTreeActivity.confronta(TreesActivity.this, tree, false)) {
-                                    tree.grade = 20;
-                                    aggiornaLista();
-                                } else
-                                    Toast.makeText(TreesActivity.this, R.string.no_results, Toast.LENGTH_LONG).show();
                             } else if (id == 7) { // Esporta Gedcom
                                 if (exporter.openTree(treeId)) {
                                     String mime = "application/octet-stream";

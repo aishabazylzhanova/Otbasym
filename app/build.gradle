@@ -36,20 +36,22 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'commons-io:commons-io:2.11.0' // Versions from 2.9.0 to 2.11.0 give NoClassDefFoundError on old devices
     implementation 'com.google.code.gson:gson:2.10.1'
     implementation 'commons-net:commons-net:3.9.0'
-    implementation 'androidx.lifecycle:lifecycle-process:2.5.1'
+    implementation 'androidx.lifecycle:lifecycle-process:2.5.1' //Не обновлять
     implementation 'org.familysearch.gedcom:gedcom:1.13.0'
 
 
-    implementation 'androidx.work:work-runtime:2.7.1'
-    implementation 'androidx.appcompat:appcompat:1.7.0-alpha01'
+    implementation 'androidx.work:work-runtime:2.7.1' //не обновлять
+    implementation 'androidx.appcompat:appcompat:1.7.0-alpha01' //не обновлять
     implementation 'com.android.installreferrer:installreferrer:2.2'
 
-    implementation 'com.google.android.flexbox:flexbox:3.0.0'
-    implementation files('libs/gedcomgraph-3.2.jar')
+    implementation 'com.google.android.flexbox:flexbox:3.0.0' //флексбокс
+    implementation files('libs/gedcomgraph-3.2.jar') //библиотека с гита
     implementation 'joda-time:joda-time:2.12.1'
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
     implementation 'com.otaliastudios:zoomlayout:1.9.0'
@@ -59,5 +61,5 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'jp.wasabeef:picasso-transformations:2.2.1'
     implementation 'org.jdom:jdom:1.1.3'
-    
+
 }
