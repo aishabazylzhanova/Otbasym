@@ -23,6 +23,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.abazy.otbasym.list.BaurFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import org.folg.gedcom.model.Media;
@@ -45,9 +46,9 @@ public class Principal /*TODO Main?*/ extends AppCompatActivity implements Navig
     Toolbar toolbar;
     NavigationView menuPrincipe;
     List<Integer> idMenu = Arrays.asList(R.id.nav_diagramma, R.id.nav_persone, R.id.nav_famiglie,
-            R.id.nav_media, R.id.nav_note, R.id.nav_fonti, R.id.nav_archivi, R.id.nav_autore);
+            R.id.nav_media, R.id.nav_note, R.id.nav_baur);
     List<Class> frammenti = Arrays.asList(DiagramFragment.class, PersonsFragment.class, FamiliesFragment.class,
-            MediaFragment.class, NotesFragment.class);
+            MediaFragment.class, NotesFragment.class, BaurFragment.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,7 +168,7 @@ public class Principal /*TODO Main?*/ extends AppCompatActivity implements Navig
             }
             // Put count of existing records in menu items
             Menu menu = navigation.getMenu();
-            for (int i = 1; i <= 7; i++) {
+            for (int i = 1; i <= 5; i++) {
                 int count = 0;
                 switch (i) {
                     case 1:
@@ -186,14 +187,8 @@ public class Principal /*TODO Main?*/ extends AppCompatActivity implements Navig
                         gc.accept(notesList);
                         count = notesList.noteList.size() + gc.getNotes().size();
                         break;
-                    case 5:
-                        count = gc.getSources().size();
-                        break;
-                    case 6:
-                        count = gc.getRepositories().size();
-                        break;
-                    case 7:
-                        count = gc.getSubmitters().size();
+
+
                 }
                 TextView countView = menu.getItem(i).getActionView().findViewById(R.id.menu_item_text);
                 if (count > 0)

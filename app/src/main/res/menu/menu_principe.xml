@@ -29,6 +29,10 @@
 			android:icon="@drawable/menu_nota"
 			android:title="@string/notes"
 			app:actionLayout="@layout/menu_item_extra"/>
+		<item android:id="@+id/nav_baur"
+			android:icon="@drawable/halo"
+			android:title="@string/kinship"
+			app:actionLayout="@layout/menu_item_extra"/>
 		<item
 			android:id="@+id/nav_fonti"
 			android:icon="@drawable/menu_fonte"

@@ -216,7 +216,7 @@ public class ProfileActivity extends AppCompatActivity {
                         menu.add(0, 21, 0, R.string.sex);
                     // Main events
                     SubMenu eventSubMenu = menu.addSubMenu(R.string.event);
-                    CharSequence[] mainEventLabels = {getText(R.string.birth), getText(R.string.baptism), getText(R.string.residence), getText(R.string.occupation), getText(R.string.death), getText(R.string.burial)};
+                    CharSequence[] mainEventLabels = {getText(R.string.birth), getText(R.string.residence), getText(R.string.occupation), getText(R.string.death), getText(R.string.burial)};
                     int i;
                     for (i = 0; i < mainEventLabels.length; i++) {
                         CharSequence label = mainEventLabels[i];
@@ -224,25 +224,7 @@ public class ProfileActivity extends AppCompatActivity {
                             label += " — " + mainEventTags[i];
                         eventSubMenu.add(0, 40 + i, 0, label);
                     }
-                    // Other events
-                    SubMenu otherSubMenu = eventSubMenu.addSubMenu(R.string.other);
-                    i = 0;
-                    for (Pair item : otherEvents) {
-                        otherSubMenu.add(0, 50 + i, 0, (String)item.second);
-                        i++;
-                    }
-                    SubMenu subNota = menu.addSubMenu(R.string.note);
-                    subNota.add(0, 22, 0, R.string.new_note);
-                    subNota.add(0, 23, 0, R.string.new_shared_note);
-                    if (!gc.getNotes().isEmpty())
-                        subNota.add(0, 24, 0, R.string.link_shared_note);
-                    if (Global.settings.expert) {
-                        SubMenu subFonte = menu.addSubMenu(R.string.source);
-                        subFonte.add(0, 25, 0, R.string.new_source_note);
-                        subFonte.add(0, 26, 0, R.string.new_source);
-                        if (!gc.getSources().isEmpty())
-                            subFonte.add(0, 27, 0, R.string.link_source);
-                    }
+
                     break;
                 case 2: // Individuo Familiari
                     menu.add(0, 30, 0, R.string.new_relative);

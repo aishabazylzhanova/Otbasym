@@ -179,7 +179,7 @@
     <string name="sex">Sex</string>
     <string name="event">Event</string>
     <string name="birth">Birth</string>
-    <string name="baptism">Baptism</string>
+<!--    <string name="baptism">Baptism</string>-->
     <string name="residence">Residence</string>
     <string name="occupation">Occupation</string>
     <string name="death">Death</string>
@@ -316,7 +316,7 @@
     <string name="female">Female</string>
     <string name="unknown">Unknown</string>
     <string name="birth_date">Birth date</string>
-    <string name="birth_place">Birth place</string>
+    <string name="birth_place">Relation</string>
     <string name="dead">Dead</string>
     <string name="death_date">Death date</string>
     <string name="death_place">Death place</string>
@@ -367,4 +367,5 @@
     <string name="invalid_id">Invalid ID</string>
     <string name="existing_id">Already existing ID</string>
     <string name="welcome_message">Family history in your pocket</string>
+    <string name="kinship">Kinship</string>
 </resources>
