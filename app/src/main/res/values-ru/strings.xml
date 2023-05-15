@@ -18,10 +18,10 @@
     <string name="cause">Причина</string>
     <string name="married">Женат или замужем</string>
     <string name="maiden">Девичья</string>
-    <string name="phonetic">фонетически</string>
+    <string name="phonetic">Фонетически</string>
     <string name="aka">Также известен как</string>
     <string name="married_name">Замужнее имя</string>
-    <string name="given">Собственное имя</string>
+    <string name="given">Имя</string>
     <string name="link_repository">Ссылка на репозиторий</string>
     <string name="link_source">Источник ссылки</string>
     <string name="link_shared_note">Ссылка на общую заметку</string>
@@ -354,11 +354,11 @@
     <string name="ex_wife">Бывшая жена</string>
     <string name="ex_husband">Бывший муж</string>
     <string name="ex_spouse">Бывший супруг</string>
-    <string name="ex_female_partner">Бывший партнер-женщина</string>
-    <string name="ex_male_partner">Бывший партнер-мужчина</string>
+    <string name="ex_female_partner">Бывшая жена</string>
+    <string name="ex_male_partner">Бывший муж</string>
     <string name="ex_partner">Бывший партнер</string>
-    <string name="female_partner">Партнер-женщина</string>
-    <string name="male_partner">Партнер-мужчина</string>
+    <string name="female_partner">Жена</string>
+    <string name="male_partner">Муж</string>
     <string name="partner">Партнер</string>
     <string name="age">Возраст</string>
     <string name="uncles_cousins">Дяди и двоюродные братья</string>
@@ -372,5 +372,5 @@
     <string name="existing_id">Уже существующий идентификатор</string>
     <string name="undefined">Неопределенные</string>
     <string name="welcome_message">История семьи в твоем кармане</string>
-    <string name="kinship">Туыстық</string>
+    <string name="kinship">Родство</string>
 </resources>

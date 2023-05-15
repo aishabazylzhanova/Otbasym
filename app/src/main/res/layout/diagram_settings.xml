@@ -97,10 +97,11 @@
 				android:paddingBottom="2dp"
 				android:textColor="#FFFFFFFF"
 				android:textSize="18sp"/>
+
 			<ImageView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				app:srcCompat="@drawable/segnalino"/>
+				app:srcCompat="@drawable/segnalino" />
 		</LinearLayout>
 	</LinearLayout>
 </ScrollView>

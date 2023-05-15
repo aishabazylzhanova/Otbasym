@@ -114,7 +114,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editore_data_nascita">
 
-            <com.abazy.otbasym.PlaceFinderTextView
+            <EditText
                 android:id="@+id/luogo_nascita"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -175,7 +175,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editore_data_morte">
 
-                    <com.abazy.otbasym.PlaceFinderTextView
+                    <EditText
                     android:id="@+id/luogo_morte"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

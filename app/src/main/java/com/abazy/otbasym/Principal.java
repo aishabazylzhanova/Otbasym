@@ -93,12 +93,7 @@ public class Principal /*TODO Main?*/ extends AppCompatActivity implements Navig
         });
 
         // Nasconde le voci del menu più ostiche
-        if (!Global.settings.expert) {
-            Menu menu = menuPrincipe.getMenu();
-            menu.findItem(R.id.nav_fonti).setVisible(false);
-            menu.findItem(R.id.nav_archivi).setVisible(false);
-            menu.findItem(R.id.nav_autore).setVisible(false);
-        }
+
     }
 
     // Chiamato praticamente sempre tranne che onBackPressed
@@ -123,9 +118,6 @@ public class Principal /*TODO Main?*/ extends AppCompatActivity implements Navig
                 ((FamiliesFragment)fragment).refresh(FamiliesFragment.What.RELOAD);
             } else if (fragment instanceof MediaFragment) {
                 ((MediaFragment)fragment).recreate();
-            /*} else if( fragment instanceof NotesFragment ) {
-                // Doesn't work to update NotesFragment when a note is deleted
-                ((NotesFragment)fragment).adapter.notifyDataSetChanged(); */
             } else {
                 recreate(); // questo dovrebbe andare a scomparire man mano
             }
@@ -144,22 +136,14 @@ public class Principal /*TODO Main?*/ extends AppCompatActivity implements Navig
     void furnishMenu() {
         NavigationView navigation = scatolissima.findViewById(R.id.menu);
         View menuHeader = navigation.getHeaderView(0);
-        ImageView imageView = menuHeader.findViewById(R.id.menu_immagine);
+
         TextView mainTitle = menuHeader.findViewById(R.id.menu_titolo);
-        imageView.setVisibility(ImageView.GONE);
+
         mainTitle.setText("");
         if (Global.gc != null) {
             MediaList cercaMedia = new MediaList(Global.gc, 3);
             Global.gc.accept(cercaMedia);
-            if (cercaMedia.list.size() > 0) {
-                int caso = new Random().nextInt(cercaMedia.list.size());
-                for (Media med : cercaMedia.list)
-                    if (--caso < 0) { // arriva a -1
-                        F.showImage(med, imageView, null);
-                        imageView.setVisibility(ImageView.VISIBLE);
-                        break;
-                    }
-            }
+
             mainTitle.setText(Global.settings.getCurrentTree().title);
             if (Global.settings.expert) {
                 TextView treeNumView = menuHeader.findViewById(R.id.menu_number);

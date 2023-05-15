@@ -6,12 +6,7 @@
 	android:layout_height="190dp"
 	android:background="@drawable/menu_sfondo">
 
-	<ImageView
-		android:id="@+id/menu_immagine"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:alpha="0.75"
-		android:scaleType="centerCrop"/>
+
 
 	<TextView
 		android:id="@+id/menu_titolo"
@@ -43,12 +38,10 @@
 		android:paddingEnd="32dp"
 		android:paddingBottom="12dp">
 
-		<TextView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="32dp"
-			android:text="@string/trees"
-			android:textSize="15sp" />
+		<ImageView
+			android:layout_width="15dp"
+			android:layout_height="15dp"
+			android:src="@drawable/back" />
 	</LinearLayout>
 
 	<TextView

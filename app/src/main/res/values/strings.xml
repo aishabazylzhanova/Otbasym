@@ -41,8 +41,7 @@
     <string name="backup_invalid">This backup is invalid.</string>
     <string name="invalid_gedcom">Invalid GEDCOM.</string>
     <string name="tree">Tree</string>
-    <string name="simpsons_tree">The Simpsons Family Tree</string>
-    <string name="family_gem_example">Family Gem example</string>
+
     <string name="a_new_tree">A new family tree</string>
     <string name="you_can_download">You can now download the tree shared with you.</string>
     <string name="download">Download</string>
@@ -115,7 +114,7 @@
     <string name="sharing_tree">Sharing a family tree</string>
     <string name="click_this_link">Click this link to see my family tree: %s</string>
     <string name="share_with">Share with</string>
-    <string name="sharing_completed">Share completed.</string>
+
     <string name="tree_with_news">Tree with updates</string>
     <string name="tree_without_news">Tree without updates</string>
     <string name="tree_news_imported">The old tree above can receive %d updates from the imported tree:</string>
@@ -180,7 +179,7 @@
     <string name="event">Event</string>
     <string name="birth">Birth</string>
 <!--    <string name="baptism">Baptism</string>-->
-    <string name="residence">Residence</string>
+    <string name="residence">Kinship</string>
     <string name="occupation">Occupation</string>
     <string name="death">Death</string>
     <string name="burial">Burial</string>
@@ -218,7 +217,6 @@
     <string name="daughter">Daughter</string>
     <string name="ex_partner">Former partner</string>
     <string name="ex_male_partner">Former partner</string>
-    <string name="ex_female_partner">Former partner</string>
     <string name="ex_spouse">Ex-spouse</string>
     <string name="ex_husband">Ex-husband</string>
     <string name="ex_wife">Ex-wife</string>
@@ -233,7 +231,7 @@
     <string name="value">Value</string>
     <string name="type">Type</string>
     <string name="prefix">Prefix</string>
-    <string name="given">Given name</string>
+    <string name="given">Name</string>
     <string name="nickname">Nickname</string>
     <string name="surname_prefix">Surname prefix</string>
     <string name="suffix">Suffix</string>
@@ -368,4 +366,7 @@
     <string name="existing_id">Already existing ID</string>
     <string name="welcome_message">Family history in your pocket</string>
     <string name="kinship">Kinship</string>
+    <string name="ex_female_partner">Ex Wife</string>
+
+
 </resources>

@@ -184,10 +184,8 @@ public class FamilyActivity extends DetailActivity {
                             role = R.string.wife;
                             break;
                         case DIVORCED:
-                            role = R.string.ex_wife;
-                            break;
                         case SEPARATED:
-                            role = R.string.ex_female_partner;
+                            role = R.string.ex_wife;
                             break;
                         default:
                             role = R.string.female_partner;

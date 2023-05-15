@@ -663,14 +663,6 @@ public abstract class   DetailActivity extends AppCompatActivity {
         if (pieceObject.equals("Place")) {
             showInput = true;
             // If it hasn't already done so, it replaces EditText with PlaceFinderTextView
-            if (!(editText instanceof PlaceFinderTextView)) {
-                ViewGroup parent = (ViewGroup)pieceView;
-                int index = parent.indexOfChild(editText);
-                parent.removeView(editText);
-                editText = new PlaceFinderTextView(editText.getContext(), null);
-                editText.setId(R.id.fatto_edita);
-                parent.addView(editText, index);
-            } else
                 editText.setVisibility(View.VISIBLE);
         } // Name type
         else if (object instanceof Name && pieceObject.equals("Type")) {

@@ -62,7 +62,7 @@ public class ProfileActivity extends AppCompatActivity {
     Person one;
     TabLayout tabLayout;
     Fragment[] tabs = new Fragment[3];
-    String[] mainEventTags = {"BIRT", "BAPM", "RESI", "OCCU", "DEAT", "BURI"};
+    String[] mainEventTags = {"BIRT", "RESI", "OCCU", "DEAT", "BURI"};
     List<Pair<String, String>> otherEvents; // List of tag + label
 
     @Override

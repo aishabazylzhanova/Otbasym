@@ -262,9 +262,7 @@ public class F {
         View likely = null;
         if (imageView.getParent() != null && imageView.getParent().getParent() != null)
             likely = (View)imageView.getParent().getParent().getParent();
-        if (likely != null && likely.getId() == R.id.confronto_nuovo)
-            treeId = Global.treeId2;
-        else treeId = Global.settings.openTree;
+        treeId = Global.settings.openTree;
         String path = mediaPath(treeId, media);
         Uri[] uri = new Uri[1];
         if (path == null)
