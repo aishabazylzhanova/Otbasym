@@ -1,7 +1,6 @@
 package com.abazy.otbasym;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
@@ -39,7 +38,7 @@ public class NewTreeActivity extends BaseActivity {
         setContentView(R.layout.new_tree);
         progress = findViewById(R.id.new_progress);
         String referrer = Global.settings.referrer; // Dataid proveniente da una condivisione
-        boolean esisteDataId = referrer != null && referrer.matches("[0-9]{14}");
+        boolean esisteDataId = referrer != null && referrer.matches("\\d{14}");
 
 
         // Create an empty tree
@@ -49,7 +48,7 @@ public class NewTreeActivity extends BaseActivity {
                 emptyTree.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.primary_light)));
         }
         emptyTree.setOnClickListener(v -> {
-            View dialogView = LayoutInflater.from(this).inflate(R.layout.albero_nomina, null);
+            View dialogView = LayoutInflater.from(this).inflate(R.layout.title_tree, null);
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setView(dialogView).setTitle(R.string.title);
             TextView textView = dialogView.findViewById(R.id.nuovo_nome_testo);
@@ -73,24 +72,8 @@ public class NewTreeActivity extends BaseActivity {
         });
 
 
-        // Let you choose a GEDCOM file to import
-        Button importGedcom = findViewById(R.id.new_import_gedcom);
-        importGedcom.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            // KitKat disables .ged files in the Download folder if the type is 'application/*'
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT)
-                intent.setType("*/*");
-            else
-                intent.setType("application/*");
-            startActivityForResult(intent, 630);
-        });
 
-        Button recoverBackup = findViewById(R.id.new_recover_backup);
-        recoverBackup.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType("application/zip");
-            startActivityForResult(intent, 219);
-        });
+
     }
 
     // Create a brand new tree
@@ -119,20 +102,6 @@ public class NewTreeActivity extends BaseActivity {
 
     // Unzip a ZIP file in the device storage
     // Used equally by: Simpsons example, backup files and shared trees
-
-
-    // Replace Italian with English in the Json settings of ZIP backup
-    // Added in Family Gem 0.8
-    static String updateLanguage(String json) {
-        json = json.replace("\"generazioni\":", "\"generations\":");
-        json = json.replace("\"grado\":", "\"grade\":");
-        json = json.replace("\"individui\":", "\"persons\":");
-        json = json.replace("\"radice\":", "\"root\":");
-        json = json.replace("\"titolo\":", "\"title\":");
-        json = json.replace("\"condivisioni\":", "\"shares\":");
-        json = json.replace("\"data\":", "\"dateId\":");
-        return json;
-    }
 
 
     // Confronta le date di invio degli alberi esistenti

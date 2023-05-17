@@ -29,7 +29,7 @@
     <string name="new_tree">New tree</string>
     <string name="download_shared_tree">Download the shared tree</string>
     <string name="empty_tree">Start an empty tree</string>
-    <string name="download_example">Download an example</string>
+
     <string name="import_gedcom">Import a GEDCOM file</string>
     <string name="import_backup">Recover a ZIP backup</string>
     <string name="modify_later">Later you can edit it.</string>
@@ -56,7 +56,7 @@
     <string name="not_memory_tree">Not enough memory for this tree.</string>
     <string name="tree_info">Info</string>
     <string name="rename">Rename</string>
-    <string name="find_errors">Find errors</string>
+
     <string name="share_tree">Share</string>
     <string name="compare">Compare</string>
     <string name="export_gedcom">Export GEDCOM</string>
@@ -102,14 +102,14 @@
     <string name="app_storage">App storage</string>
     <string name="add_device_folder">Add a folder from this device.</string>
     <string name="share_sensitive">Sharing sensitive data</string>
-    <string name="aware_upload_server">Please be aware that you are going to upload the whole tree to a server online.</string>
-    <string name="remind_later">Remind me later</string>
+
+
     <string name="please_title">Please write a title.</string>
     <string name="please_name">Please write a name.</string>
     <string name="ideally_recipient">Ideally the recipient of the sharing.</string>
     <string name="changes_submitter">Submitter of changes</string>
     <string name="usually_your_name">Usually your name and surname.</string>
-    <string name="allow_developer_access">Allow the app developer to access the shared tree</string>
+
     <string name="correctly_uploaded">Tree successfully uploaded.</string>
     <string name="sharing_tree">Sharing a family tree</string>
     <string name="click_this_link">Click this link to see my family tree: %s</string>
@@ -122,7 +122,7 @@
     <string name="shared_medias">Shared media</string>
     <string name="view_updates">Review singly</string>
     <string name="accept_all">Accept all</string>
-    <string name="delete_imported_tree">Delete imported tree</string>
+
     <string name="one_update_choice">One update needs a choice</string>
     <string name="many_updates_choice">%d updates need a choice</string>
     <string name="updates_replace_add">You have to choose whether the updates should replace existing items or be added as new items.</string>
@@ -314,7 +314,7 @@
     <string name="female">Female</string>
     <string name="unknown">Unknown</string>
     <string name="birth_date">Birth date</string>
-    <string name="birth_place">Relation</string>
+    <string name="birth_place">Birth Place</string>
     <string name="dead">Dead</string>
     <string name="death_date">Death date</string>
     <string name="death_place">Death place</string>

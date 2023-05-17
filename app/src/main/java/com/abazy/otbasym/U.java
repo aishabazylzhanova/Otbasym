@@ -900,7 +900,7 @@ public class U {
      * @param label  Title above the cabinet
      */
     public static void placeCabinet(LinearLayout layout, Object object, int label) {
-        View cabinetView = LayoutInflater.from(layout.getContext()).inflate(R.layout.dispensa, layout, false);
+        View cabinetView = LayoutInflater.from(layout.getContext()).inflate(R.layout.holder, layout, false);
         TextView vistaTit = cabinetView.findViewById(R.id.dispensa_titolo);
         vistaTit.setText(label);
         vistaTit.setBackground(AppCompatResources.getDrawable(layout.getContext(), R.drawable.sghembo)); // For KitKat

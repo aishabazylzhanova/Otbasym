@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="sharing_completed">Поделение завершено.</string>
     <string name="sharing_tree">Совместное использование семейного дерева</string>
     <string name="shares">Совместное использование</string>
     <string name="from_to">От… до</string>
@@ -34,7 +33,6 @@
     <string name="submitter">Податель</string>
     <string name="corporation">Корпорация</string>
     <string name="software">Программа</string>
-    <string name="family_gem_example">Пример Family Gem</string>
     <string name="complex_tree_advanced_tools">Это дерево выглядит довольно сложным.
 \nВы хотите видеть дополнительные инструменты для лучшего управления им\?</string>
     <string name="make_default">Главный податель</string>
@@ -82,7 +80,7 @@
     <string name="death_place">Место смерти</string>
     <string name="death_date">Дата смерти</string>
     <string name="dead">Мертв</string>
-    <string name="birth_place">Родство</string>
+    <string name="birth_place">Место рождения</string>
     <string name="birth_date">Дата рождения</string>
     <string name="unknown">Неизвестный</string>
     <string name="female">Женщина</string>
@@ -136,7 +134,7 @@
     <string name="nickname">Ник</string>
     <string name="prefix">Префикс</string>
     <string name="type">Тип</string>
-    <string name="value">Значение</string>
+    <string name="value">Параметр</string>
     <string name="make_main_submitter">Хотите ли вы, чтобы этот податель был главным подателем дерева\?</string>
     <string name="copy">Копировать текст</string>
     <string name="crop">Обрезать</string>
@@ -169,7 +167,7 @@
     <string name="burial">Погребение</string>
     <string name="death">Смерть</string>
     <string name="occupation">Профессия</string>
-    <string name="residence">Проживание</string>
+    <string name="residence">Родство</string>
 
     <string name="birth">Рождение</string>
     <string name="event">Событие</string>
@@ -184,7 +182,7 @@
     <string name="download_shared_tree">Скачать общее дерево</string>
     <string name="submitters">Податели</string>
     <string name="existing_family">Семья уже существует</string>
-    <string name="new_family_of">Новая семья особы %s</string>
+    <string name="new_family_of">Новая семья  %s</string>
     <string name="person_deleted">Человек удален.</string>
     <string name="really_delete_person">Хотите удалить этого человека\?</string>
     <string name="number_relatives">Количество родственников</string>
@@ -283,12 +281,11 @@
     <string name="no_useful_data">Неможно получить никаких полезных данных.</string>
     <string name="generations">Поколения</string>
     <string name="generation">Поколение</string>
-    <string name="persons">Особы</string>
+    <string name="persons">Члены семьи</string>
     <string name="tap_add_tree">Нажмите, чтобы добавить семейное дерево.</string>
     <string name="download">Скачать</string>
     <string name="you_can_download">Теперь вы можете скачать дерево, которым с вами поделились.</string>
     <string name="a_new_tree">Новое семейное дерево</string>
-    <string name="simpsons_tree">Семейное древо Симпсонов</string>
     <string name="tree">Дерево</string>
     <string name="invalid_gedcom">Недействительный файл GEDCOM.</string>
     <string name="backup_invalid">Эта резервная копия недействительна.</string>
@@ -339,7 +336,7 @@
     <string name="share_sensitive">Совместное использование конфиденциальных данных</string>
     <string name="not_memory_tree">Недостаточно памяти для этого дерева.</string>
     <string name="and">и</string>
-    <string name="between">между</string>
+    <string name="between">Между</string>
     <string name="separation">Разделение</string>
     <string name="common_law_marriage">По общему праву</string>
     <string name="religious_marriage">Церковный</string>

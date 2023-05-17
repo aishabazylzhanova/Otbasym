@@ -14,14 +14,7 @@
 			android:layout_centerVertical="true"
 			android:orientation="vertical"
 			android:padding="30dp">
-			<Button
-				android:id="@+id/new_download_shared"
-				style="@style/AppTheme.BottoneColorato"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginBottom="16dp"
-				android:minWidth="350dp"
-				android:text="@string/download_shared_tree"/>
+
 			<Button
 				android:id="@+id/new_empty_tree"
 				style="@style/AppTheme.BottoneColorato"
@@ -30,29 +23,7 @@
 				android:layout_marginBottom="16dp"
 				android:minWidth="350dp"
 				android:text="@string/empty_tree"/>
-			<Button
-				android:id="@+id/new_download_example"
-				style="@style/AppTheme.BottoneNormale"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginBottom="16dp"
-				android:minWidth="350dp"
-				android:text="@string/download_example"/>
-			<Button
-				android:id="@+id/new_import_gedcom"
-				style="@style/AppTheme.BottoneNormale"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginBottom="16dp"
-				android:minWidth="350dp"
-				android:text="@string/import_gedcom"/>
-			<Button
-				android:id="@+id/new_recover_backup"
-				style="@style/AppTheme.BottoneNormale"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:minWidth="350dp"
-				android:text="@string/import_backup"/>
+
 		</LinearLayout>
 		<ProgressBar
 			android:id="@+id/new_progress"

@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.documentfile.provider.DocumentFile;
 
 import java.util.ArrayList;
@@ -32,7 +31,7 @@ public class MediaFoldersActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        setContentView(R.layout.cartelle_media);
+        setContentView(R.layout.media_folders_search);
         treeId = getIntent().getIntExtra("idAlbero", 0);
         dirs = new ArrayList<>(Global.settings.getTree(treeId).dirs);
         uris = new ArrayList<>(Global.settings.getTree(treeId).uris);
@@ -58,8 +57,7 @@ public class MediaFoldersActivity extends BaseActivity {
             else if (perm == PackageManager.PERMISSION_GRANTED)
                 chooseFolder();
         });
-        if (Global.settings.getTree(treeId).dirs.isEmpty() && Global.settings.getTree(treeId).uris.isEmpty())
-            new SpeechBubble(this, R.string.add_device_folder).show();
+
     }
 
     void chooseFolder() {

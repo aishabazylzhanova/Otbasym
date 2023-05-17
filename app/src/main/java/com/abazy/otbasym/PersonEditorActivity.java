@@ -57,7 +57,7 @@ public class PersonEditorActivity extends AppCompatActivity {
     protected void onCreate(Bundle bandolo) {
         super.onCreate(bandolo);
         U.ensureGlobalGedcomNotNull(gc);
-        setContentView(R.layout.edita_individuo);
+        setContentView(R.layout.edit_person);
         Bundle bundle = getIntent().getExtras();
         idIndi = bundle.getString("idIndividuo");
         familyId = bundle.getString("idFamiglia");
@@ -192,7 +192,7 @@ public class PersonEditorActivity extends AppCompatActivity {
 
         // Toolbar
         ActionBar toolbar = getSupportActionBar();
-        View actionBar = getLayoutInflater().inflate(R.layout.barra_edita, new LinearLayout(getApplicationContext()), false);
+        View actionBar = getLayoutInflater().inflate(R.layout.save_cancel, new LinearLayout(getApplicationContext()), false);
         actionBar.findViewById(R.id.edita_annulla).setOnClickListener(v -> onBackPressed());
         actionBar.findViewById(R.id.edita_salva).setOnClickListener(v -> save());
         toolbar.setCustomView(actionBar);

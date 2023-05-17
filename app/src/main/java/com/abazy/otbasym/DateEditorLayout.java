@@ -56,7 +56,7 @@ public class DateEditorLayout extends LinearLayout {
      */
     void initialize(final EditText editaTesto) {
 
-        addView(inflate(getContext(), R.layout.editore_data, null), this.getLayoutParams());
+        addView(inflate(getContext(), R.layout.edit_data, null), this.getLayoutParams());
         this.editaTesto = editaTesto;
 
         for (int i = 0; i < anniRuota.length - 1; i++)
@@ -97,16 +97,8 @@ public class DateEditorLayout extends LinearLayout {
                     return true;
                 });
             });
-            findViewById(R.id.editadata_negativa1).setOnClickListener(vista -> {
-                data1.negative = ((CompoundButton)vista).isChecked();
-                veroImputTesto = false;
-                genera();
-            });
-            findViewById(R.id.editadata_doppia1).setOnClickListener(vista -> {
-                data1.doubleDate = ((CompoundButton)vista).isChecked();
-                veroImputTesto = false;
-                genera();
-            });
+
+
             findViewById(R.id.editadata_negativa2).setOnClickListener(vista -> {
                 data2.negative = ((CompoundButton)vista).isChecked();
                 veroImputTesto = false;
@@ -117,14 +109,9 @@ public class DateEditorLayout extends LinearLayout {
                 veroImputTesto = false;
                 genera();
             });
-            findViewById(R.id.editadata_circa).setVisibility(GONE);
+
         } else {
-            findViewById(R.id.editadata_circa).setOnClickListener(vista -> {
-                findViewById(R.id.editadata_seconda).setVisibility(GONE); // casomai fosse visibile per tipi 6 o 9
-                gedcomDateConverter.kind = ((CompoundButton)vista).isChecked() ? Kind.APPROXIMATE : Kind.EXACT;
-                veroImputTesto = false;
-                genera();
-            });
+
             findViewById(R.id.editadata_avanzate).setVisibility(GONE);
         }
 
@@ -235,7 +222,7 @@ public class DateEditorLayout extends LinearLayout {
     // Chiamato quando clicco sul campo editabile, e dopo ogni editazione del testo
     void impostaTutto() {
         gedcomDateConverter.analyze(editaTesto.getText().toString());
-        ((CheckBox)findViewById(R.id.editadata_circa)).setChecked(gedcomDateConverter.kind == Kind.APPROXIMATE);
+
         ((TextView)findViewById(R.id.editadata_tipi)).setText(dateKinds[gedcomDateConverter.kind.ordinal()]);
 
         // Primo carro
@@ -287,8 +274,8 @@ public class DateEditorLayout extends LinearLayout {
     void impostaCecchi(GedcomDateConverter.Data data) {
         CheckBox ceccoBC, ceccoDoppia;
         if (data.equals(data1)) {
-            ceccoBC = findViewById(R.id.editadata_negativa1);
-            ceccoDoppia = findViewById(R.id.editadata_doppia1);
+            ceccoBC = findViewById(R.id.editadata_negativa2);
+            ceccoDoppia = findViewById(R.id.editadata_doppia2);
         } else {
             ceccoBC = findViewById(R.id.editadata_negativa2);
             ceccoDoppia = findViewById(R.id.editadata_doppia2);

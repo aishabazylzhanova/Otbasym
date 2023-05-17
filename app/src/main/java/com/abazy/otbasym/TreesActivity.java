@@ -22,10 +22,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 
-import com.android.installreferrer.api.InstallReferrerClient;
-import com.android.installreferrer.api.InstallReferrerStateListener;
-import com.android.installreferrer.api.ReferrerDetails;
-
 import org.folg.gedcom.model.ChildRef;
 import org.folg.gedcom.model.Family;
 import org.folg.gedcom.model.Gedcom;
@@ -53,7 +49,7 @@ public class TreesActivity extends AppCompatActivity {
     List<Map<String, String>> treeList;
     SimpleAdapter adapter;
     View progress;
-    SpeechBubble welcome;
+
     Exporter exporter;
     private boolean autoOpenedTree; // To open automatically the tree at startup only once
     // The birthday notification IDs are stored to display the corresponding person only once
@@ -65,7 +61,7 @@ public class TreesActivity extends AppCompatActivity {
         setContentView(R.layout.trees);
         ListView listView = findViewById(R.id.trees_list);
         progress = findViewById(R.id.trees_progress);
-        welcome = new SpeechBubble(this, R.string.tap_add_tree);
+
         exporter = new Exporter(this);
 
         // Al primissimo avvio
@@ -142,10 +138,6 @@ public class TreesActivity extends AppCompatActivity {
                             menu.add(0, 2, 0, R.string.rename);
                         if (esiste && (!derivato || Global.settings.expert) && !esaurito)
                             menu.add(0, 3, 0, R.string.media_folders);
-                        if (!esaurito)
-                            menu.add(0, 4, 0, R.string.find_errors);
-                        if (esiste && !derivato && !esaurito) // non si può ri-condividere un albero ricevuto indietro, anche se sei esperto..
-                            menu.add(0, 5, 0, R.string.share_tree);
                         if (esiste && !derivato && !esaurito && Global.settings.expert && Global.settings.trees.size() > 1
                                 && tree.shares != null && tree.grade != 0) // cioè dev'essere 9 o 10
                             menu.add(0, 6, 0, R.string.compare);
@@ -169,7 +161,7 @@ public class TreesActivity extends AppCompatActivity {
                                 startActivity(intent);
                             } else if (id == 2) { // Rinomina albero
                                 AlertDialog.Builder builder = new AlertDialog.Builder(TreesActivity.this);
-                                View vistaMessaggio = getLayoutInflater().inflate(R.layout.albero_nomina, listView, false);
+                                View vistaMessaggio = getLayoutInflater().inflate(R.layout.title_tree, listView, false);
                                 builder.setView(vistaMessaggio).setTitle(R.string.title);
                                 EditText editaNome = vistaMessaggio.findViewById(R.id.nuovo_nome_albero);
                                 editaNome.setText(treeList.get(position).get("titolo"));
@@ -241,7 +233,6 @@ public class TreesActivity extends AppCompatActivity {
 
         // FAB
         findViewById(R.id.fab).setOnClickListener(v -> {
-            welcome.hide();
             startActivity(new Intent(this, NewTreeActivity.class));
         });
 
@@ -304,45 +295,6 @@ public class TreesActivity extends AppCompatActivity {
             return true;
         }
         return false;
-    }
-
-    // Cerca di recuperare dal Play Store il dataID casomai l'app sia stata installata in seguito ad una condivisione
-    // Se trova il dataid propone di scaricare l'albero condiviso
-    void recuperaReferrer() {
-        InstallReferrerClient irc = InstallReferrerClient.newBuilder(this).build();
-        irc.startConnection(new InstallReferrerStateListener() {
-            @Override
-            public void onInstallReferrerSetupFinished(int risposta) {
-                switch (risposta) {
-                    case InstallReferrerClient.InstallReferrerResponse.OK:
-                        try {
-                            ReferrerDetails dettagli = irc.getInstallReferrer();
-                            // Normalmente 'referrer' è una stringa type 'utm_source=google-play&utm_medium=organic'
-                            // Ma se l'app è stata installata dal link nella pagina di condivisione sarà un data-id come '20191003215337'
-                            String referrer = dettagli.getInstallReferrer();
-
-                            Global.settings.save();
-                            irc.endConnection();
-                        } catch (Exception e) {
-                            U.toast(TreesActivity.this, e.getLocalizedMessage());
-                        }
-                        break;
-                    // App Play Store inesistente sul device o comunque risponde in modo errato
-                    case InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED:
-                        // Questo non l'ho mai visto comparire
-                    case InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE:
-                        Global.settings.referrer = null; // così non torniamo più qui
-                        Global.settings.save();
-                        welcome.show();
-                }
-            }
-
-            @Override
-            public void onInstallReferrerServiceDisconnected() {
-                // Mai visto comparire
-                U.toast(TreesActivity.this, "Install Referrer Service Disconnected");
-            }
-        });
     }
 
     void aggiornaLista() {

@@ -263,12 +263,7 @@ public abstract class   DetailActivity extends AppCompatActivity {
             eventSubMenu.add(0, 125, 0, divorceLabel);
 
             // The other events that can be placed
-            SubMenu otherSubMenu = eventSubMenu.addSubMenu(0, 100, 0, R.string.other);
-            int i = 0;
-            for (Pair<String, String> event : otherEvents) {
-                otherSubMenu.add(0, 200 + i, 0, event.second);
-                i++;
-            }
+
         }
         if (object instanceof Source && findViewById(R.id.citazione_fonte) == null) { // TODO: doubt: shouldn't it be citation_REPOSITORY?
             SubMenu subRepository = menu.addSubMenu(0, 100, 0, R.string.repository);
@@ -719,7 +714,7 @@ public abstract class   DetailActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(false); // Hides the back arrow
         whichMenu = 0;
         invalidateOptionsMenu();
-        View editBar = getLayoutInflater().inflate(R.layout.barra_edita, new LinearLayout(box.getContext()), false);
+        View editBar = getLayoutInflater().inflate(R.layout.save_cancel, new LinearLayout(box.getContext()), false);
         editBar.findViewById(R.id.edita_annulla).setOnClickListener(v -> {
             editText.setText(textView.getText());
             restore(pieceView);

@@ -47,13 +47,7 @@ public class SettingsActivity extends BaseActivity {
             Global.settings.save();
         });
 
-        // Expert mode
-        SwitchCompat expert = findViewById(R.id.opzioni_esperto);
-        expert.setChecked(Global.settings.expert);
-        expert.setOnCheckedChangeListener((widget, active) -> {
-            Global.settings.expert = active;
-            Global.settings.save();
-        });
+
 
         // Language picker
         languages = new ArrayList<>();
@@ -113,7 +107,7 @@ public class SettingsActivity extends BaseActivity {
                         LinearLayout layout = findViewById(R.id.layout);
                         layout.removeView(save);
                         layout.removeView(load);
-                        layout.removeView(expert);
+
                     }
                     dialog.dismiss();
                     if (code == null) recreate();

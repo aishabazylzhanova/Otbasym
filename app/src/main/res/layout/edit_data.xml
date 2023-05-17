@@ -4,11 +4,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:orientation="vertical">
-	<CheckBox
-		android:id="@+id/editadata_circa"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/approximate"/>
+
 	<LinearLayout
 		android:id="@+id/editadata_avanzate"
 		android:layout_width="match_parent"
@@ -20,16 +16,7 @@
 			android:layout_height="wrap_content"
 			android:layout_weight="1"
 			android:textSize="18sp"/>
-		<CheckBox
-			android:id="@+id/editadata_negativa1"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="B.C."/>
-		<CheckBox
-			android:id="@+id/editadata_doppia1"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/double_date"/>
+
 	</LinearLayout>
 	<LinearLayout
 		android:id="@+id/editadata_prima"
