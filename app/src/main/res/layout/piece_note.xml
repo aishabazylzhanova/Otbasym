@@ -8,7 +8,7 @@
 		android:id="@+id/note_text"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:background="@drawable/nota_sfondo"
+		android:background="@drawable/note_background"
 		android:paddingLeft="10dp"
 		android:paddingTop="6dp"
 		android:paddingRight="10dp"

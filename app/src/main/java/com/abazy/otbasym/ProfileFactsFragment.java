@@ -35,7 +35,6 @@ import java.util.Map;
 
 import com.abazy.otbasym.constant.Gender;
 import com.abazy.otbasym.detail.EventActivity;
-import com.abazy.otbasym.detail.ExtensionActivity;
 import com.abazy.otbasym.detail.NameActivity;
 
 public class ProfileFactsFragment extends Fragment {
@@ -44,7 +43,7 @@ public class ProfileFactsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View vistaEventi = inflater.inflate(R.layout.individuo_scheda, container, false);
+        View vistaEventi = inflater.inflate(R.layout.person_card, container, false);
         if (gc != null) {
             LinearLayout layout = vistaEventi.findViewById(R.id.contenuto_scheda);
             one = gc.getPerson(Global.indi);
@@ -144,7 +143,7 @@ public class ProfileFactsFragment extends Fragment {
     private int chosenSex;
 
     private void placeEvent(LinearLayout layout, String title, String text, Object object) {
-        View eventView = LayoutInflater.from(layout.getContext()).inflate(R.layout.individuo_eventi_pezzo, layout, false);
+        View eventView = LayoutInflater.from(layout.getContext()).inflate(R.layout.individual_event_frame, layout, false);
         layout.addView(eventView);
         ((TextView)eventView.findViewById(R.id.evento_titolo)).setText(title);
         TextView textView = eventView.findViewById(R.id.evento_testo);
@@ -215,11 +214,11 @@ public class ProfileFactsFragment extends Fragment {
                     startActivity(new Intent(getContext(), EventActivity.class));
                 });
             }
-        } else if (object instanceof GedcomTag) {
-            eventView.setOnClickListener(v -> {
-                Memory.add(object);
-                startActivity(new Intent(getContext(), ExtensionActivity.class));
-            });
+//        } else if (object instanceof GedcomTag) {
+//            eventView.setOnClickListener(v -> {
+//                Memory.add(object);
+//                startActivity(new Intent(getContext(), ExtensionActivity.class));
+//            });
         }
     }
 
@@ -356,12 +355,7 @@ public class ProfileFactsFragment extends Fragment {
                 U.save(true, capi);
                 refresh();
                 return true;
-            // Citazione fonte
-            case 230: // Copia
-                U.copyToClipboard(getText(R.string.source_citation),
-                        ((TextView)pieceView.findViewById(R.id.fonte_testo)).getText() + "\n"
-                                + ((TextView)pieceView.findViewById(R.id.citazione_testo)).getText());
-                return true;
+
             case 231: // Elimina
                 // todo conferma : Vuoi eliminare questa citazione della fonte? La fonte continuerà ad esistere.
                 one.getSourceCitations().remove(pieceObject);

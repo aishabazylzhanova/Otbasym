@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.LocaleList;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,6 +15,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.os.LocaleListCompat;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -29,7 +32,7 @@ public class SettingsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        setContentView(R.layout.opzioni);
+        setContentView(R.layout.options_menu);
 
         // Auto save
         SwitchCompat save = findViewById(R.id.opzioni_salva);
@@ -105,7 +108,7 @@ public class SettingsActivity extends BaseActivity {
                     // Removes switches to force KitKat to update their language
                     if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
                         LinearLayout layout = findViewById(R.id.layout);
-                        layout.removeView(save);
+
                         layout.removeView(load);
 
                     }
@@ -117,6 +120,23 @@ public class SettingsActivity extends BaseActivity {
         findViewById(R.id.opzioni_lapide).setOnClickListener(view -> startActivity(
                 new Intent(SettingsActivity.this, AboutActivity.class)
         ));
+
+        //Logout
+        TextView logout =  findViewById(R.id.log_out);
+        logout.setOnClickListener(v -> {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(SettingsActivity.this, LauncherActivity.class);
+            startActivity(intent);
+        });
+
+
+        Bundle arguments = getIntent().getExtras();
+        String name = arguments.get("from").toString();
+        if (!name.equals("trees")){
+            load.setVisibility(View.GONE);
+            logout.setVisibility(View.GONE);
+
+        }
     }
 
     /**
@@ -134,7 +154,7 @@ public class SettingsActivity extends BaseActivity {
         return languages.get(0);
     }
 
-    private class Language implements Comparable<Language> {
+    class Language implements Comparable<Language> {
         String code;
         int percent;
 

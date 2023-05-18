@@ -16,7 +16,7 @@
 			app:actionLayout="@layout/menu_item_extra"/>
 		<item
 			android:id="@+id/nav_famiglie"
-			android:icon="@drawable/menu_famiglia"
+			android:icon="@drawable/menu_family"
 			android:title="@string/families"
 			app:actionLayout="@layout/menu_item_extra"/>
 		<item

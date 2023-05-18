@@ -3,12 +3,12 @@
 	android:id="@+id/minicard"
 	android:layout_width="wrap_content"
 	android:layout_height="wrap_content"
-	android:background="@drawable/casella_sfondo_base">
+	android:background="@drawable/background_base">
 	<TextView
 		android:id="@+id/minicard_text"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:background="@drawable/casella_bordo_neutro"
+		android:background="@drawable/border_neutral"
 		android:paddingBottom="3dp"
 		android:paddingLeft="5dp"
 		android:paddingRight="5dp"

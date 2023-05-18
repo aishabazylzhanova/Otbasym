@@ -267,6 +267,14 @@
     <string name="export_gedcom">Экспорт файла GEDCOM</string>
     <string name="compare">Салыстыру</string>
     <string name="share_tree">Бөлісу</string>
+    <string name="sign_in">Кіру</string>
+    <string name="register">Тіркелу</string>
+    <string name="mail">Пошта</string>
+    <string name="password">Құпия сөз</string>
+    <string name="No_account_register_here">Тіркелу</string>
+    <string name="create_account">Тіркелгі жасау</string>
+    <string name="already_have_account">Кіру</string>
+    <string name="logout">Шығу</string>
     <string name="find_errors">Қателерді іздеу</string>
     <string name="rename">Атын өзгерту</string>
     <string name="tree_info">Ақпарат</string>

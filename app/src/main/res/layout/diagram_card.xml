@@ -9,7 +9,7 @@
         android:id="@+id/card_background"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/casella_sfondo_base"
+        android:background="@drawable/background_base"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,7 +19,7 @@
         android:id="@+id/card_border"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/casella_bordo_neutro"
+        android:background="@drawable/border_neutral"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,5 +74,5 @@
         android:layout_height="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/defunto" />
+        app:srcCompat="@drawable/death" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -178,7 +178,7 @@
     <string name="sex">Sex</string>
     <string name="event">Event</string>
     <string name="birth">Birth</string>
-<!--    <string name="baptism">Baptism</string>-->
+    <!--    <string name="baptism">Baptism</string>-->
     <string name="residence">Kinship</string>
     <string name="occupation">Occupation</string>
     <string name="death">Death</string>
@@ -186,7 +186,7 @@
     <string name="other">Other</string>
     <string name="note">Note</string>
     <string name="new_note">New note</string>
-    <string name="new_shared_note">New shared note</string>
+<!--    <string name="new_shared_note">New shared note</string>-->
     <string name="link_shared_note">Link shared note</string>
     <string name="source">Source</string>
     <string name="new_source_note">New note-source</string>
@@ -296,7 +296,7 @@
     <string name="marriage">Marriage</string>
     <string name="civil_marriage">Civil</string>
     <string name="religious_marriage">Religious</string>
-    <string name="common_law_marriage">Common law</string>
+<!--    <string name="common_law_marriage">Common law</string>-->
     <string name="separation">Separation</string>
     <string name="divorce">Divorce</string>
     <string name="lineage">Lineage</string>
@@ -367,6 +367,14 @@
     <string name="welcome_message">Family history in your pocket</string>
     <string name="kinship">Kinship</string>
     <string name="ex_female_partner">Ex Wife</string>
+    <string name="sign_in">Sign In</string>
+    <string name="register">Register</string>
+    <string name="mail">Email</string>
+    <string name="password">Password</string>
+    <string name="No_account_register_here">Register here</string>
+    <string name="create_account">Create account</string>
+    <string name="already_have_account">Already have account?</string>
+    <string name="logout">Logout</string>
 
 
 </resources>

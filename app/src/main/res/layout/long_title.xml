@@ -14,7 +14,7 @@
 		android:id="@+id/titolo_testo"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:text="Titoletto lunghetto"
+		android:text="long title"
 		android:textColor="#fee"
 		android:textSize="18sp" />
 

@@ -36,15 +36,7 @@ public class NameActivity extends DetailActivity {
         }
         place(getString(R.string.nickname), "Nickname");
         place(getString(R.string.type), "Type", true, false); // _TYPE in GEDCOM 5.5, TYPE in GEDCOM 5.5.1
-        place(getString(R.string.prefix), "Prefix", Global.settings.expert, false);
-        place(getString(R.string.given), "Given", Global.settings.expert, false);
-        place(getString(R.string.surname_prefix), "SurnamePrefix", Global.settings.expert, false);
-        place(getString(R.string.surname), "Surname", Global.settings.expert, false);
-        place(getString(R.string.suffix), "Suffix", Global.settings.expert, false);
-        place(getString(R.string.married_name), "MarriedName", false, false); // _marrnm
-        place(getString(R.string.aka), "Aka", false, false); // _aka
-        place(getString(R.string.romanized), "Romn", Global.settings.expert, false);
-        place(getString(R.string.phonetic), "Fone", Global.settings.expert, false);
+
         placeExtensions(n);
         U.placeNotes(box, n, true);
         U.placeMedia(box, n, true); // Per GEDCOM 5.5.1 a Name should not contain Media

@@ -77,7 +77,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
         if (one == null) return; // Capita raramente che il bundle non faccia il suo lavoro
         Global.indi = one.getId();
-        setContentView(R.layout.individuo);
+        setContentView(R.layout.person);
 
         // Barra
         Toolbar toolbar = findViewById(R.id.profile_toolbar);
@@ -211,6 +211,7 @@ public class ProfileActivity extends AppCompatActivity {
                     break;
                 case 1: // Individuo Eventi
                     menu.add(0, 20, 0, R.string.name);
+                    menu.add(0, 22, 0, R.string.note);
                     // Sesso
                     if (Gender.getGender(one) == Gender.NONE)
                         menu.add(0, 21, 0, R.string.sex);

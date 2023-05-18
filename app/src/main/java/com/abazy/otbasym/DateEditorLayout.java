@@ -365,7 +365,8 @@ public class DateEditorLayout extends LinearLayout {
      */
     public void finishEditing() {
         if (gedcomDateConverter.kind == Kind.PHRASE) {
-            editaTesto.setText("(" + editaTesto.getText() + ")");
+            String s = "(" + editaTesto.getText() + ")";
+            editaTesto.setText(s);
         }
     }
 

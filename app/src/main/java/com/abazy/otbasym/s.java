@@ -1,22 +1,17 @@
 package com.abazy.otbasym;
 
-// Scrivi in breve
 
 public class s {
 
 	public static void l(Object... objects) {
-		String str = "";
+		StringBuilder str = new StringBuilder();
 		if( objects != null ) {
 			for( Object obj : objects )
-				str += obj + " ";
+				str.append(obj).append(" ");
 		} else
-			str += objects;
+			str.append((Object) null);
 		System.out.println(".\t" + str);
-		//android.util.Log.v("v", str);
+
 	}
-	
-	public static void p( Object parola ) {
-		System.out.print( parola );
-	}
-	
+
 }

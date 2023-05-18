@@ -272,6 +272,14 @@
     <string name="export_gedcom">Экспорт файла GEDCOM</string>
     <string name="compare">Сравнить</string>
     <string name="share_tree">Поделиться</string>
+    <string name="sign_in">Войти</string>
+    <string name="register">Регистрация</string>
+    <string name="mail">Почта</string>
+    <string name="password">Пароль</string>
+    <string name="No_account_register_here">Зарегистрироваться</string>
+    <string name="create_account">Создать аккаунт</string>
+    <string name="already_have_account">Уже есть аккаунт?</string>
+    <string name="logout">Выйти</string>
     <string name="find_errors">Поиск ошибок</string>
     <string name="rename">Переименовать</string>
     <string name="tree_info">Информация</string>

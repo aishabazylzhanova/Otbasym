@@ -50,13 +50,13 @@ public class MediaActivity extends DetailActivity {
         place(getString(R.string.type), "Type", false, false); // Tag '_TYPE' not GEDCOM standard
         if (Global.settings.expert)
             place(getString(R.string.file), "File"); // File name, visible only with advanced tools
-        // TODO: File string should be max 259 characters according to GEDCOM 5.5.5 specs
+
         place(getString(R.string.format), "Format", Global.settings.expert, false); // File format, e.g. 'jpeg'
         place(getString(R.string.primary), "Primary"); // Tag '_PRIM' not GEDCOM standard, but used to select main media
         place(getString(R.string.scrapbook), "Scrapbook", false, false); // Scrapbook that contains the Media record, not GEDCOM standard
         place(getString(R.string.slideshow), "SlideShow", false, false); // Not GEDCOM standard
         place(getString(R.string.blob), "Blob", false, true);
-        //m.getFileTag(); // The tag, could be 'FILE' or '_FILE'
+
         placeExtensions(m);
         U.placeNotes(box, m, true);
         U.placeChangeDate(box, m.getChange());
@@ -69,7 +69,7 @@ public class MediaActivity extends DetailActivity {
     }
 
     void displayMedia(Media media, int position) {
-        imageView = LayoutInflater.from(this).inflate(R.layout.immagine_immagine, box, false);
+        imageView = LayoutInflater.from(this).inflate(R.layout.image, box, false);
         box.addView(imageView, position);
         ImageView imageView = this.imageView.findViewById(R.id.immagine_foto);
         F.showImage(media, imageView, this.imageView.findViewById(R.id.immagine_circolo));

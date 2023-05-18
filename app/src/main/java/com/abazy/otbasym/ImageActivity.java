@@ -18,7 +18,7 @@ public class ImageActivity extends AppCompatActivity {
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.lavagna);
+        setContentView(R.layout.board);
         // Shows the file in full resolution
         String path = getIntent().getStringExtra("path");
         Picasso picasso = Picasso.get();

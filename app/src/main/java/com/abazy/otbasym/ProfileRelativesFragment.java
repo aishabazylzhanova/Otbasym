@@ -32,7 +32,7 @@ public class ProfileRelativesFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        tabView = inflater.inflate(R.layout.individuo_scheda, container, false);
+        tabView = inflater.inflate(R.layout.person_card, container, false);
         if (gc != null) {
             one = gc.getPerson(Global.indi);
             if (one != null) {

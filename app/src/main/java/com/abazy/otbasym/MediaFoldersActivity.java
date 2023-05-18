@@ -78,7 +78,7 @@ public class MediaFoldersActivity extends BaseActivity {
         LinearLayout layout = findViewById(R.id.cartelle_scatola);
         layout.removeAllViews();
         for (String dir : dirs) {
-            View folderView = getLayoutInflater().inflate(R.layout.pezzo_cartella, layout, false);
+            View folderView = getLayoutInflater().inflate(R.layout.delete, layout, false);
             layout.addView(folderView);
             TextView nameView = folderView.findViewById(R.id.cartella_nome);
             TextView urlView = folderView.findViewById(R.id.cartella_url);
@@ -104,7 +104,7 @@ public class MediaFoldersActivity extends BaseActivity {
             registerForContextMenu(folderView);
         }
         for (String uriString : uris) {
-            View uriView = getLayoutInflater().inflate(R.layout.pezzo_cartella, layout, false);
+            View uriView = getLayoutInflater().inflate(R.layout.delete, layout, false);
             layout.addView(uriView);
             DocumentFile documentDir = DocumentFile.fromTreeUri(this, Uri.parse(uriString));
             String name = null;

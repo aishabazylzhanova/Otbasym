@@ -405,15 +405,15 @@ public class DiagramFragment extends Fragment {
             View view = getLayoutInflater().inflate(R.layout.diagram_card, this, true);
             View border = view.findViewById(R.id.card_border);
             if (Gender.isMale(person))
-                border.setBackgroundResource(R.drawable.casella_bordo_maschio);
+                border.setBackgroundResource(R.drawable.border_male);
             else if (Gender.isFemale(person))
-                border.setBackgroundResource(R.drawable.casella_bordo_femmina);
+                border.setBackgroundResource(R.drawable.border_female);
             background = view.findViewById(R.id.card_background);
             if (personNode.isFulcrumNode()) {
-                background.setBackgroundResource(R.drawable.casella_sfondo_evidente);
+                background.setBackgroundResource(R.drawable.person_on_select);
                 fulcrumView = this;
             } else if (personNode.acquired) {
-                background.setBackgroundResource(R.drawable.casella_sfondo_sposo);
+                background.setBackgroundResource(R.drawable.spouse_box);
             }
             F.showMainImageForPerson(Global.gc, person, view.findViewById(R.id.card_photo));
             TextView vistaNome = view.findViewById(R.id.card_name);
@@ -446,7 +446,7 @@ public class DiagramFragment extends Fragment {
         public void invalidate() {
             // Change background color for PDF export
             if (printPDF && ((PersonNode)metric).acquired) {
-                background.setBackgroundResource(R.drawable.casella_sfondo_sposo_stampa);
+                background.setBackgroundResource(R.drawable.spouse_box_pressed);
             }
         }
     }
@@ -508,12 +508,12 @@ public class DiagramFragment extends Fragment {
             miniCardText.setText(personNode.amount > 100 ? "100+" : String.valueOf(personNode.amount));
             Gender sex = Gender.getGender(personNode.person);
             if (sex == Gender.MALE)
-                miniCardText.setBackgroundResource(R.drawable.casella_bordo_maschio);
+                miniCardText.setBackgroundResource(R.drawable.border_male);
             else if (sex == Gender.FEMALE)
-                miniCardText.setBackgroundResource(R.drawable.casella_bordo_femmina);
+                miniCardText.setBackgroundResource(R.drawable.border_female);
             if (personNode.acquired) {
                 layout = miniCard.findViewById(R.id.minicard);
-                layout.setBackgroundResource(R.drawable.casella_sfondo_sposo);
+                layout.setBackgroundResource(R.drawable.spouse_box);
             }
             miniCard.setOnClickListener(view -> clickCard(personNode.person));
         }
@@ -521,7 +521,7 @@ public class DiagramFragment extends Fragment {
         @Override
         public void invalidate() {
             if (printPDF && layout != null) {
-                layout.setBackgroundResource(R.drawable.casella_sfondo_sposo_stampa);
+                layout.setBackgroundResource(R.drawable.spouse_box_pressed);
             }
         }
     }
@@ -834,7 +834,7 @@ public class DiagramFragment extends Fragment {
                 for (int i = 0; i < box.getChildCount(); i++) {
                     box.getChildAt(i).invalidate();
                 }
-                fulcrumView.findViewById(R.id.card_background).setBackgroundResource(R.drawable.casella_sfondo_base);
+                fulcrumView.findViewById(R.id.card_background).setBackgroundResource(R.drawable.background_base);
                 // Create PDF
                 PdfDocument document = new PdfDocument();
                 PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(box.getWidth(), box.getHeight(), 1).create();

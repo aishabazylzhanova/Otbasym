@@ -43,7 +43,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.abazy.otbasym.visitor.MediaList;
-
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 public class TreesActivity extends AppCompatActivity {
 
     List<Map<String, String>> treeList;
@@ -63,191 +64,206 @@ public class TreesActivity extends AppCompatActivity {
         progress = findViewById(R.id.trees_progress);
 
         exporter = new Exporter(this);
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        // Al primissimo avvio
+        if (currentUser == null) {
+            Intent intent = new Intent(this, WelcomeActivity.class);
+            startActivity(intent);
+        } else {
 
 
-        if (savedState != null) {
-            autoOpenedTree = savedState.getBoolean("autoOpenedTree");
-            consumedNotifications = savedState.getIntegerArrayList("consumedNotifications");
-        }
+            if (savedState != null) {
+                autoOpenedTree = savedState.getBoolean("autoOpenedTree");
+                consumedNotifications = savedState.getIntegerArrayList("consumedNotifications");
+            }
 
-        if (Global.settings.trees != null) {
+            if (Global.settings.trees != null) {
 
-            // Lista degli alberi genealogici
-            treeList = new ArrayList<>();
+                // Lista degli alberi genealogici
+                treeList = new ArrayList<>();
 
-            // Dà i dati in pasto all'adattatore
-            adapter = new SimpleAdapter(this, treeList,
-                    R.layout.pezzo_albero,
-                    new String[]{"titolo", "dati"},
-                    new int[]{R.id.albero_titolo, R.id.albero_dati}) {
-                // Individua ciascuna vista dell'elenco
-                @Override
-                public View getView(final int position, View convertView, ViewGroup parent) {
-                    View treeView = super.getView(position, convertView, parent);
-                    int treeId = Integer.parseInt(treeList.get(position).get("id"));
-                    Settings.Tree tree = Global.settings.getTree(treeId);
-                    boolean derivato = tree.grade == 20;
-                    boolean esaurito = tree.grade == 30;
-                    if (derivato) {
-                        treeView.setBackgroundColor(getResources().getColor(R.color.accent_medium));
-                        ((TextView)treeView.findViewById(R.id.albero_dati)).setTextColor(getResources().getColor(R.color.text));
-                        treeView.setOnClickListener(v -> {
+                // Dà i dati in pasto all'adattatore
+                adapter = new SimpleAdapter(this, treeList,
+                        R.layout.fragment_tree_dots,
+                        new String[]{"titolo", "dati"},
+                        new int[]{R.id.albero_titolo, R.id.albero_dati}) {
+                    // Individua ciascuna vista dell'elenco
+                    @Override
+                    public View getView(final int position, View convertView, ViewGroup parent) {
+                        View treeView = super.getView(position, convertView, parent);
+                        int treeId = Integer.parseInt(treeList.get(position).get("id"));
+                        Settings.Tree tree = Global.settings.getTree(treeId);
+                        boolean derivato = tree.grade == 20;
+                        boolean esaurito = tree.grade == 30;
+                        if (derivato) {
+                            treeView.setBackgroundColor(getResources().getColor(R.color.accent_medium));
+                            ((TextView) treeView.findViewById(R.id.albero_dati)).setTextColor(getResources().getColor(R.color.text));
+                            treeView.setOnClickListener(v -> {
                                 tree.grade = 10; // viene retrocesso
                                 Global.settings.save();
                                 aggiornaLista();
                                 Toast.makeText(TreesActivity.this, R.string.something_wrong, Toast.LENGTH_LONG).show();
 
-                        });
-                    } else if (esaurito) {
-                        treeView.setBackgroundColor(getResources().getColor(R.color.consumed));
-                        ((TextView)treeView.findViewById(R.id.albero_titolo)).setTextColor(getResources().getColor(R.color.gray_text));
-                        treeView.setOnClickListener(v -> {
+                            });
+                        } else if (esaurito) {
+                            treeView.setBackgroundColor(getResources().getColor(R.color.consumed));
+                            ((TextView) treeView.findViewById(R.id.albero_titolo)).setTextColor(getResources().getColor(R.color.gray_text));
+                            treeView.setOnClickListener(v -> {
 
                                 tree.grade = 10; // viene retrocesso
                                 Global.settings.save();
                                 aggiornaLista();
                                 Toast.makeText(TreesActivity.this, R.string.something_wrong, Toast.LENGTH_LONG).show();
 
-                        });
-                    } else {
-                        treeView.setBackgroundColor(getResources().getColor(R.color.back_element));
-                        treeView.setOnClickListener(v -> {
-                            progress.setVisibility(View.VISIBLE);
-                            if (!(Global.gc != null && treeId == Global.settings.openTree)) { // se non è già aperto
-                                if (!openGedcom(treeId, true)) {
-                                    progress.setVisibility(View.GONE);
-                                    return;
-                                }
-                            }
-                            startActivity(new Intent(TreesActivity.this, Principal.class));
-                        });
-                    }
-                    treeView.findViewById(R.id.albero_menu).setOnClickListener(vista -> {
-                        boolean esiste = new File(getFilesDir(), treeId + ".json").exists();
-                        PopupMenu popup = new PopupMenu(TreesActivity.this, vista);
-                        Menu menu = popup.getMenu();
-                        if (treeId == Global.settings.openTree && Global.shouldSave)
-                            menu.add(0, -1, 0, R.string.save);
-                        if ((Global.settings.expert && derivato) || (Global.settings.expert && esaurito))
-                            menu.add(0, 0, 0, R.string.open);
-                        if (!esaurito || Global.settings.expert)
-                            menu.add(0, 1, 0, R.string.tree_info);
-                        if ((!derivato && !esaurito) || Global.settings.expert)
-                            menu.add(0, 2, 0, R.string.rename);
-                        if (esiste && (!derivato || Global.settings.expert) && !esaurito)
-                            menu.add(0, 3, 0, R.string.media_folders);
-                        if (esiste && !derivato && !esaurito && Global.settings.expert && Global.settings.trees.size() > 1
-                                && tree.shares != null && tree.grade != 0) // cioè dev'essere 9 o 10
-                            menu.add(0, 6, 0, R.string.compare);
-                        if (esiste && Global.settings.expert && !esaurito)
-                            menu.add(0, 7, 0, R.string.export_gedcom);
-                        if (esiste && Global.settings.expert)
-                            menu.add(0, 8, 0, R.string.make_backup);
-                        menu.add(0, 9, 0, R.string.delete);
-                        popup.show();
-                        popup.setOnMenuItemClickListener(item -> {
-                            int id = item.getItemId();
-                            if (id == -1) { // Salva
-                                U.saveJson(Global.gc, treeId);
-                                Global.shouldSave = false;
-                            } else if (id == 0) { // Apre un albero derivato
-                                openGedcom(treeId, true);
-                                startActivity(new Intent(TreesActivity.this, Principal.class));
-                            } else if (id == 1) { // Info Gedcom
-                                Intent intent = new Intent(TreesActivity.this, InfoActivity.class);
-                                intent.putExtra("idAlbero", treeId);
-                                startActivity(intent);
-                            } else if (id == 2) { // Rinomina albero
-                                AlertDialog.Builder builder = new AlertDialog.Builder(TreesActivity.this);
-                                View vistaMessaggio = getLayoutInflater().inflate(R.layout.title_tree, listView, false);
-                                builder.setView(vistaMessaggio).setTitle(R.string.title);
-                                EditText editaNome = vistaMessaggio.findViewById(R.id.nuovo_nome_albero);
-                                editaNome.setText(treeList.get(position).get("titolo"));
-                                AlertDialog dialogo = builder.setPositiveButton(R.string.rename, (dialog, i1) -> {
-                                    Global.settings.rinomina(treeId, editaNome.getText().toString());
-                                    aggiornaLista();
-                                }).setNeutralButton(R.string.cancel, null).create();
-                                editaNome.setOnEditorActionListener((view, action, event) -> {
-                                    if (action == EditorInfo.IME_ACTION_DONE)
-                                        dialogo.getButton(AlertDialog.BUTTON_POSITIVE).performClick();
-                                    return false;
-                                });
-                                dialogo.show();
-                                vistaMessaggio.postDelayed(() -> {
-                                    editaNome.requestFocus();
-                                    editaNome.setSelection(editaNome.getText().length());
-                                    InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                                    inputMethodManager.showSoftInput(editaNome, InputMethodManager.SHOW_IMPLICIT);
-                                }, 300);
-                            } else if (id == 3) { // Media folders
-                                startActivity(new Intent(TreesActivity.this, MediaFoldersActivity.class)
-                                        .putExtra("idAlbero", treeId)
-                                );
-                            } else if (id == 4) { // Correggi errori
-                                findErrors(treeId, false);
-
-                            } else if (id == 7) { // Esporta Gedcom
-                                if (exporter.openTree(treeId)) {
-                                    String mime = "application/octet-stream";
-                                    String ext = "ged";
-                                    int code = 636;
-                                    if (exporter.numMediaFilesToAttach() > 0) {
-                                        mime = "application/zip";
-                                        ext = "zip";
-                                        code = 6219;
+                            });
+                        } else {
+                            treeView.setBackgroundColor(getResources().getColor(R.color.back_element));
+                            treeView.setOnClickListener(v -> {
+                                progress.setVisibility(View.VISIBLE);
+                                if (!(Global.gc != null && treeId == Global.settings.openTree)) { // se non è già aperto
+                                    if (!openGedcom(treeId, true)) {
+                                        progress.setVisibility(View.GONE);
+                                        return;
                                     }
-                                    F.saveDocument(TreesActivity.this, null, treeId, mime, ext, code);
                                 }
-                            } else if (id == 8) { // Fai backup
-                                if (exporter.openTree(treeId))
-                                    F.saveDocument(TreesActivity.this, null, treeId, "application/zip", "zip", 327);
-                            } else if (id == 9) {    // Elimina albero
-                                new AlertDialog.Builder(TreesActivity.this).setMessage(R.string.really_delete_tree)
-                                        .setPositiveButton(R.string.delete, (dialog, id1) -> {
-                                            deleteTree(TreesActivity.this, treeId);
-                                            aggiornaLista();
-                                        }).setNeutralButton(R.string.cancel, null).show();
-                            } else {
-                                return false;
-                            }
-                            return true;
+                                startActivity(new Intent(TreesActivity.this, Principal.class));
+                            });
+                        }
+                        treeView.findViewById(R.id.albero_menu).setOnClickListener(vista -> {
+                            boolean esiste = new File(getFilesDir(), treeId + ".json").exists();
+                            PopupMenu popup = new PopupMenu(TreesActivity.this, vista);
+                            Menu menu = popup.getMenu();
+                            if (treeId == Global.settings.openTree && Global.shouldSave)
+                                menu.add(0, -1, 0, R.string.save);
+                            if ((Global.settings.expert && derivato) || (Global.settings.expert && esaurito))
+                                menu.add(0, 0, 0, R.string.open);
+                            if (!esaurito || Global.settings.expert)
+                                menu.add(0, 1, 0, R.string.tree_info);
+                            if ((!derivato && !esaurito) || Global.settings.expert)
+                                menu.add(0, 2, 0, R.string.rename);
+                            if (esiste && (!derivato || Global.settings.expert) && !esaurito)
+                                menu.add(0, 3, 0, R.string.media_folders);
+                            if (esiste && !derivato && !esaurito && Global.settings.expert && Global.settings.trees.size() > 1
+                                    && tree.shares != null && tree.grade != 0) // cioè dev'essere 9 o 10
+                                menu.add(0, 6, 0, R.string.compare);
+                            if (esiste && Global.settings.expert && !esaurito)
+                                menu.add(0, 7, 0, R.string.export_gedcom);
+                            if (esiste && Global.settings.expert)
+                                menu.add(0, 8, 0, R.string.make_backup);
+                            menu.add(0, 9, 0, R.string.delete);
+                            popup.show();
+                            popup.setOnMenuItemClickListener(item -> {
+                                int id = item.getItemId();
+                                if (id == -1) { // Salva
+                                    U.saveJson(Global.gc, treeId);
+                                    Global.shouldSave = false;
+                                } else if (id == 0) { // Apre un albero derivato
+                                    openGedcom(treeId, true);
+                                    startActivity(new Intent(TreesActivity.this, Principal.class));
+                                } else if (id == 1) { // Info Gedcom
+                                    Intent intent = new Intent(TreesActivity.this, InfoActivity.class);
+                                    intent.putExtra("idAlbero", treeId);
+                                    startActivity(intent);
+                                } else if (id == 2) { // Rinomina albero
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(TreesActivity.this);
+                                    View vistaMessaggio = getLayoutInflater().inflate(R.layout.title_tree, listView, false);
+                                    builder.setView(vistaMessaggio).setTitle(R.string.title);
+                                    EditText editaNome = vistaMessaggio.findViewById(R.id.nuovo_nome_albero);
+                                    editaNome.setText(treeList.get(position).get("titolo"));
+                                    AlertDialog dialogo = builder.setPositiveButton(R.string.rename, (dialog, i1) -> {
+                                        Global.settings.rinomina(treeId, editaNome.getText().toString());
+                                        aggiornaLista();
+                                    }).setNeutralButton(R.string.cancel, null).create();
+                                    editaNome.setOnEditorActionListener((view, action, event) -> {
+                                        if (action == EditorInfo.IME_ACTION_DONE)
+                                            dialogo.getButton(AlertDialog.BUTTON_POSITIVE).performClick();
+                                        return false;
+                                    });
+                                    dialogo.show();
+                                    vistaMessaggio.postDelayed(() -> {
+                                        editaNome.requestFocus();
+                                        editaNome.setSelection(editaNome.getText().length());
+                                        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                        inputMethodManager.showSoftInput(editaNome, InputMethodManager.SHOW_IMPLICIT);
+                                    }, 300);
+                                } else if (id == 3) { // Media folders
+                                    startActivity(new Intent(TreesActivity.this, MediaFoldersActivity.class)
+                                            .putExtra("idAlbero", treeId)
+                                    );
+                                } else if (id == 4) { // Correggi errori
+                                    findErrors(treeId, false);
+
+                                } else if (id == 7) { // Esporta Gedcom
+                                    if (exporter.openTree(treeId)) {
+                                        String mime = "application/octet-stream";
+                                        String ext = "ged";
+                                        int code = 636;
+                                        if (exporter.numMediaFilesToAttach() > 0) {
+                                            mime = "application/zip";
+                                            ext = "zip";
+                                            code = 6219;
+                                        }
+                                        F.saveDocument(TreesActivity.this, null, treeId, mime, ext, code);
+                                    }
+                                } else if (id == 8) { // Fai backup
+                                    if (exporter.openTree(treeId))
+                                        F.saveDocument(TreesActivity.this, null, treeId, "application/zip", "zip", 327);
+                                } else if (id == 9) {    // Elimina albero
+                                    new AlertDialog.Builder(TreesActivity.this).setMessage(R.string.really_delete_tree)
+                                            .setPositiveButton(R.string.delete, (dialog, id1) -> {
+                                                deleteTree(TreesActivity.this, treeId);
+                                                aggiornaLista();
+                                            }).setNeutralButton(R.string.cancel, null).show();
+                                } else {
+                                    return false;
+                                }
+                                return true;
+                            });
                         });
-                    });
-                    return treeView;
-                }
-            };
-            listView.setAdapter(adapter);
-            aggiornaLista();
-        }
+                        return treeView;
+                    }
+                };
+                listView.setAdapter(adapter);
+                aggiornaLista();
+            }
 
-        // Barra personalizzata
-        ActionBar bar = getSupportActionBar();
-        View treesBar = getLayoutInflater().inflate(R.layout.trees_bar, null);
-        treesBar.findViewById(R.id.trees_settings).setOnClickListener(v -> startActivity(
-                new Intent(this, SettingsActivity.class))
-        );
-        bar.setCustomView(treesBar);
-        bar.setDisplayShowCustomEnabled(true);
+            // Barra personalizzata
+            ActionBar bar = getSupportActionBar();
+            View treesBar = getLayoutInflater().inflate(R.layout.trees_bar, null);
+            treesBar.findViewById(R.id.trees_settings).setOnClickListener(v -> {
+                        Intent intent = new Intent(this, SettingsActivity.class);
+                        intent.putExtra("from", "trees");
+                        startActivity(intent);
+                    }
 
-        // FAB
-        findViewById(R.id.fab).setOnClickListener(v -> {
-            startActivity(new Intent(this, NewTreeActivity.class));
-        });
+            );
+            bar.setCustomView(treesBar);
+            bar.setDisplayShowCustomEnabled(true);
 
-        // Automatic load of last opened tree of previous session
-        if (!birthdayNotifyTapped(getIntent()) && !autoOpenedTree
-                && getIntent().getBooleanExtra("apriAlberoAutomaticamente", false) && Global.settings.openTree > 0) {
-            listView.post(() -> {
-                if (openGedcom(Global.settings.openTree, false)) {
-                    progress.setVisibility(View.VISIBLE);
-                    autoOpenedTree = true;
-                    startActivity(new Intent(this, Principal.class));
-                }
+            // FAB
+            findViewById(R.id.fab).setOnClickListener(v -> {
+                startActivity(new Intent(this, NewTreeActivity.class));
             });
+
+            // Automatic load of last opened tree of previous session
+            if (!birthdayNotifyTapped(getIntent()) && !autoOpenedTree
+                    && getIntent().getBooleanExtra("openTreeAutomatically", false) && Global.settings.openTree > 0) {
+                listView.post(() -> {
+                    if (openGedcom(Global.settings.openTree, false)) {
+                        progress.setVisibility(View.VISIBLE);
+                        autoOpenedTree = true;
+                        startActivity(new Intent(this, Principal.class));
+                    }
+                });
+            }
         }
+
+
     }
+
+
 
     @Override
     protected void onResume() {

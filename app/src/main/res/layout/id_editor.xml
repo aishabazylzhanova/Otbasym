@@ -10,7 +10,8 @@
 		android:id="@+id/edit_id_input_layout"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		app:errorEnabled="true">
+		app:errorEnabled="true"
+		>
 		<com.google.android.material.textfield.TextInputEditText
 			android:id="@+id/edit_id_input_field"
 			android:layout_width="match_parent"
@@ -18,6 +19,7 @@
 			android:typeface="monospace"
 			android:inputType="textCapSentences|textNoSuggestions"
 			android:maxLength="20"
-			android:maxLines="1"/>
+			android:maxLines="1"
+			android:background="@drawable/input"/>
 	</com.google.android.material.textfield.TextInputLayout>
 </LinearLayout>

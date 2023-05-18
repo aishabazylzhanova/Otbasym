@@ -21,7 +21,7 @@ public class SpeechBubble {
 
     public SpeechBubble(Context context, String testo) {
         Activity attivita = (Activity)context;
-        balloon = attivita.getLayoutInflater().inflate(R.layout.fabuloso, null);
+        balloon = attivita.getLayoutInflater().inflate(R.layout.bubble_add_tree, null);
         balloon.setVisibility(View.INVISIBLE);
         ((LinearLayout)attivita.findViewById(R.id.fab_box)).addView(balloon, 0,
                 new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));

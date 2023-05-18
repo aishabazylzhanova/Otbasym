@@ -4,7 +4,7 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="190dp"
-	android:background="@drawable/menu_sfondo">
+	android:background="@drawable/menu_header_back">
 
 
 
@@ -56,15 +56,4 @@
 		android:textColor="#dfff"
 		android:visibility="gone"/>
 
-	<Button
-		android:id="@+id/menu_salva"
-		style="@style/AppTheme.BottoneColorato"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_above="@+id/menu_titolo"
-		android:layout_alignParentEnd="true"
-		android:layout_marginEnd="16dp"
-		android:layout_marginBottom="8dp"
-		android:text="@string/save"
-		android:visibility="gone"/>
 </RelativeLayout>

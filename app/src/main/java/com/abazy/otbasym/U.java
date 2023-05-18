@@ -80,7 +80,6 @@ import java.util.TimeZone;
 import com.abazy.otbasym.constant.Choice;
 import com.abazy.otbasym.constant.Format;
 import com.abazy.otbasym.constant.Gender;
-import com.abazy.otbasym.detail.ChangeActivity;
 import com.abazy.otbasym.detail.FamilyActivity;
 import com.abazy.otbasym.detail.MediaActivity;
 import com.abazy.otbasym.detail.NoteActivity;
@@ -88,7 +87,6 @@ import com.abazy.otbasym.list.FamiliesFragment;
 import com.abazy.otbasym.list.PersonsFragment;
 import com.abazy.otbasym.list.MediaAdapter;
 import com.abazy.otbasym.visitor.FindStack;
-import com.abazy.otbasym.visitor.ListOfSourceCitations;
 import com.abazy.otbasym.visitor.MediaContainers;
 import com.abazy.otbasym.visitor.MediaContainerList;
 import com.abazy.otbasym.visitor.NoteContainers;
@@ -612,7 +610,7 @@ public class U {
      * Add a generic not editable title-text item to a Layout.
      */
     public static void place(LinearLayout layout, String title, String text) {
-        View pieceView = LayoutInflater.from(layout.getContext()).inflate(R.layout.pezzo_fatto, layout, false);
+        View pieceView = LayoutInflater.from(layout.getContext()).inflate(R.layout.done_fact_fragment, layout, false);
         layout.addView(pieceView);
         ((TextView)pieceView.findViewById(R.id.fatto_titolo)).setText(title);
         TextView textView = pieceView.findViewById(R.id.fatto_testo);
@@ -659,9 +657,9 @@ public class U {
         if (!isDead(persona))
             vistaIndi.findViewById(R.id.person_mourning).setVisibility(View.GONE);
         if (Gender.isMale(persona))
-            vistaIndi.findViewById(R.id.person_border).setBackgroundResource(R.drawable.casella_bordo_maschio);
+            vistaIndi.findViewById(R.id.person_border).setBackgroundResource(R.drawable.border_male);
         else if (Gender.isFemale(persona))
-            vistaIndi.findViewById(R.id.person_border).setBackgroundResource(R.drawable.casella_bordo_femmina);
+            vistaIndi.findViewById(R.id.person_border).setBackgroundResource(R.drawable.border_female);
         vistaIndi.setTag(persona.getId());
         return vistaIndi;
     }
@@ -767,65 +765,16 @@ public class U {
             if (container instanceof Note) // Note non estende SourceCitationContainer
                 listaCitaFonti = ((Note)container).getSourceCitations();
             else listaCitaFonti = ((SourceCitationContainer)container).getSourceCitations();
-            for (final SourceCitation citaz : listaCitaFonti) {
-                View vistaCita = LayoutInflater.from(layout.getContext()).inflate(R.layout.pezzo_citazione_fonte, layout, false);
-                layout.addView(vistaCita);
-                String t = "";
-                if (citaz.getValue() != null) t += citaz.getValue() + "\n";
-                if (citaz.getPage() != null) t += citaz.getPage() + "\n";
-                if (citaz.getDate() != null) t += citaz.getDate() + "\n";
-                // Vale sia per sourceNote che per sourceCitation
-                if (citaz.getText() != null) t += citaz.getText() + "\n";
-                TextView vistaTesto = vistaCita.findViewById(R.id.citazione_testo);
-                if (t.isEmpty()) vistaTesto.setVisibility(View.GONE);
-                else vistaTesto.setText(t.substring(0, t.length() - 1));
-                // Tutto il resto
-                LinearLayout scatolaAltro = vistaCita.findViewById(R.id.citazione_note);
-                placeNotes(scatolaAltro, citaz, false);
-                placeMedia(scatolaAltro, citaz, false);
-                vistaCita.setTag(R.id.tag_object, citaz);
-                if (layout.getContext() instanceof ProfileActivity) { // ProfileFactsFragment
-                    ((AppCompatActivity)layout.getContext()).getSupportFragmentManager()
-                            .findFragmentByTag("android:switcher:" + R.id.profile_pager + ":1")
-                            .registerForContextMenu(vistaCita);
-                } else // AppCompatActivity
-                    ((AppCompatActivity)layout.getContext()).registerForContextMenu(vistaCita);
 
-            }
         }
     }
 
     // Inserisce nella scatola il richiamo ad una fonte, con dettagli o essenziale
-    public static void placeSource(final LinearLayout layout, final Source source, boolean detailed) {
-        View vistaFonte = LayoutInflater.from(layout.getContext()).inflate(R.layout.pezzo_fonte, layout, false);
-        layout.addView(vistaFonte);
-        TextView vistaTesto = vistaFonte.findViewById(R.id.fonte_testo);
-        String txt = "";
-        if (detailed) {
-            if (source.getTitle() != null)
-                txt = source.getTitle() + "\n";
-            else if (source.getAbbreviation() != null)
-                txt = source.getAbbreviation() + "\n";
-            if (source.getType() != null)
-                txt += source.getType().replaceAll("\n", " ") + "\n";
-            if (source.getPublicationFacts() != null)
-                txt += source.getPublicationFacts().replaceAll("\n", " ") + "\n";
-            if (source.getText() != null)
-                txt += source.getText().replaceAll("\n", " ");
-            if (txt.endsWith("\n"))
-                txt = txt.substring(0, txt.length() - 1);
-            LinearLayout scatolaAltro = vistaFonte.findViewById(R.id.fonte_scatola);
-            placeNotes(scatolaAltro, source, false);
-            placeMedia(scatolaAltro, source, false);
-            vistaFonte.setTag(R.id.tag_object, source);
-            ((AppCompatActivity)layout.getContext()).registerForContextMenu(vistaFonte);
-        }
 
-    }
 
     // La view ritornata è usata da Condivisione
     public static View linkaPersona(LinearLayout scatola, Person p, int scheda) {
-        View vistaPersona = LayoutInflater.from(scatola.getContext()).inflate(R.layout.pezzo_individuo_piccolo, scatola, false);
+        View vistaPersona = LayoutInflater.from(scatola.getContext()).inflate(R.layout.person_card_in_recycler, scatola, false);
         scatola.addView(vistaPersona);
         F.showMainImageForPerson(Global.gc, p, vistaPersona.findViewById(R.id.collega_foto));
         ((TextView)vistaPersona.findViewById(R.id.collega_nome)).setText(properName(p));
@@ -836,9 +785,9 @@ public class U {
         if (!isDead(p))
             vistaPersona.findViewById(R.id.collega_lutto).setVisibility(View.GONE);
         if (Gender.isMale(p))
-            vistaPersona.findViewById(R.id.collega_bordo).setBackgroundResource(R.drawable.casella_bordo_maschio);
+            vistaPersona.findViewById(R.id.collega_bordo).setBackgroundResource(R.drawable.border_male);
         else if (Gender.isFemale(p))
-            vistaPersona.findViewById(R.id.collega_bordo).setBackgroundResource(R.drawable.casella_bordo_femmina);
+            vistaPersona.findViewById(R.id.collega_bordo).setBackgroundResource(R.drawable.border_female);
         vistaPersona.setOnClickListener(v -> {
             Memory.setFirst(p);
             Intent intent = new Intent(scatola.getContext(), ProfileActivity.class);
@@ -879,7 +828,7 @@ public class U {
 
     // Usato da dispensa
     static void linkaMedia(LinearLayout scatola, Media media) {
-        View vistaMedia = LayoutInflater.from(scatola.getContext()).inflate(R.layout.pezzo_media, scatola, false);
+        View vistaMedia = LayoutInflater.from(scatola.getContext()).inflate(R.layout.media, scatola, false);
         scatola.addView(vistaMedia);
         MediaAdapter.arredaMedia(media, vistaMedia.findViewById(R.id.media_testo), vistaMedia.findViewById(R.id.media_num));
         LinearLayout.LayoutParams parami = (LinearLayout.LayoutParams)vistaMedia.getLayoutParams();
@@ -903,7 +852,7 @@ public class U {
         View cabinetView = LayoutInflater.from(layout.getContext()).inflate(R.layout.holder, layout, false);
         TextView vistaTit = cabinetView.findViewById(R.id.dispensa_titolo);
         vistaTit.setText(label);
-        vistaTit.setBackground(AppCompatResources.getDrawable(layout.getContext(), R.drawable.sghembo)); // For KitKat
+        vistaTit.setBackground(AppCompatResources.getDrawable(layout.getContext(), R.drawable.folder_reference_head)); // For KitKat
         layout.addView(cabinetView);
         LinearLayout cabinet = cabinetView.findViewById(R.id.dispensa_scatola);
         if (object instanceof Object[]) {
@@ -917,8 +866,6 @@ public class U {
     static void mettiQualsiasi(LinearLayout scatola, Object record) {
         if (record instanceof Person)
             linkaPersona(scatola, (Person)record, 1);
-        else if (record instanceof Source)
-            placeSource(scatola, (Source)record, false);
         else if (record instanceof Family)
             linkaFamiglia(scatola, (Family)record);
         else if (record instanceof Note)
@@ -931,7 +878,7 @@ public class U {
     public static void placeChangeDate(final LinearLayout layout, final Change change) {
         View changeView = null;
         if (change != null && Global.settings.expert) {
-            changeView = LayoutInflater.from(layout.getContext()).inflate(R.layout.pezzo_data_cambiamenti, layout, false);
+            changeView = LayoutInflater.from(layout.getContext()).inflate(R.layout.change_data_fragment, layout, false);
             layout.addView(changeView);
             TextView textView = changeView.findViewById(R.id.cambi_testo);
             if (change.getDateTime() != null) {
@@ -945,12 +892,7 @@ public class U {
             LinearLayout scatolaNote = changeView.findViewById(R.id.cambi_note);
             for (Extension altroTag : findExtensions(change))
                 place(scatolaNote, altroTag.name, altroTag.text);
-            // Grazie al mio contributo la data cambiamento può avere delle note
-            placeNotes(scatolaNote, change, false);
-            changeView.setOnClickListener(v -> {
-                Memory.add(change);
-                layout.getContext().startActivity(new Intent(layout.getContext(), ChangeActivity.class));
-            });
+
         }
     }
 
@@ -986,7 +928,7 @@ public class U {
             Global.shouldSave = true;
             if (Global.mainView != null) {
                 NavigationView menu = Global.mainView.findViewById(R.id.menu);
-                menu.getHeaderView(0).findViewById(R.id.menu_salva).setVisibility(View.VISIBLE);
+
             }
         }
     }
@@ -1380,14 +1322,7 @@ public class U {
                             note.setId(newId);
                             U.updateChangeDate(note);
                             U.save(true, noteContainers.containers.toArray());
-                        } else if (record instanceof Source) {
-                            ListOfSourceCitations citations = new ListOfSourceCitations(Global.gc, oldId);
-                            for (ListOfSourceCitations.Triplet triple : citations.list)
-                                triple.citation.setRef(newId);
-                            Source source = (Source)record;
-                            source.setId(newId);
-                            U.updateChangeDate(source);
-                            U.save(true, citations.getProgenitors());
+
                         } else if (record instanceof Repository) {
                             Set<Source> modified = new HashSet<>();
                             for (Source source : Global.gc.getSources()) {

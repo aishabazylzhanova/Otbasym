@@ -49,7 +49,7 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.gestoreVista
 
     @Override
     public gestoreVistaMedia onCreateViewHolder(ViewGroup parent, int type) {
-        View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.pezzo_media, parent, false);
+        View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.media, parent, false);
         return new gestoreVistaMedia(vista, dettagli);
     }
 

@@ -30,7 +30,7 @@ public class ProfileMediaFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View vistaMedia = inflater.inflate(R.layout.individuo_scheda, container, false);
+        View vistaMedia = inflater.inflate(R.layout.person_card, container, false);
         if (gc != null) {
             final LinearLayout scatola = vistaMedia.findViewById(R.id.contenuto_scheda);
             one = gc.getPerson(Global.indi);

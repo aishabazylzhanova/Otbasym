@@ -67,7 +67,6 @@ import java.util.Objects;
 
 import com.abazy.otbasym.constant.Choice;
 import com.abazy.otbasym.detail.EventActivity;
-import com.abazy.otbasym.detail.ExtensionActivity;
 import com.abazy.otbasym.detail.FamilyActivity;
 import com.abazy.otbasym.detail.MediaActivity;
 import com.abazy.otbasym.detail.NoteActivity;
@@ -146,7 +145,7 @@ public abstract class   DetailActivity extends AppCompatActivity {
                     View piece = placePiece(eggs.get(id).title, "", thing, eggs.get(id).multiLine);
                     if (thing instanceof String)
                         edit(piece);
-                    // TODO: open new Address for editing
+
                 } else if (id == 103) { // New note
                     Note note = new Note();
                     note.setValue("");
@@ -265,16 +264,10 @@ public abstract class   DetailActivity extends AppCompatActivity {
             // The other events that can be placed
 
         }
-        if (object instanceof Source && findViewById(R.id.citazione_fonte) == null) { // TODO: doubt: shouldn't it be citation_REPOSITORY?
-            SubMenu subRepository = menu.addSubMenu(0, 100, 0, R.string.repository);
-            subRepository.add(0, 101, 0, R.string.new_repository);
-            if (!gc.getRepositories().isEmpty())
-                subRepository.add(0, 102, 0, R.string.link_repository);
-        }
         if (object instanceof NoteContainer) {
             SubMenu subNote = menu.addSubMenu(0, 100, 0, R.string.note);
             subNote.add(0, 103, 0, R.string.new_note);
-            subNote.add(0, 104, 0, R.string.new_shared_note);
+
             if (!gc.getNotes().isEmpty())
                 subNote.add(0, 105, 0, R.string.link_shared_note);
         }
@@ -382,8 +375,8 @@ public abstract class   DetailActivity extends AppCompatActivity {
         if (Global.settings.expert) {
             slugLayout.removeAllViews();
             for (final Memory.Step step : Memory.getStepStack()) {
-                View stepView = LayoutInflater.from(this).inflate(R.layout.pezzo_bava, box, false);
-                TextView stepText = stepView.findViewById(R.id.bava_goccia);
+                View stepView = LayoutInflater.from(this).inflate(R.layout.slug, box, false);
+                TextView stepText = stepView.findViewById(R.id.slug);
                 if (Memory.getStepStack().indexOf(step) < Memory.getStepStack().size() - 1) {
                     if (step.object instanceof Visitable) // GedcomTag extensions are not Visitable and it is impossible to find the stack of them
                         stepView.setOnClickListener(v -> {
@@ -512,7 +505,7 @@ public abstract class   DetailActivity extends AppCompatActivity {
 
     public View placePiece(String title, String text, Object object, boolean multiLine) {
         if (text == null) return null;
-        View pieceView = LayoutInflater.from(box.getContext()).inflate(R.layout.pezzo_fatto, box, false);
+        View pieceView = LayoutInflater.from(box.getContext()).inflate(R.layout.done_fact_fragment, box, false);
         box.addView(pieceView);
         ((TextView)pieceView.findViewById(R.id.fatto_titolo)).setText(title);
         ((TextView)pieceView.findViewById(R.id.fatto_testo)).setText(text);
@@ -540,11 +533,11 @@ public abstract class   DetailActivity extends AppCompatActivity {
             LinearLayout noteLayout = pieceView.findViewById(R.id.fatto_note);
             U.placeNotes(noteLayout, object, false);
             U.placeMedia(noteLayout, object, false);
-        } else if (object instanceof GedcomTag) { // Extension
-            click = v -> {
-                Memory.add(object);
-                startActivity(new Intent(this, ExtensionActivity.class));
-            };
+//        } else if (object instanceof GedcomTag) { // Extension
+//            click = v -> {
+//                Memory.add(object);
+//                startActivity(new Intent(this, ExtensionActivity.class));
+//            };
         }
         pieceView.setOnClickListener(click);
         registerForContextMenu(pieceView);
@@ -990,11 +983,7 @@ public abstract class   DetailActivity extends AppCompatActivity {
                 Object[] leaders = U.deleteNote((Note)pieceObject, pieceView);
                 U.save(true, leaders);
                 return true;
-            case 30: // Copy source citation
-                U.copyToClipboard(getText(R.string.source_citation),
-                        ((TextView)pieceView.findViewById(R.id.fonte_testo)).getText() + "\n"
-                                + ((TextView)pieceView.findViewById(R.id.citazione_testo)).getText());
-                return true;
+
             case 31: // Delete source citation
                 if (object instanceof Note) // Note does not extend SourceCitationContainer
                     ((Note)object).getSourceCitations().remove(pieceObject);
@@ -1028,21 +1017,13 @@ public abstract class   DetailActivity extends AppCompatActivity {
             case 61: // Delete extension
                 U.deleteExtension((GedcomTag)pieceObject, object, null);
                 break;
-            case 70: // Copy source text
-                U.copyToClipboard(getText(R.string.source), ((TextView)pieceView.findViewById(R.id.fonte_testo)).getText());
-                return true;
-            case 80: // Copy repository citation text
-                U.copyToClipboard(getText(R.string.repository_citation),
-                        ((TextView)pieceView.findViewById(R.id.fonte_testo)).getText() + "\n"
-                                + ((TextView)pieceView.findViewById(R.id.citazione_testo)).getText());
-                return true;
+
+
             case 81: // Delete repository citation
                 ((Source)object).setRepositoryRef(null);
                 Memory.setInstanceAndAllSubsequentToNull(pieceObject);
                 break;
-            case 90: // Copy repository text
-                U.copyToClipboard(getText(R.string.repository), ((TextView)pieceView.findViewById(R.id.fonte_testo)).getText());
-                return true;
+
             case 100: // Crop image
                 cropImage(pieceView);
                 return true;

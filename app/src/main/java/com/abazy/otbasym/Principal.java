@@ -8,15 +8,12 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -26,11 +23,8 @@ import androidx.fragment.app.FragmentManager;
 import com.abazy.otbasym.list.BaurFragment;
 import com.google.android.material.navigation.NavigationView;
 
-import org.folg.gedcom.model.Media;
-
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 import com.abazy.otbasym.constant.Choice;
 import com.abazy.otbasym.list.FamiliesFragment;
@@ -53,7 +47,7 @@ public class Principal /*TODO Main?*/ extends AppCompatActivity implements Navig
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.principe);
+        setContentView(R.layout.menu_navigation);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -182,33 +176,9 @@ public class Principal /*TODO Main?*/ extends AppCompatActivity implements Navig
             }
         }
         // Save button
-        Button saveButton = menuHeader.findViewById(R.id.menu_salva);
-        saveButton.setOnClickListener(view -> {
-            view.setVisibility(View.GONE);
-            U.saveJson(Global.gc, Global.settings.openTree);
-            scatolissima.closeDrawer(GravityCompat.START);
-            Global.shouldSave = false;
-            Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
-        });
-        saveButton.setOnLongClickListener(view -> {
-            PopupMenu popup = new PopupMenu(this, view);
-            popup.getMenu().add(0, 0, 0, R.string.revert);
-            popup.show();
-            popup.setOnMenuItemClickListener(item -> {
-                if (item.getItemId() == 0) {
-                    TreesActivity.openGedcom(Global.settings.openTree, false);
-                    U.askWhichParentsToShow(this, null, 0); // Semplicemente ricarica il diagramma
-                    scatolissima.closeDrawer(GravityCompat.START);
-                    //saveButton.setVisibility(View.GONE);
-                    Global.edited = false;
-                    Global.shouldSave = false;
-                    furnishMenu();
-                }
-                return true;
-            });
-            return true;
-        });
-        saveButton.setVisibility(Global.shouldSave ? View.VISIBLE : View.GONE);
+
+
+
     }
 
     // Evidenzia voce del menu e mostra/nasconde toolbar

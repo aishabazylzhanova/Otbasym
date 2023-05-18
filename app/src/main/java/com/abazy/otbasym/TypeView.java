@@ -44,25 +44,9 @@ public class TypeView extends AppCompatAutoCompleteTextView {
 	static Map<String, Integer> getTypes(Combo combo) {
 		switch( combo ) {
 			case NAME:
-				return ImmutableMap(
-						"aka", R.string.aka,
-						"birth", R.string.birth,
-						"immigrant", R.string.immigrant,
-						"maiden", R.string.maiden,
-						"married", R.string.married
-				);
 			case RELATIONSHIP:
 				return ImmutableMap(
-						"unknown", R.string.unknown_relationship,
-						"marriage", R.string.marriage,
-						"not married", R.string.not_married,
-						"civil", R.string.civil_marriage,
-						"religious", R.string.religious_marriage,
-						"common law", R.string.common_law_marriage,
-						"partnership", R.string.partnership,
-						"registered partnership", R.string.registered_partnership,
-						"living together", R.string.living_together,
-						"living apart together", R.string.living_apart_together
+
 				);
 			default:
 				return null;

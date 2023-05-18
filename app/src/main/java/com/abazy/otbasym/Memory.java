@@ -1,10 +1,7 @@
 package com.abazy.otbasym;
 
-import org.folg.gedcom.model.Address;
-import org.folg.gedcom.model.Change;
 import org.folg.gedcom.model.EventFact;
 import org.folg.gedcom.model.Family;
-import org.folg.gedcom.model.GedcomTag;
 import org.folg.gedcom.model.Media;
 import org.folg.gedcom.model.Name;
 import org.folg.gedcom.model.Note;
@@ -16,9 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
-import com.abazy.otbasym.detail.ChangeActivity;
 import com.abazy.otbasym.detail.EventActivity;
-import com.abazy.otbasym.detail.ExtensionActivity;
 import com.abazy.otbasym.detail.FamilyActivity;
 import com.abazy.otbasym.detail.MediaActivity;
 import com.abazy.otbasym.detail.NameActivity;
@@ -36,8 +31,8 @@ public class Memory {
 
     Memory() {
         classes.put(Person.class, ProfileActivity.class);
-        classes.put(Change.class, ChangeActivity.class);
-        classes.put(GedcomTag.class, ExtensionActivity.class);
+//        classes.put(Change.class, ChangeActivity.class);
+//        classes.put(GedcomTag.class, ExtensionActivity.class);
         classes.put(EventFact.class, EventActivity.class);
         classes.put(Family.class, FamilyActivity.class);
         classes.put(Media.class, MediaActivity.class);
@@ -166,25 +161,6 @@ public class Memory {
                 }
             }
         }
-    }
-
-    // TODO: replace with Log
-    public static void print(String intro) {
-        if (intro != null)
-            s.l(intro);
-        for (StepStack stepStack : memory.list) {
-            for (Step step : stepStack) {
-                String stack = step.clearStackOnBackPressed ? "< " : "";
-                if (step.tag != null)
-                    s.p(stack + step.tag + " ");
-                else if (step.object != null)
-                    s.p(stack + step.object.getClass().getSimpleName() + " ");
-                else
-                    s.p(stack + "Null"); // capita in rarissimi casi
-            }
-            s.l("");
-        }
-        s.l("- - - -");
     }
 
     static class StepStack extends Stack<Step> {

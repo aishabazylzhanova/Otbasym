@@ -14,6 +14,17 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
+    <queries>
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.GET_CONTENT" />
+
+            <data android:mimeType="*/*" />
+        </intent>
+    </queries>
+
     <application
         android:name=".Global"
         android:allowBackup="true"
@@ -23,6 +34,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".WelcomeActivity"
+            android:exported="false" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -39,26 +60,11 @@
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data
-                    android:host="www.familygem.app"
-                    android:path="/share.php"
-                    android:scheme="https" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data
-                    android:host="www.familygem.app"
-                    android:pathPattern="/condivisi/.*.zip"
-                    android:scheme="https" />
-            </intent-filter>
+
+
         </activity>
         <activity
             android:name=".TreesActivity"
@@ -85,8 +91,6 @@
         <activity
             android:name=".MediaFoldersActivity"
             android:label="@string/media_folders" />
-
-
         <activity
             android:name=".DiagramSettingsActivity"
             android:label="@string/diagram_settings"
@@ -94,15 +98,13 @@
         <activity
             android:name=".ProfileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".detail.FamilyActivity"/>
+        <activity android:name=".detail.FamilyActivity" />
         <activity android:name=".detail.NameActivity" />
-
         <activity android:name=".detail.NoteActivity" />
-
         <activity android:name=".detail.MediaActivity" />
         <activity android:name=".detail.EventActivity" />
-        <activity android:name=".detail.ExtensionActivity" />
-        <activity android:name=".detail.ChangeActivity" />
+
+
         <activity
             android:name=".ImageActivity"
             android:parentActivityName=".detail.MediaActivity"
@@ -118,6 +120,7 @@
                 android:name="autoStoreLocales"
                 android:value="true" />
         </service>
+
         <receiver
             android:name=".NotifyReceiver"
             android:enabled="true"
@@ -127,14 +130,5 @@
             </intent-filter>
         </receiver>
     </application>
-    <queries>
-        <intent>
-            <action android:name="android.media.action.IMAGE_CAPTURE" />
-        </intent>
-        <intent>
-            <action android:name="android.intent.action.GET_CONTENT" />
-            <data android:mimeType="*/*" />
-        </intent>
-    </queries>
 
 </manifest>

@@ -101,7 +101,7 @@
 			<ImageView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				app:srcCompat="@drawable/segnalino" />
+				app:srcCompat="@drawable/pointer_settings_diagram" />
 		</LinearLayout>
 	</LinearLayout>
 </ScrollView>

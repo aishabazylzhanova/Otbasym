@@ -32,7 +32,7 @@ public class InfoActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        setContentView(R.layout.info_albero);
+        setContentView(R.layout.info_tree);
         LinearLayout scatola = findViewById(R.id.info_scatola);
 
         final int treeId = getIntent().getIntExtra("idAlbero", 1);

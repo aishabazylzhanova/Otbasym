@@ -204,13 +204,13 @@ public class PersonsFragment extends Fragment {
             int border;
             switch (Gender.getGender(person)) {
                 case MALE:
-                    border = R.drawable.casella_bordo_maschio;
+                    border = R.drawable.border_male;
                     break;
                 case FEMALE:
-                    border = R.drawable.casella_bordo_femmina;
+                    border = R.drawable.border_female;
                     break;
                 default:
-                    border = R.drawable.casella_bordo_neutro;
+                    border = R.drawable.border_neutral;
             }
             indiView.findViewById(R.id.person_border).setBackgroundResource(border);
 

@@ -197,11 +197,6 @@ public class Settings {
             birthdays = new HashSet<>();
         }
 
-        public void aggiungiCondivisione(Share share) {
-            if (shares == null)
-                shares = new ArrayList<>();
-            shares.add(share);
-        }
     }
 
     // The essential data of a share

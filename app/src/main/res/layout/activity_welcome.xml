@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context=".WelcomeActivity">
+
+    <ImageView
+        android:id="@+id/logo_with_text"
+        android:layout_width="match_parent"
+        android:layout_height="408dp"
+        android:layout_weight="1"
+        android:contentDescription="@string/app_name"
+        app:srcCompat="@drawable/logo_with_text" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/primary">
+
+        <LinearLayout
+            android:layout_width="409dp"
+            android:layout_height="519dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:gravity="center">
+
+
+            <TextView
+                android:id="@+id/welcome_message"
+                android:layout_width="355dp"
+                android:layout_height="189dp"
+                android:text="@string/welcome_message"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="40sp" />
+
+            <Button
+                android:id="@+id/sign_in"
+                android:layout_width="285sp"
+                android:layout_height="75sp"
+                android:backgroundTint="@color/accent"
+
+                android:text="@string/sign_in"
+                android:textColor="@color/black"
+                android:textSize="25sp" />
+
+            <Button
+                android:id="@+id/register"
+                android:layout_width="285sp"
+                android:layout_height="75sp"
+                android:backgroundTint="@color/white"
+
+                android:text="@string/register"
+                android:textColor="@color/black"
+                android:textSize="25sp" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

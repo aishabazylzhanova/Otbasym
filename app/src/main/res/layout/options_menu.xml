@@ -34,5 +34,11 @@
 		android:layout_height="wrap_content"
 		android:text="@string/about"
 		android:layout_marginTop="30dp"/>
+	<TextView
+		android:id="@+id/log_out"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/logout"
+		android:layout_marginTop="30dp"/>
 
 </LinearLayout>

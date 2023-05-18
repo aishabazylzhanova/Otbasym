@@ -34,6 +34,6 @@
 		android:layout_alignParentEnd="true"
 		android:layout_marginTop="20dp"
 		android:background="#0FFF"
-		app:srcCompat="@drawable/elimina" />
+		app:srcCompat="@drawable/delete" />
 
 </RelativeLayout>

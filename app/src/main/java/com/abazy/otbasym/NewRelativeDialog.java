@@ -61,7 +61,7 @@ public class NewRelativeDialog extends DialogFragment {
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         //builder.setTitle( nuovo ? R.string.new_relative : R.string.link_person );
-        View vista = requireActivity().getLayoutInflater().inflate(R.layout.nuovo_parente, null);
+        View vista = requireActivity().getLayoutInflater().inflate(R.layout.new_person, null);
         // Spinner per scegliere la famiglia
         spinner = vista.findViewById(R.id.nuovoparente_famiglie);
         ArrayAdapter<VoceFamiglia> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item);
