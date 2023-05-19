@@ -35,8 +35,7 @@ public class Global extends MultiDexApplication {
      */
     public static String pathOfCameraDestination;
     public static Media croppedMedia; // Temporary parking of the Media in the cropping process
-    public static Gedcom gc2; // A shared tree, for comparison of updates
-    public static int treeId2; // ID of the shared tree
+
 
     /**
      * This is called when the application starts, and also when it is restarted.
@@ -50,17 +49,9 @@ public class Global extends MultiDexApplication {
 
     public static void start(Context context) {
         File settingsFile = new File(context.getFilesDir(), "settings.json");
-        // Renames "preferenze.json" to "settings.json" (introduced in version 0.8)
-        File preferencesFile = new File(context.getFilesDir(), "preferenze.json");
-        if (preferencesFile.exists() && !settingsFile.exists()) {
-            if (!preferencesFile.renameTo(settingsFile)) {
-                Toast.makeText(context, R.string.something_wrong, Toast.LENGTH_LONG).show();
-                settingsFile = preferencesFile;
-            }
-        }
         try {
             String jsonString = FileUtils.readFileToString(settingsFile, "UTF-8");
-            jsonString = updateSettings(jsonString);
+//            jsonString = updateSettings(jsonString);
             Gson gson = new Gson();
             settings = gson.fromJson(jsonString, Settings.class);
         } catch (Exception e) {
@@ -81,7 +72,7 @@ public class Global extends MultiDexApplication {
                         File mediaDir = new File(context.getExternalFilesDir(null), String.valueOf(treeId));
                         settings.trees.add(new Settings.Tree(treeId, String.valueOf(treeId),
                                 mediaDir.exists() ? mediaDir.getPath() : null,
-                                0, 0, null, null, 0));
+                                0, 0, null, 0));
                     } catch (Exception e) {
                     }
                 }
@@ -101,29 +92,7 @@ public class Global extends MultiDexApplication {
     /**
      * Modifications to the text coming from files/settings.json
      */
-    private static String updateSettings(String json) {
-        // Version 0.8 added new settings for the diagram
-        return json
-                .replace("\"siblings\":true", "siblings:2,cousins:2,spouses:true")
-                .replace("\"siblings\":false", "siblings:0,cousins:0,spouses:true")
 
-                // Italian translated to English (version 0.8)
-                .replace("\"alberi\":", "\"trees\":")
-                .replace("\"alberi\":", "\"trees\":")
-                .replace("\"idAprendo\":", "\"openTree\":")
-                .replace("\"autoSalva\":", "\"autoSave\":")
-                .replace("\"caricaAlbero\":", "\"loadTree\":")
-                .replace("\"esperto\":", "\"expert\":")
-                .replace("\"nome\":", "\"title\":")
-                .replace("\"cartelle\":", "\"dirs\":")
-                .replace("\"individui\":", "\"persons\":")
-                .replace("\"generazioni\":", "\"generations\":")
-                .replace("\"radice\":", "\"root\":")
-                .replace("\"condivisioni\":", "\"shares\":")
-                .replace("\"radiceCondivisione\":", "\"shareRoot\":")
-                .replace("\"grado\":", "\"grade\":")
-                .replace("\"data\":", "\"dateId\":");
-    }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {

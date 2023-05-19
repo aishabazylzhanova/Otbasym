@@ -29,7 +29,6 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Barra personalizzata
         ActionBar bar = getSupportActionBar();
         View treesBar = getLayoutInflater().inflate(R.layout.trees_bar_for_home, null);
         treesBar.findViewById(R.id.trees_settings).setOnClickListener(v ->{

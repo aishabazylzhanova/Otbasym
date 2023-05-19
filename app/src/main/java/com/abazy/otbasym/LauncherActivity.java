@@ -2,7 +2,6 @@ package com.abazy.otbasym;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,18 +28,13 @@ public class LauncherActivity extends AppCompatActivity {
         }
         else{
 
-
-
-        // Set app locale for application context and resources (localized gedcom.jar library)
-        Locale locale = AppCompatDelegate.getApplicationLocales().get(0); // Find app locale, or null if not existing
+        Locale locale = AppCompatDelegate.getApplicationLocales().get(0);
         if (locale != null) {
             Configuration config = getResources().getConfiguration();
             config.setLocale(locale);
-            getApplicationContext().getResources().updateConfiguration(config, null); // Change locale both for static methods and jar library
+            getApplicationContext().getResources().updateConfiguration(config, null);
         }
-
             Intent treesIntent = new Intent(this, TreesActivity.class);
-            // Open last tree at startup
             if (Global.settings.loadTree) {
                 treesIntent.putExtra("openTreeAutomatically", true);
                 treesIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -48,7 +42,6 @@ public class LauncherActivity extends AppCompatActivity {
             startActivity(treesIntent);
         }
     }
-
 
 }
 

@@ -67,14 +67,7 @@ public class InfoActivity extends BaseActivity {
                 if (tree.root != null) {
                     i += "\n" + getText(R.string.root) + ": " + U.properName(gc.getPerson(tree.root));
                 }
-                if (tree.shares != null && !tree.shares.isEmpty()) {
-                    i += "\n\n" + getText(R.string.shares) + ":";
-                    for (Settings.Share share : tree.shares) {
-                        i += "\n" + dataIdVersoData(share.dateId);
-                        if (gc.getSubmitter(share.submitter) != null)
-                            i += " - " + submitterName(gc.getSubmitter(share.submitter));
-                    }
-                }
+
             }
         }
         ((TextView)findViewById(R.id.info_statistiche)).setText(i);

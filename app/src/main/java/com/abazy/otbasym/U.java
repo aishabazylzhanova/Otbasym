@@ -979,18 +979,7 @@ public class U {
         } catch (IOException e) {
             Toast.makeText(Global.context, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
         }
-        new Notifier(Global.context, gedcom, treeId, Notifier.What.DEFAULT);
-    }
 
-    public static int castJsonInt(Object unknown) {
-        if (unknown instanceof Integer) return (int)unknown;
-        else return ((JsonPrimitive)unknown).getAsInt();
-    }
-
-    public static String castJsonString(Object unknown) {
-        if (unknown == null) return null;
-        else if (unknown instanceof String) return (String)unknown;
-        else return ((JsonPrimitive)unknown).getAsString();
     }
 
     static float pxToDp(float pixels) {
@@ -1027,16 +1016,6 @@ public class U {
                     }).setNegativeButton(R.string.no, null).show();
         }
     }
-
-    // Restituisce il primo autore non passato
-    public static Submitter autoreFresco(Gedcom gc) {
-        for (Submitter autore : gc.getSubmitters()) {
-            if (autore.getExtension("passed") == null)
-                return autore;
-        }
-        return null;
-    }
-
 
 
     // Elenco di stringhe dei membri rappresentativi delle famiglie
@@ -1336,17 +1315,7 @@ public class U {
                             repo.setId(newId);
                             U.updateChangeDate(repo);
                             U.save(true, modified.toArray());
-                        } else if (record instanceof Submitter) {
-                            for (Settings.Share share : Global.settings.getCurrentTree().shares)
-                                if (oldId.equals(share.submitter))
-                                    share.submitter = newId;
-                            Global.settings.save();
-                            Header header = Global.gc.getHeader();
-                            if (oldId.equals(header.getSubmitterRef()))
-                                header.setSubmitterRef(newId);
-                            Submitter submitter = (Submitter)record;
-                            submitter.setId(newId);
-                            U.save(true, submitter);
+
                         }
                         Global.gc.createIndexes();
                         refresh.run();

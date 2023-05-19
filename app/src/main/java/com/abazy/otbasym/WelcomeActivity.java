@@ -1,7 +1,5 @@
 package com.abazy.otbasym;
 
-import static java.lang.System.exit;
-
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -41,9 +39,6 @@ public class WelcomeActivity extends AppCompatActivity {
             Intent intent = new Intent(WelcomeActivity.this, RegisterActivity.class);
             startActivity(intent);
         });
-
-
     }
-
 
 }

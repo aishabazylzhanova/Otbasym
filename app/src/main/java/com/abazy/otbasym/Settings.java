@@ -46,7 +46,6 @@ public class Settings {
      * Used to display or hide all advanced tools.
      */
     public boolean expert;
-    public boolean shareAgreement;
     Diagram diagram;
 
     /**
@@ -69,11 +68,11 @@ public class Settings {
         return num;
     }
 
-    void aggiungi(Tree tree) {
+    void add(Tree tree) {
         trees.add(tree);
     }
 
-    void rinomina(int id, String nuovoNome) {
+    void rename(int id, String nuovoNome) {
         for (Tree tree : trees) {
             if (tree.id == id) {
                 tree.title = nuovoNome;
@@ -116,11 +115,7 @@ public class Settings {
     }
 
     public Tree getTree(int treeId) {
-        /* Da quando ho installato Android Studio 4.0, quando compilo con minifyEnabled true
-           misteriosamente 'alberi' qui è null.
-           Però non è null se DOPO c'è 'trees = Global.settings.trees'
-           Davvero incomprensibile!
-        */
+
         if (trees == null) {
             trees = Global.settings.trees;
         }
@@ -164,25 +159,11 @@ public class Settings {
         int generations;
         int media;
         public String root;
-        public List<Share> shares; // Dati identificativi delle condivisioni attraverso il tempo e lo spazio
-        public String shareRoot; // Id della Person radice dell'albero in Condivisione
-        /**
-         * Sharing grade:
-         * <ol>
-         *     <li value="0">Albero creato da zero in Italia.
-         *     Rimane 0 anche aggiungendo il submitter principale, condividendolo e ricevendo novità.
-         *     <li value="9">Albero spedito per la condivisione in attesa di marchiare con 'passato' tutti i submitter.
-         *     <li value="10">Albero ricevuto tramite condivisione in Australia. Non potrà mai più ritornare 0.
-         *     <li value="20">Albero ritornato in Italia dimostratosi un derivato da uno zero (o da un 10).
-         *     Solo se è 10 può diventare 20. Se per caso perde lo status di derivato ritorna 10 (mai 0).
-         *     <li value="30">Albero derivato da cui sono state estratte tutte le novità OPPURE privo di novità già all'arrivo (grigio).
-         *     Può essere eliminato.
-         * </ol>
-         */
-        public int grade;
-        Set<Birthday> birthdays;
 
-        Tree(int id, String title, String dir, int persons, int generations, String root, List<Share> shares, int grade) {
+        public int grade;
+
+
+        Tree(int id, String title, String dir, int persons, int generations, String root, int grade) {
             this.id = id;
             this.title = title;
             dirs = new LinkedHashSet<>();
@@ -192,80 +173,14 @@ public class Settings {
             this.persons = persons;
             this.generations = generations;
             this.root = root;
-            this.shares = shares;
             this.grade = grade;
-            birthdays = new HashSet<>();
+
         }
 
     }
 
-    // The essential data of a share
-    public static class Share {
-        String dateId; // on compressed date and time format: YYYYMMDDhhmmss
-        public String submitter; // Submitter id
 
-        public Share(String dateId, String submitter) {
-            this.dateId = dateId;
-            this.submitter = submitter;
-        }
-    }
 
-    // Birthday of one person
-    static class Birthday {
-        String id; // E.g. 'I123'
-        String given; // 'John'
-        String name; // 'John Doe III'
-        long date; // Date of next birthday in Unix time
-        int age; // Turned years
 
-        public Birthday(String id, String given, String name, long date, int age) {
-            this.id = id;
-            this.given = given;
-            this.name = name;
-            this.date = date;
-            this.age = age;
-        }
 
-        @Override
-        public String toString() {
-            DateFormat sdf = new SimpleDateFormat("d MMM y", Locale.US);
-            return "[" + name + ": " + age + " (" + sdf.format(date) + ")]";
-        }
-    }
-
-    /**
-     * Model of the file 'settings.json' inside a backup, shared or example ZIP file.
-     * It contains basic info of the zipped tree.
-     */
-    static class ZippedTree {
-        String title;
-        int persons;
-        int generations;
-        String root;
-        List<Share> shares;
-        /**
-         * Coming from {@link Tree#grade}.
-         */
-        int grade;
-
-        ZippedTree(String title, int persons, int generations, String root, List<Share> shares, int grade) {
-            this.title = title;
-            this.persons = persons;
-            this.generations = generations;
-            this.root = root;
-            this.shares = shares;
-            this.grade = grade;
-        }
-
-        File save() {
-            File settingsFile = new File(Global.context.getCacheDir(), "settings.json");
-            Gson gson = new Gson();
-            String json = gson.toJson(this);
-            try {
-                FileUtils.writeStringToFile(settingsFile, json, "UTF-8");
-            } catch (Exception e) {
-            }
-            return settingsFile;
-        }
-    }
 }

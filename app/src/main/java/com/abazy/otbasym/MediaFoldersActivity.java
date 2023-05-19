@@ -87,7 +87,7 @@ public class MediaFoldersActivity extends BaseActivity {
                 urlView.setSingleLine(false);
             View deleteButton = folderView.findViewById(R.id.cartella_elimina);
             // La cartella '/storage/.../Android/data/com.abazy.otbasym/files/X' va preservata inquanto è quella di default dei media copiati
-            // Oltretutto in Android 11 non è più raggiungibile dall'utente con SAF
+            // Oltretutto in Android 11 non è più raddbile dall'utente con SAF
             if (dir.equals(getExternalFilesDir(null) + "/" + treeId)) {
                 nameView.setText(R.string.app_storage);
                 deleteButton.setVisibility(View.GONE);

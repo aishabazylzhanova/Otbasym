@@ -2,9 +2,7 @@ package com.abazy.otbasym;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,16 +20,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 
-import org.folg.gedcom.model.ChildRef;
-import org.folg.gedcom.model.Family;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import org.folg.gedcom.model.Gedcom;
-import org.folg.gedcom.model.Media;
-import org.folg.gedcom.model.MediaRef;
-import org.folg.gedcom.model.Name;
-import org.folg.gedcom.model.ParentFamilyRef;
-import org.folg.gedcom.model.Person;
-import org.folg.gedcom.model.SpouseFamilyRef;
-import org.folg.gedcom.model.SpouseRef;
 import org.folg.gedcom.parser.JsonParser;
 
 import java.io.BufferedReader;
@@ -41,20 +33,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.abazy.otbasym.visitor.MediaList;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 public class TreesActivity extends AppCompatActivity {
 
     List<Map<String, String>> treeList;
     SimpleAdapter adapter;
     View progress;
 
-    Exporter exporter;
+
     private boolean autoOpenedTree; // To open automatically the tree at startup only once
     // The birthday notification IDs are stored to display the corresponding person only once
-    private ArrayList<Integer> consumedNotifications = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedState) {
@@ -63,7 +51,7 @@ public class TreesActivity extends AppCompatActivity {
         ListView listView = findViewById(R.id.trees_list);
         progress = findViewById(R.id.trees_progress);
 
-        exporter = new Exporter(this);
+
         FirebaseAuth mAuth;
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -76,8 +64,7 @@ public class TreesActivity extends AppCompatActivity {
 
             if (savedState != null) {
                 autoOpenedTree = savedState.getBoolean("autoOpenedTree");
-                consumedNotifications = savedState.getIntegerArrayList("consumedNotifications");
-            }
+                }
 
             if (Global.settings.trees != null) {
 
@@ -103,7 +90,7 @@ public class TreesActivity extends AppCompatActivity {
                             treeView.setOnClickListener(v -> {
                                 tree.grade = 10; // viene retrocesso
                                 Global.settings.save();
-                                aggiornaLista();
+                                updateList();
                                 Toast.makeText(TreesActivity.this, R.string.something_wrong, Toast.LENGTH_LONG).show();
 
                             });
@@ -114,7 +101,7 @@ public class TreesActivity extends AppCompatActivity {
 
                                 tree.grade = 10; // viene retrocesso
                                 Global.settings.save();
-                                aggiornaLista();
+                                updateList();
                                 Toast.makeText(TreesActivity.this, R.string.something_wrong, Toast.LENGTH_LONG).show();
 
                             });
@@ -145,13 +132,6 @@ public class TreesActivity extends AppCompatActivity {
                                 menu.add(0, 2, 0, R.string.rename);
                             if (esiste && (!derivato || Global.settings.expert) && !esaurito)
                                 menu.add(0, 3, 0, R.string.media_folders);
-                            if (esiste && !derivato && !esaurito && Global.settings.expert && Global.settings.trees.size() > 1
-                                    && tree.shares != null && tree.grade != 0) // cioè dev'essere 9 o 10
-                                menu.add(0, 6, 0, R.string.compare);
-                            if (esiste && Global.settings.expert && !esaurito)
-                                menu.add(0, 7, 0, R.string.export_gedcom);
-                            if (esiste && Global.settings.expert)
-                                menu.add(0, 8, 0, R.string.make_backup);
                             menu.add(0, 9, 0, R.string.delete);
                             popup.show();
                             popup.setOnMenuItemClickListener(item -> {
@@ -173,8 +153,8 @@ public class TreesActivity extends AppCompatActivity {
                                     EditText editaNome = vistaMessaggio.findViewById(R.id.nuovo_nome_albero);
                                     editaNome.setText(treeList.get(position).get("titolo"));
                                     AlertDialog dialogo = builder.setPositiveButton(R.string.rename, (dialog, i1) -> {
-                                        Global.settings.rinomina(treeId, editaNome.getText().toString());
-                                        aggiornaLista();
+                                        Global.settings.rename(treeId, editaNome.getText().toString());
+                                        updateList();
                                     }).setNeutralButton(R.string.cancel, null).create();
                                     editaNome.setOnEditorActionListener((view, action, event) -> {
                                         if (action == EditorInfo.IME_ACTION_DONE)
@@ -192,29 +172,11 @@ public class TreesActivity extends AppCompatActivity {
                                     startActivity(new Intent(TreesActivity.this, MediaFoldersActivity.class)
                                             .putExtra("idAlbero", treeId)
                                     );
-                                } else if (id == 4) { // Correggi errori
-                                    findErrors(treeId, false);
-
-                                } else if (id == 7) { // Esporta Gedcom
-                                    if (exporter.openTree(treeId)) {
-                                        String mime = "application/octet-stream";
-                                        String ext = "ged";
-                                        int code = 636;
-                                        if (exporter.numMediaFilesToAttach() > 0) {
-                                            mime = "application/zip";
-                                            ext = "zip";
-                                            code = 6219;
-                                        }
-                                        F.saveDocument(TreesActivity.this, null, treeId, mime, ext, code);
-                                    }
-                                } else if (id == 8) { // Fai backup
-                                    if (exporter.openTree(treeId))
-                                        F.saveDocument(TreesActivity.this, null, treeId, "application/zip", "zip", 327);
                                 } else if (id == 9) {    // Elimina albero
                                     new AlertDialog.Builder(TreesActivity.this).setMessage(R.string.really_delete_tree)
                                             .setPositiveButton(R.string.delete, (dialog, id1) -> {
                                                 deleteTree(TreesActivity.this, treeId);
-                                                aggiornaLista();
+                                                updateList();
                                             }).setNeutralButton(R.string.cancel, null).show();
                                 } else {
                                     return false;
@@ -226,7 +188,7 @@ public class TreesActivity extends AppCompatActivity {
                     }
                 };
                 listView.setAdapter(adapter);
-                aggiornaLista();
+                updateList();
             }
 
             // Barra personalizzata
@@ -247,17 +209,6 @@ public class TreesActivity extends AppCompatActivity {
                 startActivity(new Intent(this, NewTreeActivity.class));
             });
 
-            // Automatic load of last opened tree of previous session
-            if (!birthdayNotifyTapped(getIntent()) && !autoOpenedTree
-                    && getIntent().getBooleanExtra("openTreeAutomatically", false) && Global.settings.openTree > 0) {
-                listView.post(() -> {
-                    if (openGedcom(Global.settings.openTree, false)) {
-                        progress.setVisibility(View.VISIBLE);
-                        autoOpenedTree = true;
-                        startActivity(new Intent(this, Principal.class));
-                    }
-                });
-            }
         }
 
 
@@ -277,43 +228,22 @@ public class TreesActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        aggiornaLista();
+        updateList();
     }
 
     // New intent coming from a tapped notification
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        birthdayNotifyTapped(intent);
-    }
+
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putBoolean("autoOpenedTree", autoOpenedTree);
-        outState.putIntegerArrayList("consumedNotifications", consumedNotifications);
         super.onSaveInstanceState(outState);
     }
 
     // If a birthday notification was tapped loads the relative tree and returns true
-    private boolean birthdayNotifyTapped(Intent intent) {
-        int treeId = intent.getIntExtra(Notifier.TREE_ID_KEY, 0);
-        int notifyId = intent.getIntExtra(Notifier.NOTIFY_ID_KEY, 0);
-        if (treeId > 0 && !consumedNotifications.contains(notifyId)) {
-            new Handler().post(() -> {
-                if (openGedcom(treeId, true)) {
-                    progress.setVisibility(View.VISIBLE);
-                    Global.indi = intent.getStringExtra(Notifier.INDI_ID_KEY);
-                    consumedNotifications.add(notifyId);
-                    startActivity(new Intent(this, Principal.class));
-                    new Notifier(this, Global.gc, treeId, Notifier.What.DEFAULT); // Actually delete present notification
-                }
-            });
-            return true;
-        }
-        return false;
-    }
 
-    void aggiornaLista() {
+
+    void updateList() {
         treeList.clear();
         for (Settings.Tree alb : Global.settings.trees) {
             Map<String, String> dato = new HashMap<>(3);
@@ -354,7 +284,7 @@ public class TreesActivity extends AppCompatActivity {
         return gc;
     }
 
-    // Apertura del Gedcom per editare tutto in Family Gem
+
     static boolean openGedcom(int treeId, boolean savePreferences) {
         Global.gc = readJson(treeId);
         if (Global.gc == null)
@@ -364,8 +294,8 @@ public class TreesActivity extends AppCompatActivity {
             Global.settings.save();
         }
         Global.indi = Global.settings.getCurrentTree().root;
-        Global.familyNum = 0; // eventualmente lo resetta se era > 0
-        Global.shouldSave = false; // eventualmente lo resetta se era true
+        Global.familyNum = 0;
+        Global.shouldSave = false;
         return true;
     }
 
@@ -394,11 +324,7 @@ public class TreesActivity extends AppCompatActivity {
             Toast.makeText(Global.context, R.string.no_useful_data, Toast.LENGTH_LONG).show();
             return null;
         }
-        // This Notifier was introduced in version 0.9.1
-        // Todo: Can be removed from here in the future because tree.birthdays will never more be null
-        if (Global.settings.getTree(treeId).birthdays == null) {
-            new Notifier(Global.context, gedcom, treeId, Notifier.What.CREATE);
-        }
+
         return gedcom;
     }
 
@@ -419,7 +345,7 @@ public class TreesActivity extends AppCompatActivity {
         if (Global.settings.openTree == treeId) {
             Global.gc = null;
         }
-        new Notifier(context, null, treeId, Notifier.What.DELETE);
+
         Global.settings.deleteTree(treeId);
     }
 
@@ -434,329 +360,8 @@ public class TreesActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == AppCompatActivity.RESULT_OK) {
-            Uri uri = data.getData();
-            boolean result = false;
-            if (requestCode == 636) { // Esporta il GEDCOM
-                result = exporter.exportGedcom(uri);
-            } else if (requestCode == 6219) { // Esporta il GEDCOM zippato coi media
-                result = exporter.exportGedcomToZip(uri);
-            } // Esporta il backup ZIP
-            else if (requestCode == 327) {
-                result = exporter.exportZipBackup(null, -1, uri);
-            }
-            if (result)
-                Toast.makeText(TreesActivity.this, exporter.successMessage, Toast.LENGTH_SHORT).show();
-            else
-                Toast.makeText(TreesActivity.this, exporter.errorMessage, Toast.LENGTH_LONG).show();
-        }
+
     }
 
-    Gedcom findErrors(final int treeId, final boolean correct) {
-        Gedcom gc = readJson(treeId);
-        if (gc == null) {
-            // todo fai qualcosa per recuperare un file introvabile..?
-            return null;
-        }
-        int errors = 0;
-        int num;
-        // Radice in preferenze
-        Settings.Tree albero = Global.settings.getTree(treeId);
-        Person radica = gc.getPerson(albero.root);
-        // Radice punta ad una persona inesistente
-        if (albero.root != null && radica == null) {
-            if (!gc.getPeople().isEmpty()) {
-                if (correct) {
-                    albero.root = U.trovaRadice(gc);
-                    Global.settings.save();
-                } else errors++;
-            } else { // albero senza persone
-                if (correct) {
-                    albero.root = null;
-                    Global.settings.save();
-                } else errors++;
-            }
-        }
-        // Oppure non è indicata una radice in preferenze pur essendoci persone nell'albero
-        if (radica == null && !gc.getPeople().isEmpty()) {
-            if (correct) {
-                albero.root = U.trovaRadice(gc);
-                Global.settings.save();
-            } else errors++;
-        }
-        // O in preferenze è indicata una radiceCondivisione che non esiste
-        Person radicaCondivisa = gc.getPerson(albero.shareRoot);
-        if (albero.shareRoot != null && radicaCondivisa == null) {
-            if (correct) {
-                albero.shareRoot = null; // la elimina e basta
-                Global.settings.save();
-            } else errors++;
-        }
-        // Cerca famiglie vuote o con un solo membro per eliminarle
-        for (Family f : gc.getFamilies()) {
-            if (f.getHusbandRefs().size() + f.getWifeRefs().size() + f.getChildRefs().size() <= 1) {
-                if (correct) {
-                    gc.getFamilies().remove(f); // così facendo lasci i ref negli individui orfani della famiglia a cui si riferiscono...
-                    // ma c'è il resto del correttore che li risolve
-                    break;
-                } else errors++;
-            }
-        }
-        // Silently delete empty list of families
-        if (gc.getFamilies().isEmpty() && correct) {
-            gc.setFamilies(null);
-        }
-        // Riferimenti da una persona alla famiglia dei genitori e dei figli
-        for (Person p : gc.getPeople()) {
-            for (ParentFamilyRef pfr : p.getParentFamilyRefs()) {
-                Family fam = gc.getFamily(pfr.getRef());
-                if (fam == null) {
-                    if (correct) {
-                        p.getParentFamilyRefs().remove(pfr);
-                        break;
-                    } else errors++;
-                } else {
-                    num = 0;
-                    for (ChildRef cr : fam.getChildRefs())
-                        if (cr.getRef() == null) {
-                            if (correct) {
-                                fam.getChildRefs().remove(cr);
-                                break;
-                            } else errors++;
-                        } else if (cr.getRef().equals(p.getId())) {
-                            num++;
-                            if (num > 1 && correct) {
-                                fam.getChildRefs().remove(cr);
-                                break;
-                            }
-                        }
-                    if (num != 1) {
-                        if (correct && num == 0) {
-                            p.getParentFamilyRefs().remove(pfr);
-                            break;
-                        } else errors++;
-                    }
-                }
-            }
-            // Remove empty list of parent family refs
-            if (p.getParentFamilyRefs().isEmpty() && correct) {
-                p.setParentFamilyRefs(null);
-            }
-            for (SpouseFamilyRef sfr : p.getSpouseFamilyRefs()) {
-                Family fam = gc.getFamily(sfr.getRef());
-                if (fam == null) {
-                    if (correct) {
-                        p.getSpouseFamilyRefs().remove(sfr);
-                        break;
-                    } else errors++;
-                } else {
-                    num = 0;
-                    for (SpouseRef sr : fam.getHusbandRefs())
-                        if (sr.getRef() == null) {
-                            if (correct) {
-                                fam.getHusbandRefs().remove(sr);
-                                break;
-                            } else errors++;
-                        } else if (sr.getRef().equals(p.getId())) {
-                            num++;
-                            if (num > 1 && correct) {
-                                fam.getHusbandRefs().remove(sr);
-                                break;
-                            }
-                        }
-                    for (SpouseRef sr : fam.getWifeRefs()) {
-                        if (sr.getRef() == null) {
-                            if (correct) {
-                                fam.getWifeRefs().remove(sr);
-                                break;
-                            } else errors++;
-                        } else if (sr.getRef().equals(p.getId())) {
-                            num++;
-                            if (num > 1 && correct) {
-                                fam.getWifeRefs().remove(sr);
-                                break;
-                            }
-                        }
-                    }
-                    if (num != 1) {
-                        if (num == 0 && correct) {
-                            p.getSpouseFamilyRefs().remove(sfr);
-                            break;
-                        } else errors++;
-                    }
-                }
-            }
-            // Remove empty list of spouse family refs
-            if (p.getSpouseFamilyRefs().isEmpty() && correct) {
-                p.setSpouseFamilyRefs(null);
-            }
-            // Riferimenti a Media inesistenti
-            // ok ma SOLO per le persone, forse andrebbe fatto col Visitor per tutti gli altri
-            num = 0;
-            for (MediaRef mr : p.getMediaRefs()) {
-                Media med = gc.getMedia(mr.getRef());
-                if (med == null) {
-                    if (correct) {
-                        p.getMediaRefs().remove(mr);
-                        break;
-                    } else errors++;
-                } else {
-                    if (mr.getRef().equals(med.getId())) {
-                        num++;
-                        if (num > 1)
-                            if (correct) {
-                                p.getMediaRefs().remove(mr);
-                                break;
-                            } else errors++;
-                    }
-                }
-            }
-        }
-        // References from each family to the persons belonging to it
-        for (Family f : gc.getFamilies()) {
-            // Husbands refs
-            for (SpouseRef sr : f.getHusbandRefs()) {
-                Person husband = gc.getPerson(sr.getRef());
-                if (husband == null) {
-                    if (correct) {
-                        f.getHusbandRefs().remove(sr);
-                        break;
-                    } else errors++;
-                } else {
-                    num = 0;
-                    for (SpouseFamilyRef sfr : husband.getSpouseFamilyRefs())
-                        if (sfr.getRef() == null) {
-                            if (correct) {
-                                husband.getSpouseFamilyRefs().remove(sfr);
-                                break;
-                            } else errors++;
-                        } else if (sfr.getRef().equals(f.getId())) {
-                            num++;
-                            if (num > 1 && correct) {
-                                husband.getSpouseFamilyRefs().remove(sfr);
-                                break;
-                            }
-                        }
-                    if (num != 1) {
-                        if (num == 0 && correct) {
-                            f.getHusbandRefs().remove(sr);
-                            break;
-                        } else errors++;
-                    }
 
-                }
-            }
-            // Remove empty list of husband refs
-            if (f.getHusbandRefs().isEmpty() && correct) {
-                f.setHusbandRefs(null);
-            }
-            // Wives refs
-            for (SpouseRef sr : f.getWifeRefs()) {
-                Person wife = gc.getPerson(sr.getRef());
-                if (wife == null) {
-                    if (correct) {
-                        f.getWifeRefs().remove(sr);
-                        break;
-                    } else errors++;
-                } else {
-                    num = 0;
-                    for (SpouseFamilyRef sfr : wife.getSpouseFamilyRefs())
-                        if (sfr.getRef() == null) {
-                            if (correct) {
-                                wife.getSpouseFamilyRefs().remove(sfr);
-                                break;
-                            } else errors++;
-                        } else if (sfr.getRef().equals(f.getId())) {
-                            num++;
-                            if (num > 1 && correct) {
-                                wife.getSpouseFamilyRefs().remove(sfr);
-                                break;
-                            }
-                        }
-                    if (num != 1) {
-                        if (num == 0 && correct) {
-                            f.getWifeRefs().remove(sr);
-                            break;
-                        } else errors++;
-                    }
-                }
-            }
-            // Remove empty list of wife refs
-            if (f.getWifeRefs().isEmpty() && correct) {
-                f.setWifeRefs(null);
-            }
-            // Children refs
-            for (ChildRef cr : f.getChildRefs()) {
-                Person child = gc.getPerson(cr.getRef());
-                if (child == null) {
-                    if (correct) {
-                        f.getChildRefs().remove(cr);
-                        break;
-                    } else errors++;
-                } else {
-                    num = 0;
-                    for (ParentFamilyRef pfr : child.getParentFamilyRefs())
-                        if (pfr.getRef() == null) {
-                            if (correct) {
-                                child.getParentFamilyRefs().remove(pfr);
-                                break;
-                            } else errors++;
-                        } else if (pfr.getRef().equals(f.getId())) {
-                            num++;
-                            if (num > 1 && correct) {
-                                child.getParentFamilyRefs().remove(pfr);
-                                break;
-                            }
-                        }
-                    if (num != 1) {
-                        if (num == 0 && correct) {
-                            f.getChildRefs().remove(cr);
-                            break;
-                        } else errors++;
-                    }
-                }
-            }
-            // Remove empty list of child refs
-            if (f.getChildRefs().isEmpty() && correct) {
-                f.setChildRefs(null);
-            }
-        }
-
-        // Aggiunge un tag 'TYPE' ai name type che non l'hanno
-        for (Person person : gc.getPeople()) {
-            for (Name name : person.getNames()) {
-                if (name.getType() != null && name.getTypeTag() == null) {
-                    if (correct) name.setTypeTag("TYPE");
-                    else errors++;
-                }
-            }
-        }
-
-        // Aggiunge un tag 'FILE' ai Media che non l'hanno
-        MediaList visitaMedia = new MediaList(gc, 0);
-        gc.accept(visitaMedia);
-        for (Media med : visitaMedia.list) {
-            if (med.getFileTag() == null) {
-                if (correct) med.setFileTag("FILE");
-                else errors++;
-            }
-        }
-
-        if (!correct) {
-            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-            dialog.setMessage(errors == 0 ? getText(R.string.all_ok) : getString(R.string.errors_found, errors));
-            if (errors > 0) {
-                dialog.setPositiveButton(R.string.correct, (dialogo, i) -> {
-                    dialogo.cancel();
-                    Gedcom gcCorretto = findErrors(treeId, true);
-                    U.saveJson(gcCorretto, treeId);
-                    Global.gc = null; // così se era aperto poi lo ricarica corretto
-                    findErrors(treeId, false);    // riapre per ammirere il risultato
-                    aggiornaLista();
-                });
-            }
-            dialog.setNeutralButton(android.R.string.cancel, null).show();
-        }
-        return gc;
-    }
 }

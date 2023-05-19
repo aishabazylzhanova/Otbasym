@@ -308,9 +308,9 @@ public class PersonsFragment extends Fragment {
                             }
                             break;
                     }
-                    if (idFamiglia != null) // aggiungiParente() userà la famiglia trovata
+                    if (idFamiglia != null) // addParente() userà la famiglia trovata
                         intent.putExtra("idFamiglia", idFamiglia);
-                    else // aggiungiParente() creerà una nuova famiglia
+                    else // addParente() creerà una nuova famiglia
                         intent.removeExtra("collocazione");
                 }
                 getActivity().setResult(AppCompatActivity.RESULT_OK, intent);

@@ -90,7 +90,7 @@ public class NewTreeActivity extends BaseActivity {
             Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
             return;
         }
-        Global.settings.aggiungi(new Settings.Tree(num, title, null, 0, 0, null, null, 0));
+        Global.settings.add(new Settings.Tree(num, title, null, 0, 0, null, 0));
         Global.settings.openTree = num;
         Global.settings.save();
         onBackPressed();

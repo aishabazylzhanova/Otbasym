@@ -87,7 +87,7 @@ public class NewRelativeDialog extends DialogFragment {
         });
 
         builder.setView(vista).setPositiveButton(android.R.string.ok, (dialog, id) -> {
-            // Setta alcuni valori che verranno passati a EditaIndividuo o ad PersonsFragment e arriveranno ad aggiungiParente()
+            // Setta alcuni valori che verranno passati a EditaIndividuo o ad PersonsFragment e arriveranno ad addParente()
             Intent intent = new Intent();
             intent.putExtra("idIndividuo", perno.getId());
             intent.putExtra("relazione", relazione);
