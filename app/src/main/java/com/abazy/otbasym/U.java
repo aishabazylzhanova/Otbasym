@@ -77,20 +77,20 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
 
-import com.abazy.otbasym.constant.Choice;
-import com.abazy.otbasym.constant.Format;
-import com.abazy.otbasym.constant.Gender;
-import com.abazy.otbasym.detail.FamilyActivity;
-import com.abazy.otbasym.detail.MediaActivity;
-import com.abazy.otbasym.detail.NoteActivity;
-import com.abazy.otbasym.list.FamiliesFragment;
-import com.abazy.otbasym.list.PersonsFragment;
-import com.abazy.otbasym.list.MediaAdapter;
-import com.abazy.otbasym.visitor.FindStack;
-import com.abazy.otbasym.visitor.MediaContainers;
-import com.abazy.otbasym.visitor.MediaContainerList;
-import com.abazy.otbasym.visitor.NoteContainers;
-import com.abazy.otbasym.visitor.NoteReferences;
+import com.abazy.otbasym.Constants.Choice;
+import com.abazy.otbasym.Constants.Format;
+import com.abazy.otbasym.Constants.Gender;
+import com.abazy.otbasym.Details.FamilyActivity;
+import com.abazy.otbasym.Details.MediaActivity;
+import com.abazy.otbasym.Details.NoteActivity;
+import com.abazy.otbasym.Menu.FamiliesFragment;
+import com.abazy.otbasym.Menu.PersonsFragment;
+import com.abazy.otbasym.Menu.MediaAdapter;
+import com.abazy.otbasym.Visitors.FindStack;
+import com.abazy.otbasym.Visitors.MediaContainers;
+import com.abazy.otbasym.Visitors.MediaContainerList;
+import com.abazy.otbasym.Visitors.NoteContainers;
+import com.abazy.otbasym.Visitors.NoteReferences;
 
 /**
  * Static methods used all across the app.
@@ -746,7 +746,7 @@ public class U {
 
     // Elenca tutti i media di un object contenitore
     public static void placeMedia(LinearLayout layout, Object container, boolean detailed) {
-        RecyclerView griglia = new MediaAdapter.RiciclaVista(layout.getContext(), detailed);
+        RecyclerView griglia = new MediaAdapter.RecycleView(layout.getContext(), detailed);
         griglia.setHasFixedSize(true);
         RecyclerView.LayoutManager gestoreLayout = new GridLayoutManager(layout.getContext(), detailed ? 2 : 3);
         griglia.setLayoutManager(gestoreLayout);
@@ -830,7 +830,7 @@ public class U {
     static void linkaMedia(LinearLayout scatola, Media media) {
         View vistaMedia = LayoutInflater.from(scatola.getContext()).inflate(R.layout.media, scatola, false);
         scatola.addView(vistaMedia);
-        MediaAdapter.arredaMedia(media, vistaMedia.findViewById(R.id.media_testo), vistaMedia.findViewById(R.id.media_num));
+        MediaAdapter.arrangeMedia(media, vistaMedia.findViewById(R.id.media_testo), vistaMedia.findViewById(R.id.media_num));
         LinearLayout.LayoutParams parami = (LinearLayout.LayoutParams)vistaMedia.getLayoutParams();
         parami.height = dpToPx(80);
         F.showImage(media, vistaMedia.findViewById(R.id.media_img), vistaMedia.findViewById(R.id.media_circolo));
