@@ -43,7 +43,7 @@ public class ProfileRelativesFragment extends Fragment {
                     U.metti( scatola, "Primary", pfr.getPrimary() ); // Custom tag _PRIM _PRIMARY
                     U.metti( scatola, "Relationship Type", pfr.getRelationshipType() ); // Tag PEDI (pedigree)
                     for( Estensione altroTag : U.trovaEstensioni( pfr ) )
-                        U.metti( scatola, altroTag.nome, altroTag.testo );
+                        U.metti( scatola, altroTag.nome, altroTag.text );
                 } */
                 // Famiglie di origine: genitori e fratelli
                 List<Family> listaFamiglie = one.getParentFamilies(gc);

@@ -19,13 +19,13 @@ public class SpeechBubble {
         this(context, context.getString(textId));
     }
 
-    public SpeechBubble(Context context, String testo) {
+    public SpeechBubble(Context context, String text) {
         Activity attivita = (Activity)context;
         balloon = attivita.getLayoutInflater().inflate(R.layout.bubble_add_tree, null);
         balloon.setVisibility(View.INVISIBLE);
         ((LinearLayout)attivita.findViewById(R.id.fab_box)).addView(balloon, 0,
                 new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        ((TextView)balloon.findViewById(R.id.fabuloso_text)).setText(testo);
+        ((TextView)balloon.findViewById(R.id.fabuloso_text)).setText(text);
         balloon.setOnTouchListener((vista, evento) -> {
             hide();
             return true;

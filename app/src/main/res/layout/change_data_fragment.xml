@@ -8,13 +8,13 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginEnd="6dp"
-		android:layout_toStartOf="@id/cambi_testo"
+		android:layout_toStartOf="@id/cambi_text"
 		android:text="@string/change_date"
 		android:textSize="14sp"
 		android:textColor="@color/text_veiled"/>
 
 	<TextView
-		android:id="@+id/cambi_testo"
+		android:id="@+id/cambi_text"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_alignParentEnd="true"
@@ -25,7 +25,7 @@
 		android:id="@+id/cambi_note"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_below="@id/cambi_testo"
+		android:layout_below="@id/cambi_text"
 		android:orientation="vertical" />
 
 </RelativeLayout>

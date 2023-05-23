@@ -91,7 +91,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         // arricchisce il tablayout
         tabLayout = findViewById(R.id.profile_tabs);
-        tabLayout.setupWithViewPager(viewPager); // altrimenti il testo nei TabItem scompare (?!)
+        tabLayout.setupWithViewPager(viewPager); // altrimenti il text nei TabItem scompare (?!)
         tabLayout.getTabAt(0).setText(R.string.media);
         tabLayout.getTabAt(1).setText(R.string.events);
         tabLayout.getTabAt(2).setText(R.string.relatives);
@@ -299,10 +299,10 @@ public class ProfileActivity extends AppCompatActivity {
                             DialogFragment dialog = new NewRelativeDialog(one, null, null, true, null);
                             dialog.show(getSupportFragmentManager(), "scegli");
                         } else {
-                            builder.setItems(familiari, (dialog, quale) -> {
+                            builder.setItems(familiari, (dialog, which) -> {
                                 Intent intent1 = new Intent(getApplicationContext(), PersonEditorActivity.class);
                                 intent1.putExtra("idIndividuo", one.getId());
-                                intent1.putExtra("relazione", quale + 1);
+                                intent1.putExtra("relazione", which + 1);
                                 if (U.controllaMultiMatrimoni(intent1, this, null))
                                     return;
                                 startActivity(intent1);
@@ -314,11 +314,11 @@ public class ProfileActivity extends AppCompatActivity {
                             DialogFragment dialog = new NewRelativeDialog(one, null, null, false, null);
                             dialog.show(getSupportFragmentManager(), "scegli");
                         } else {
-                            builder.setItems(familiari, (dialog, quale) -> {
+                            builder.setItems(familiari, (dialog, which) -> {
                                 Intent intent2 = new Intent(getApplication(), Principal.class);
                                 intent2.putExtra("idIndividuo", one.getId());
                                 intent2.putExtra(Choice.PERSON, true);
-                                intent2.putExtra("relazione", quale + 1);
+                                intent2.putExtra("relazione", which + 1);
                                 if (U.controllaMultiMatrimoni(intent2, this, null))
                                     return;
                                 startActivityForResult(intent2, 1401);

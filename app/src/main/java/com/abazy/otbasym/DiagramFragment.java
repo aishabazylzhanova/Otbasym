@@ -197,7 +197,7 @@ public class DiagramFragment extends Fragment {
             nodeParams.endToEnd = LayoutParams.PARENT_ID;
             addView(childView, nodeParams);
             popup = view.findViewById(R.id.popup_fumetto);
-            ((TextView)popup.findViewById(R.id.popup_testo)).setText(suggestion);
+            ((TextView)popup.findViewById(R.id.popup_text)).setText(suggestion);
             popup.setVisibility(INVISIBLE);
             popup.setOnTouchListener((v, e) -> {
                 //v.performClick(); // TODO: Android Studio says to call this
@@ -752,10 +752,10 @@ public class DiagramFragment extends Fragment {
                 DialogFragment dialog = new NewRelativeDialog(pers, parentFam, spouseFam, true, null);
                 dialog.show(getActivity().getSupportFragmentManager(), "scegli");
             } else {
-                new AlertDialog.Builder(getContext()).setItems(parenti, (dialog, quale) -> {
+                new AlertDialog.Builder(getContext()).setItems(parenti, (dialog, which) -> {
                     Intent intent = new Intent(getContext(), PersonEditorActivity.class);
                     intent.putExtra("idIndividuo", idPersona);
-                    intent.putExtra("relazione", quale + 1);
+                    intent.putExtra("relazione", which + 1);
                     if (U.controllaMultiMatrimoni(intent, getContext(), null)) // aggiunge 'idFamiglia' o 'collocazione'
                         return; // se pivot è sposo in più famiglie, chiede a chi aggiungere un coniuge o un figlio
                     startActivity(intent);
@@ -766,11 +766,11 @@ public class DiagramFragment extends Fragment {
                 DialogFragment dialog = new NewRelativeDialog(pers, parentFam, spouseFam, false, DiagramFragment.this);
                 dialog.show(getActivity().getSupportFragmentManager(), "scegli");
             } else {
-                new AlertDialog.Builder(getContext()).setItems(parenti, (dialog, quale) -> {
+                new AlertDialog.Builder(getContext()).setItems(parenti, (dialog, which) -> {
                     Intent intent = new Intent(getContext(), Principal.class);
                     intent.putExtra("idIndividuo", idPersona);
                     intent.putExtra(Choice.PERSON, true);
-                    intent.putExtra("relazione", quale + 1);
+                    intent.putExtra("relazione", which + 1);
                     if (U.controllaMultiMatrimoni(intent, getContext(), DiagramFragment.this))
                         return;
                     startActivityForResult(intent, 1401);
@@ -821,7 +821,7 @@ public class DiagramFragment extends Fragment {
             // Add the relative who has been chosen in PersonsFragment
             if (requestCode == 1401) {
                 Object[] modificati = PersonEditorActivity.addParent(
-                        data.getStringExtra("idIndividuo"), // corrisponde a 'idPersona', il quale però si annulla in caso di cambio di configurazione
+                        data.getStringExtra("idIndividuo"), // corrisponde a 'idPersona', il which però si annulla in caso di cambio di configurazione
                         data.getStringExtra("idParente"),
                         data.getStringExtra("idFamiglia"),
                         data.getIntExtra("relazione", 0),

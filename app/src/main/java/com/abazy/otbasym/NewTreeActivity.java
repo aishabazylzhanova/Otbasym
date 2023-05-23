@@ -51,7 +51,7 @@ public class NewTreeActivity extends BaseActivity {
             View dialogView = LayoutInflater.from(this).inflate(R.layout.title_tree, null);
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setView(dialogView).setTitle(R.string.title);
-            TextView textView = dialogView.findViewById(R.id.nuovo_nome_testo);
+            TextView textView = dialogView.findViewById(R.id.nuovo_nome_text);
             textView.setText(R.string.modify_later);
             textView.setVisibility(View.VISIBLE);
             EditText nuovoNome = dialogView.findViewById(R.id.nuovo_nome_albero);

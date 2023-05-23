@@ -6,7 +6,7 @@
 	android:orientation="vertical">
 
 	<LinearLayout
-		android:id="@+id/editadata_avanzate"
+		android:id="@+id/editdata_advanced"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal">
@@ -26,24 +26,24 @@
 		android:orientation="horizontal"
 		android:layoutDirection="ltr">
 		<NumberPicker
-			android:id="@+id/prima_giorno"
+			android:id="@+id/first_day"
 			android:layout_width="wrap_content"
 			android:layout_height="100dp"
 			android:theme="@style/AppTheme.Wheel"/>
 		<NumberPicker
-			android:id="@+id/prima_mese"
-			android:layout_width="wrap_content"
-			android:layout_height="100dp"
-			android:layout_marginLeft="8dp"
-			android:theme="@style/AppTheme.Wheel"/>
-		<NumberPicker
-			android:id="@+id/prima_secolo"
+			android:id="@+id/first_month"
 			android:layout_width="wrap_content"
 			android:layout_height="100dp"
 			android:layout_marginLeft="8dp"
 			android:theme="@style/AppTheme.Wheel"/>
 		<NumberPicker
-			android:id="@+id/prima_anno"
+			android:id="@+id/first_century"
+			android:layout_width="wrap_content"
+			android:layout_height="100dp"
+			android:layout_marginLeft="8dp"
+			android:theme="@style/AppTheme.Wheel"/>
+		<NumberPicker
+			android:id="@+id/first_year"
 			android:layout_width="wrap_content"
 			android:layout_height="100dp"
 			android:layout_marginLeft="8dp"
@@ -76,18 +76,18 @@
 		android:layoutDirection="ltr"
 		android:visibility="gone">
 		<NumberPicker
-			android:id="@+id/seconda_giorno"
+			android:id="@+id/second_day"
 			android:layout_width="wrap_content"
 			android:layout_height="100dp"
 			android:theme="@style/AppTheme.Wheel"/>
 		<NumberPicker
-			android:id="@+id/seconda_mese"
+			android:id="@+id/second_month"
 			android:layout_width="wrap_content"
 			android:layout_height="100dp"
 			android:layout_marginLeft="8dp"
 			android:theme="@style/AppTheme.Wheel"/>
 		<NumberPicker
-			android:id="@+id/seconda_secolo"
+			android:id="@+id/second_century"
 			android:layout_width="wrap_content"
 			android:layout_height="100dp"
 			android:layout_marginLeft="8dp"

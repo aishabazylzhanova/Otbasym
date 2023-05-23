@@ -213,41 +213,41 @@ public class NewRelativeDialog extends DialogFragment {
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
     }
 
-    // Classe per le voci degli elenchi di famiglie nei dialoghi "A quale famiglia vuoi aggiungere...?"
+    // Classe per le voci degli elenchi di famiglie nei dialoghi "A which famiglia vuoi aggiungere...?"
     static class VoceFamiglia {
-        Context contesto;
+        Context context;
         Family famiglia;
         Person genitore;
         boolean esistente; // perno cercerà di inseririrsi in famiglia già esistente
 
         // Famiglia esistente
-        VoceFamiglia(Context contesto, Family famiglia) {
-            this.contesto = contesto;
+        VoceFamiglia(Context context, Family famiglia) {
+            this.context = context;
             this.famiglia = famiglia;
         }
 
         // Nuova famiglia di un genitore
-        VoceFamiglia(Context contesto, Person genitore) {
-            this.contesto = contesto;
+        VoceFamiglia(Context context, Person genitore) {
+            this.context = context;
             this.genitore = genitore;
         }
 
         // Nuova famiglia vuota (false) OPPURE famiglia acquisita dal destinatario (true)
-        VoceFamiglia(Context contesto, boolean esistente) {
-            this.contesto = contesto;
+        VoceFamiglia(Context context, boolean esistente) {
+            this.context = context;
             this.esistente = esistente;
         }
 
         @Override
         public String toString() {
             if (famiglia != null)
-                return U.testoFamiglia(contesto, Global.gc, famiglia, true);
+                return U.textFamiglia(context, Global.gc, famiglia, true);
             else if (genitore != null)
-                return contesto.getString(R.string.new_family_of, U.properName(genitore));
+                return context.getString(R.string.new_family_of, U.properName(genitore));
             else if (esistente)
-                return contesto.getString(R.string.existing_family);
+                return context.getString(R.string.existing_family);
             else
-                return contesto.getString(R.string.new_family);
+                return context.getString(R.string.new_family);
         }
     }
 }

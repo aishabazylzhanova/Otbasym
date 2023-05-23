@@ -208,7 +208,7 @@ public class InfoActivity extends BaseActivity {
         Global.settings.save();
     }
 
-    boolean testoMesso;  // impedisce di mettere più di uno spazio() consecutivo
+    boolean textMesso;  // impedisce di mettere più di uno spazio() consecutivo
 
     void poni(CharSequence title, String text) {
         if (text != null) {
@@ -227,14 +227,14 @@ public class InfoActivity extends BaseActivity {
             cell2.setText(text);
             row.addView(cell2);
             ((TableLayout)findViewById(R.id.info_tabella)).addView(row);
-            testoMesso = true;
+            textMesso = true;
         }
     }
 
     TableRow row;
 
     void spazio() {
-        if (testoMesso) {
+        if (textMesso) {
             row = new TableRow(this);
             View cella = new View(this);
             cella.setBackgroundResource(R.color.primary);
@@ -247,7 +247,7 @@ public class InfoActivity extends BaseActivity {
             param.bottomMargin = 5;
             cella.setLayoutParams(param);
             ((TableLayout)findViewById(R.id.info_tabella)).addView(row);
-            testoMesso = false;
+            textMesso = false;
         }
     }
 

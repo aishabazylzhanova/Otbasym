@@ -316,10 +316,10 @@ public class F {
                                 bitmap = generateIcon(imageView, R.layout.media_file, format);
                                 imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                                 if (imageView.getParent() instanceof RelativeLayout && // Ugly but effective
-                                        ((RelativeLayout)imageView.getParent()).findViewById(R.id.media_testo) != null) {
+                                        ((RelativeLayout)imageView.getParent()).findViewById(R.id.media_text) != null) {
                                     RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(
                                             RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-                                    param.addRule(RelativeLayout.ABOVE, R.id.media_testo);
+                                    param.addRule(RelativeLayout.ABOVE, R.id.media_text);
                                     imageView.setLayoutParams(param);
                                 }
                                 imageView.setTag(R.id.tag_file_type, 3);
@@ -416,11 +416,11 @@ public class F {
         return null;
     }
 
-    static Bitmap generateIcon(ImageView view, int icona, String testo) {
+    static Bitmap generateIcon(ImageView view, int icona, String text) {
         LayoutInflater inflater = (LayoutInflater)view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View inflated = inflater.inflate(icona, null);
         RelativeLayout frameLayout = inflated.findViewById(R.id.icona);
-        ((TextView)frameLayout.findViewById(R.id.icona_testo)).setText(testo);
+        ((TextView)frameLayout.findViewById(R.id.icona_text)).setText(text);
         frameLayout.setDrawingCacheEnabled(true);
         frameLayout.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
                 View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));

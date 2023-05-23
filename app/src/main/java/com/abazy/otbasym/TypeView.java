@@ -71,8 +71,8 @@ public class TypeView extends AppCompatAutoCompleteTextView {
 	}
 
 	class AdattatoreLista extends ArrayAdapter<String> {
-		AdattatoreLista( Context contesto, int pezzo, List<String> stringhe ) {
-			super( contesto, pezzo, stringhe );
+		AdattatoreLista( Context context, int pezzo, List<String> stringhe ) {
+			super( context, pezzo, stringhe );
 		}
 		@Override
 		public Filter getFilter() {

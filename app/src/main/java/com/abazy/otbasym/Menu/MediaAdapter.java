@@ -89,7 +89,7 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.managerViewM
             this.view = vista;
             this.details = details;
             imageView = vista.findViewById(R.id.media_img);
-            textView = vista.findViewById(R.id.media_testo);
+            textView = vista.findViewById(R.id.media_text);
             viewNumber = vista.findViewById(R.id.media_num);
         }
 

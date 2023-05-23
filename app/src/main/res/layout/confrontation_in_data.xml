@@ -34,7 +34,7 @@
 				android:textSize="22sp" />
 
 			<TextView
-				android:id="@+id/confronto_testo"
+				android:id="@+id/confronto_text"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_below="@id/confronto_titolo"
@@ -45,10 +45,10 @@
 				android:textSize="18sp" />
 
 			<TextView
-				android:id="@+id/confronto_sottotesto"
+				android:id="@+id/confronto_sottotext"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_below="@id/confronto_testo"
+				android:layout_below="@id/confronto_text"
 				android:layout_toLeftOf="@id/confronto_foto"
 				android:singleLine="false"
 				android:layout_marginTop="5dp"

@@ -258,14 +258,14 @@ public class TreesActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
-    public static String writeData(Context contesto, Settings.Tree alb) {
+    public static String writeData(Context context, Settings.Tree alb) {
         String dati = alb.persons + " " +
-                contesto.getString(alb.persons == 1 ? R.string.person : R.string.persons).toLowerCase();
+                context.getString(alb.persons == 1 ? R.string.person : R.string.persons).toLowerCase();
         if (alb.persons > 1 && alb.generations > 0)
             dati += " - " + alb.generations + " " +
-                    contesto.getString(alb.generations == 1 ? R.string.generation : R.string.generations).toLowerCase();
+                    context.getString(alb.generations == 1 ? R.string.generation : R.string.generations).toLowerCase();
         if (alb.media > 0)
-            dati += " - " + alb.media + " " + contesto.getString(R.string.media).toLowerCase();
+            dati += " - " + alb.media + " " + context.getString(R.string.media).toLowerCase();
         return dati;
     }
 

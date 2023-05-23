@@ -146,7 +146,7 @@ public class ProfileFactsFragment extends Fragment {
         View eventView = LayoutInflater.from(layout.getContext()).inflate(R.layout.individual_event_frame, layout, false);
         layout.addView(eventView);
         ((TextView)eventView.findViewById(R.id.evento_titolo)).setText(title);
-        TextView textView = eventView.findViewById(R.id.evento_testo);
+        TextView textView = eventView.findViewById(R.id.evento_text);
         if (text.isEmpty()) textView.setVisibility(View.GONE);
         else textView.setText(text);
         if (Global.settings.expert && object instanceof SourceCitationContainer) {
@@ -276,7 +276,7 @@ public class ProfileFactsFragment extends Fragment {
                 menu.add(0, 202, 0, R.string.move_down);
             menu.add(0, 203, 0, R.string.delete);
         } else if (pieceObject instanceof EventFact) {
-            if (view.findViewById(R.id.evento_testo).getVisibility() == View.VISIBLE)
+            if (view.findViewById(R.id.evento_text).getVisibility() == View.VISIBLE)
                 menu.add(0, 210, 0, R.string.copy);
             if (one.getEventsFacts().indexOf(pieceObject) > 0)
                 menu.add(0, 211, 0, R.string.move_up);
@@ -308,7 +308,7 @@ public class ProfileFactsFragment extends Fragment {
             case 210: // Copia evento
             case 220: // Copia estensione
                 U.copyToClipboard(((TextView)pieceView.findViewById(R.id.evento_titolo)).getText(),
-                        ((TextView)pieceView.findViewById(R.id.evento_testo)).getText());
+                        ((TextView)pieceView.findViewById(R.id.evento_text)).getText());
                 return true;
             case 201: // Sposta su
                 nomi.add(nomi.indexOf(pieceObject) - 1, (Name)pieceObject);

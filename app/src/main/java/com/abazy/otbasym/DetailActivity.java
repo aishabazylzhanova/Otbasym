@@ -408,7 +408,7 @@ public abstract class   DetailActivity extends AppCompatActivity {
             View otherPiece = box.getChildAt(i);
             EditText editText = otherPiece.findViewById(R.id.fatto_edita);
             if (editText != null && editText.isShown()) {
-                TextView textView = otherPiece.findViewById(R.id.fatto_testo);
+                TextView textView = otherPiece.findViewById(R.id.fatto_text);
                 if (!editText.getText().toString().equals(textView.getText().toString())) // If there has been editing
                     save(otherPiece);
                 else
@@ -508,7 +508,7 @@ public abstract class   DetailActivity extends AppCompatActivity {
         View pieceView = LayoutInflater.from(box.getContext()).inflate(R.layout.done_fact_fragment, box, false);
         box.addView(pieceView);
         ((TextView)pieceView.findViewById(R.id.fatto_titolo)).setText(title);
-        ((TextView)pieceView.findViewById(R.id.fatto_testo)).setText(text);
+        ((TextView)pieceView.findViewById(R.id.fatto_text)).setText(text);
         EditText editText = pieceView.findViewById(R.id.fatto_edita);
         if (multiLine) {
             editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
@@ -641,7 +641,7 @@ public abstract class   DetailActivity extends AppCompatActivity {
 
     void edit(View pieceView) {
         concludeOtherPiece();
-        TextView textView = pieceView.findViewById(R.id.fatto_testo);
+        TextView textView = pieceView.findViewById(R.id.fatto_text);
         textView.setVisibility(View.GONE);
         fab.hide();
         Object pieceObject = pieceView.getTag(R.id.tag_object);
@@ -732,7 +732,7 @@ public abstract class   DetailActivity extends AppCompatActivity {
             Toast.makeText(box.getContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
             return; // In case of error it remains in editor mode
         }
-        ((TextView)pieceView.findViewById(R.id.fatto_testo)).setText(text);
+        ((TextView)pieceView.findViewById(R.id.fatto_text)).setText(text);
         restore(pieceView);
         U.save(true, Memory.firstObject());
 		/*if( Memory.getStepStack().size() == 1 ) {
@@ -754,7 +754,7 @@ public abstract class   DetailActivity extends AppCompatActivity {
     void restore(View pieceView) {
         editText.setVisibility(View.GONE);
         pieceView.findViewById(R.id.fatto_data).setVisibility(View.GONE);
-        pieceView.findViewById(R.id.fatto_testo).setVisibility(View.VISIBLE);
+        pieceView.findViewById(R.id.fatto_text).setVisibility(View.VISIBLE);
         actionBar.setDisplayShowCustomEnabled(false); // Hides custom toolbar
         actionBar.setDisplayHomeAsUpEnabled(true);
         whichMenu = 1;
@@ -899,7 +899,7 @@ public abstract class   DetailActivity extends AppCompatActivity {
                 } else if (pieceObject.equals(4043) || pieceObject.equals(6064)) // Name and surname for inexperienced
                     menu.add(0, 0, 0, R.string.copy);
             } else if (pieceObject instanceof String) {
-                if (((TextView)view.findViewById(R.id.fatto_testo)).getText().length() > 0)
+                if (((TextView)view.findViewById(R.id.fatto_text)).getText().length() > 0)
                     menu.add(0, 0, 0, R.string.copy);
                 menu.add(0, 1, 0, R.string.delete);
             }
@@ -916,7 +916,7 @@ public abstract class   DetailActivity extends AppCompatActivity {
             case 55: // Event
             case 60: // Extension
                 U.copyToClipboard(((TextView)pieceView.findViewById(R.id.fatto_titolo)).getText(),
-                        ((TextView)pieceView.findViewById(R.id.fatto_testo)).getText());
+                        ((TextView)pieceView.findViewById(R.id.fatto_text)).getText());
                 return true;
             case 1: // Delete editable piece
                 try {
