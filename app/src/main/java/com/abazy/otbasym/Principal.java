@@ -20,19 +20,19 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.abazy.otbasym.list.BaurFragment;
+import com.abazy.otbasym.Menu.KinshipFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Arrays;
 import java.util.List;
 
-import com.abazy.otbasym.constant.Choice;
-import com.abazy.otbasym.list.FamiliesFragment;
-import com.abazy.otbasym.list.PersonsFragment;
-import com.abazy.otbasym.list.MediaFragment;
-import com.abazy.otbasym.list.NotesFragment;
-import com.abazy.otbasym.visitor.MediaList;
-import com.abazy.otbasym.visitor.NoteList;
+import com.abazy.otbasym.Constants.Choice;
+import com.abazy.otbasym.Menu.FamiliesFragment;
+import com.abazy.otbasym.Menu.PersonsFragment;
+import com.abazy.otbasym.Menu.MediaFragment;
+import com.abazy.otbasym.Menu.NotesFragment;
+import com.abazy.otbasym.Visitors.MediaList;
+import com.abazy.otbasym.Visitors.NoteList;
 
 public class Principal /*TODO Main?*/ extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -42,7 +42,7 @@ public class Principal /*TODO Main?*/ extends AppCompatActivity implements Navig
     List<Integer> idMenu = Arrays.asList(R.id.nav_diagramma, R.id.nav_persone, R.id.nav_famiglie,
             R.id.nav_media, R.id.nav_note, R.id.nav_baur);
     List<Class> frammenti = Arrays.asList(DiagramFragment.class, PersonsFragment.class, FamiliesFragment.class,
-            MediaFragment.class, NotesFragment.class, BaurFragment.class);
+            MediaFragment.class, NotesFragment.class, KinshipFragment.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

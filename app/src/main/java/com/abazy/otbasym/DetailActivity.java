@@ -65,16 +65,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import com.abazy.otbasym.constant.Choice;
-import com.abazy.otbasym.detail.EventActivity;
-import com.abazy.otbasym.detail.FamilyActivity;
-import com.abazy.otbasym.detail.MediaActivity;
-import com.abazy.otbasym.detail.NoteActivity;
-import com.abazy.otbasym.list.FamiliesFragment;
-import com.abazy.otbasym.list.PersonsFragment;
-import com.abazy.otbasym.list.MediaFragment;
-import com.abazy.otbasym.list.NotesFragment;
-import com.abazy.otbasym.visitor.FindStack;
+import com.abazy.otbasym.Constants.Choice;
+import com.abazy.otbasym.Details.EventActivity;
+import com.abazy.otbasym.Details.FamilyActivity;
+import com.abazy.otbasym.Details.MediaActivity;
+import com.abazy.otbasym.Details.NoteActivity;
+import com.abazy.otbasym.Menu.FamiliesFragment;
+import com.abazy.otbasym.Menu.PersonsFragment;
+import com.abazy.otbasym.Menu.MediaFragment;
+import com.abazy.otbasym.Menu.NotesFragment;
+import com.abazy.otbasym.Visitors.FindStack;
 
 public abstract class   DetailActivity extends AppCompatActivity {
 

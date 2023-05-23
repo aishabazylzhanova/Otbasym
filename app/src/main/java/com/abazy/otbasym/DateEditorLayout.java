@@ -25,27 +25,27 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
-import com.abazy.otbasym.constant.Format;
-import com.abazy.otbasym.constant.Kind;
+import com.abazy.otbasym.Constants.Format;
+import com.abazy.otbasym.Constants.Kind;
 
 public class DateEditorLayout extends LinearLayout {
 
     GedcomDateConverter gedcomDateConverter;
     GedcomDateConverter.Data data1;
     GedcomDateConverter.Data data2;
-    EditText editaTesto;
-    String[] giorniRuota = {"-", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15",
+    EditText editText;
+    String[] days = {"-", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15",
             "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
-    String[] mesiRuota = {"-", s(R.string.january), s(R.string.february), s(R.string.march), s(R.string.april), s(R.string.may), s(R.string.june),
+    String[] months = {"-", s(R.string.january), s(R.string.february), s(R.string.march), s(R.string.april), s(R.string.may), s(R.string.june),
             s(R.string.july), s(R.string.august), s(R.string.september), s(R.string.october), s(R.string.november), s(R.string.december)};
-    String[] anniRuota = new String[101];
+    String[] years = new String[101];
     int[] dateKinds = {R.string.exact, R.string.approximate, R.string.calculated, R.string.estimated,
             R.string.after, R.string.before, R.string.between_and,
             R.string.from, R.string.to, R.string.from_to, R.string.date_phrase};
-    Calendar calenda = GregorianCalendar.getInstance();
-    boolean veroImputTesto; // stabilisce se l'utente sta effettivamente digitando sulla tastiera virtuale o se il testo viene cambiato in altro modo
-    InputMethodManager tastiera;
-    boolean tastieraVisibile;
+    Calendar calendar = GregorianCalendar.getInstance();
+    boolean trueInputText; // determines if the user is actually typing on the virtual keyboard or if the text is changed in some other way
+    InputMethodManager keyboard;
+    boolean keyboardVisible;
 
     public DateEditorLayout(Context contesto, AttributeSet as) {
         super(contesto, as);
@@ -54,20 +54,20 @@ public class DateEditorLayout extends LinearLayout {
     /**
      * Actions to be done only once at the beginning.
      */
-    void initialize(final EditText editaTesto) {
+    void initialize(final EditText editText) {
 
         addView(inflate(getContext(), R.layout.edit_data, null), this.getLayoutParams());
-        this.editaTesto = editaTesto;
+        this.editText = editText;
 
-        for (int i = 0; i < anniRuota.length - 1; i++)
-            anniRuota[i] = i < 10 ? "0" + i : "" + i;
-        anniRuota[100] = "-";
+        for (int i = 0; i < years.length - 1; i++)
+            years[i] = i < 10 ? "0" + i : "" + i;
+        years[100] = "-";
 
-        gedcomDateConverter = new GedcomDateConverter(editaTesto.getText().toString());
+        gedcomDateConverter = new GedcomDateConverter(editText.getText().toString());
         data1 = gedcomDateConverter.data1;
         data2 = gedcomDateConverter.data2;
 
-        // Arreda l'editore data
+
         if (Global.settings.expert) {
             final TextView elencoTipi = findViewById(R.id.editadata_tipi);
             elencoTipi.setOnClickListener(vista -> {
@@ -78,21 +78,21 @@ public class DateEditorLayout extends LinearLayout {
                 popup.show();
                 popup.setOnMenuItemClickListener(item -> {
                     gedcomDateConverter.kind = Kind.values()[item.getItemId()];
-                    // Se eventualmente invisibile
+                    //If possibly invisible
                     findViewById(R.id.editadata_prima).setVisibility(View.VISIBLE);
-                    if (data1.date == null) // micro settaggio del carro
+                    if (data1.date == null)
                         ((NumberPicker)findViewById(R.id.prima_anno)).setValue(100);
                     if (gedcomDateConverter.kind == Kind.BETWEEN_AND || gedcomDateConverter.kind == Kind.FROM_TO) {
-                        findViewById(R.id.editadata_seconda_avanzate).setVisibility(VISIBLE);
-                        findViewById(R.id.editadata_seconda).setVisibility(VISIBLE);
+                        findViewById(R.id.editeddate_second_advanced).setVisibility(VISIBLE);
+                        findViewById(R.id.editeddate_second).setVisibility(VISIBLE);
                         if (data2.date == null)
-                            ((NumberPicker)findViewById(R.id.seconda_anno)).setValue(100);
+                            ((NumberPicker)findViewById(R.id.second_year)).setValue(100);
                     } else {
-                        findViewById(R.id.editadata_seconda_avanzate).setVisibility(GONE);
-                        findViewById(R.id.editadata_seconda).setVisibility(GONE);
+                        findViewById(R.id.editeddate_second_advanced).setVisibility(GONE);
+                        findViewById(R.id.editeddate_second).setVisibility(GONE);
                     }
                     elencoTipi.setText(dateKinds[item.getItemId()]);
-                    veroImputTesto = false;
+                    trueInputText = false;
                     genera();
                     return true;
                 });
@@ -101,12 +101,12 @@ public class DateEditorLayout extends LinearLayout {
 
             findViewById(R.id.editadata_negativa2).setOnClickListener(vista -> {
                 data2.negative = ((CompoundButton)vista).isChecked();
-                veroImputTesto = false;
+                trueInputText = false;
                 genera();
             });
             findViewById(R.id.editadata_doppia2).setOnClickListener(vista -> {
                 data2.doubleDate = ((CompoundButton)vista).isChecked();
-                veroImputTesto = false;
+                trueInputText = false;
                 genera();
             });
 
@@ -119,20 +119,20 @@ public class DateEditorLayout extends LinearLayout {
                 findViewById(R.id.prima_secolo), findViewById(R.id.prima_anno));
 
         arredaCarro(2, findViewById(R.id.seconda_giorno), findViewById(R.id.seconda_mese),
-                findViewById(R.id.seconda_secolo), findViewById(R.id.seconda_anno));
+                findViewById(R.id.seconda_secolo), findViewById(R.id.second_year));
 
         // Al primo focus mostra sè stesso (EditoreData) nascondendo la tastiera
-        tastiera = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        editaTesto.setOnFocusChangeListener((v, ciapaFocus) -> {
+        keyboard = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        editText.setOnFocusChangeListener((v, ciapaFocus) -> {
             if (ciapaFocus) {
                 if (gedcomDateConverter.kind == Kind.PHRASE) {
                     //genera(); // Toglie le parentesi alla frase
-                    editaTesto.setText(gedcomDateConverter.phrase);
+                    editText.setText(gedcomDateConverter.phrase);
                 } else {
-                    tastieraVisibile = tastiera.hideSoftInputFromWindow(editaTesto.getWindowToken(), 0); // ok nasconde tastiera
+                    keyboardVisible = keyboard.hideSoftInputFromWindow(editText.getWindowToken(), 0); // ok nasconde tastiera
 					/*Window finestra = ((Activity)getContext()).getWindow(); non aiuta la scomparsa della tastiera
 					finestra.setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN );*/
-                    editaTesto.setInputType(InputType.TYPE_NULL); // disabilita input testo con tastiera
+                    editText.setInputType(InputType.TYPE_NULL); // disabilita input testo con tastiera
                     // necessario in versioni recenti di android in cui la tastiera ricompare
                 }
                 gedcomDateConverter.data1.date = null; // un resettino
@@ -143,18 +143,18 @@ public class DateEditorLayout extends LinearLayout {
         });
 
         // Al secondo tocco fa comparire la tastiera
-        editaTesto.setOnTouchListener((vista, event) -> {
+        editText.setOnTouchListener((vista, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                editaTesto.setInputType(InputType.TYPE_CLASS_TEXT); // riabilita l'input
+                editText.setInputType(InputType.TYPE_CLASS_TEXT); // riabilita l'input
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                tastieraVisibile = tastiera.showSoftInput(editaTesto, 0); // fa ricomparire la tastiera
+                keyboardVisible = keyboard.showSoftInput(editText, 0); // fa ricomparire la tastiera
                 //veroImputTesto = true;
                 //vista.performClick(); non ne vedo l'utilità
             }
             return false;
         });
         // Imposta l'editore data in base a quanto scritto
-        editaTesto.addTextChangedListener(new TextWatcher() {
+        editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence testo, int i, int i1, int i2) {
             }
@@ -166,9 +166,9 @@ public class DateEditorLayout extends LinearLayout {
             @Override
             public void afterTextChanged(Editable testo) {
                 // non so perché ma in android 5 alla prima editazione viene chiamato 2 volte, che comunque non è un problema
-                if (veroImputTesto)
+                if (trueInputText)
                     impostaTutto();
-                veroImputTesto = true;
+                trueInputText = true;
             }
         });
     }
@@ -177,14 +177,14 @@ public class DateEditorLayout extends LinearLayout {
     void arredaCarro(final int quale, final NumberPicker ruotaGiorno, final NumberPicker ruotaMese, final NumberPicker ruotaSecolo, final NumberPicker ruotaAnno) {
         ruotaGiorno.setMinValue(0);
         ruotaGiorno.setMaxValue(31);
-        ruotaGiorno.setDisplayedValues(giorniRuota);
+        ruotaGiorno.setDisplayedValues(days);
         prepareWheel(ruotaGiorno);
         ruotaGiorno.setOnValueChangedListener((picker, vecchio, nuovo) ->
                 aggiorna(quale == 1 ? data1 : data2, ruotaGiorno, ruotaMese, ruotaSecolo, ruotaAnno)
         );
         ruotaMese.setMinValue(0);
         ruotaMese.setMaxValue(12);
-        ruotaMese.setDisplayedValues(mesiRuota);
+        ruotaMese.setDisplayedValues(months);
         prepareWheel(ruotaMese);
         ruotaMese.setOnValueChangedListener((picker, vecchio, nuovo) ->
                 aggiorna(quale == 1 ? data1 : data2, ruotaGiorno, ruotaMese, ruotaSecolo, ruotaAnno)
@@ -197,7 +197,7 @@ public class DateEditorLayout extends LinearLayout {
         );
         ruotaAnno.setMinValue(0);
         ruotaAnno.setMaxValue(100);
-        ruotaAnno.setDisplayedValues(anniRuota);
+        ruotaAnno.setDisplayedValues(years);
         prepareWheel(ruotaAnno);
         ruotaAnno.setOnValueChangedListener((picker, vecchio, nuovo) ->
                 aggiorna(quale == 1 ? data1 : data2, ruotaGiorno, ruotaMese, ruotaSecolo, ruotaAnno)
@@ -221,7 +221,7 @@ public class DateEditorLayout extends LinearLayout {
     // Prende la stringa data, aggiorna le Date e ci modifica tutto l'editore data
     // Chiamato quando clicco sul campo editabile, e dopo ogni editazione del testo
     void impostaTutto() {
-        gedcomDateConverter.analyze(editaTesto.getText().toString());
+        gedcomDateConverter.analyze(editText.getText().toString());
 
         ((TextView)findViewById(R.id.editadata_tipi)).setText(dateKinds[gedcomDateConverter.kind.ordinal()]);
 
@@ -234,24 +234,24 @@ public class DateEditorLayout extends LinearLayout {
         // Secondo carro
         if (gedcomDateConverter.kind == Kind.BETWEEN_AND || gedcomDateConverter.kind == Kind.FROM_TO) {
             impostaCarro(data2, findViewById(R.id.seconda_giorno), findViewById(R.id.seconda_mese),
-                    findViewById(R.id.seconda_secolo), findViewById(R.id.seconda_anno));
+                    findViewById(R.id.seconda_secolo), findViewById(R.id.second_year));
             if (Global.settings.expert) {
-                findViewById(R.id.editadata_seconda_avanzate).setVisibility(VISIBLE);
+                findViewById(R.id.editeddate_second_advanced).setVisibility(VISIBLE);
                 impostaCecchi(data2);
             }
-            findViewById(R.id.editadata_seconda).setVisibility(VISIBLE);
+            findViewById(R.id.editeddate_second).setVisibility(VISIBLE);
         } else {
-            findViewById(R.id.editadata_seconda_avanzate).setVisibility(GONE);
-            findViewById(R.id.editadata_seconda).setVisibility(GONE);
+            findViewById(R.id.editeddate_second_advanced).setVisibility(GONE);
+            findViewById(R.id.editeddate_second).setVisibility(GONE);
         }
     }
 
     // Gira le ruote di un carro in base a una data
     void impostaCarro(GedcomDateConverter.Data data, NumberPicker ruotaGiorno, NumberPicker ruotaMese, NumberPicker ruotaSecolo, NumberPicker ruotaAnno) {
-        calenda.clear();
+        calendar.clear();
         if (data.date != null)
-            calenda.setTime(data.date);
-        ruotaGiorno.setMaxValue(calenda.getActualMaximum(Calendar.DAY_OF_MONTH));
+            calendar.setTime(data.date);
+        ruotaGiorno.setMaxValue(calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
         if (data.date != null && (data.isFormat(Format.D_M_Y) || data.isFormat(Format.D_M)))
             ruotaGiorno.setValue(data.date.getDate());
         else
@@ -293,8 +293,8 @@ public class DateEditorLayout extends LinearLayout {
 
     // Aggiorna una Data coi nuovi valori presi dalle ruote
     void aggiorna(GedcomDateConverter.Data data, NumberPicker ruotaGiorno, NumberPicker ruotaMese, NumberPicker ruotaSecolo, NumberPicker ruotaAnno) {
-        if (tastieraVisibile) {    // Nasconde eventuale tastiera visibile
-            tastieraVisibile = tastiera.hideSoftInputFromWindow(editaTesto.getWindowToken(), 0);
+        if (keyboardVisible) {    // Nasconde eventuale tastiera visibile
+            keyboardVisible = keyboard.hideSoftInputFromWindow(editText.getWindowToken(), 0);
             // Nasconde subito la tastiera, ma ha bisogno di un secondo tentativo per restituire false. Comunque non è un problema
         }
         int giorno = ruotaGiorno.getValue();
@@ -302,8 +302,8 @@ public class DateEditorLayout extends LinearLayout {
         int secolo = ruotaSecolo.getValue();
         int anno = ruotaAnno.getValue();
         // Imposta i giorni del mese in ruotaGiorno
-        calenda.set(secolo * 100 + anno, mese - 1, 1);
-        ruotaGiorno.setMaxValue(calenda.getActualMaximum(Calendar.DAY_OF_MONTH));
+        calendar.set(secolo * 100 + anno, mese - 1, 1);
+        ruotaGiorno.setMaxValue(calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
         if (data.date == null) data.date = new Date();
         data.date.setDate(giorno == 0 ? 1 : giorno);  // altrimenti la data M_A arretra di un mese
         data.date.setMonth(mese == 0 ? 0 : mese - 1);
@@ -319,7 +319,7 @@ public class DateEditorLayout extends LinearLayout {
         else
             data.format.applyPattern(Format.EMPTY);
         impostaCecchi(data);
-        veroImputTesto = false;
+        trueInputText = false;
         genera();
     }
 
@@ -339,7 +339,7 @@ public class DateEditorLayout extends LinearLayout {
             rifatta = rifai(data1);
         } else
             rifatta = gedcomDateConverter.kind.prefix + " " + rifai(data1);
-        editaTesto.setText(rifatta);
+        editText.setText(rifatta);
     }
 
     // Scrive la singola data in base al formato
@@ -365,8 +365,8 @@ public class DateEditorLayout extends LinearLayout {
      */
     public void finishEditing() {
         if (gedcomDateConverter.kind == Kind.PHRASE) {
-            String s = "(" + editaTesto.getText() + ")";
-            editaTesto.setText(s);
+            String s = "(" + editText.getText() + ")";
+            editText.setText(s);
         }
     }
 

@@ -65,9 +65,9 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.abazy.otbasym.detail.MediaActivity;
-import com.abazy.otbasym.list.MediaFragment;
-import com.abazy.otbasym.visitor.MediaList;
+import com.abazy.otbasym.Details.MediaActivity;
+import com.abazy.otbasym.Menu.MediaFragment;
+import com.abazy.otbasym.Visitors.MediaList;
 
 /**
  * Static functions to manage files and media.

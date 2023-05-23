@@ -32,7 +32,7 @@ public class MediaFoldersActivity extends BaseActivity {
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.media_folders_search);
-        treeId = getIntent().getIntExtra("idAlbero", 0);
+        treeId = getIntent().getIntExtra("idTree", 0);
         dirs = new ArrayList<>(Global.settings.getTree(treeId).dirs);
         uris = new ArrayList<>(Global.settings.getTree(treeId).uris);
         updateList();

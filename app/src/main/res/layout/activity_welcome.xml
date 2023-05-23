@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    tools:context=".WelcomeActivity">
+    tools:context=".Registration.WelcomeActivity">
 
     <ImageView
         android:id="@+id/logo_with_text"

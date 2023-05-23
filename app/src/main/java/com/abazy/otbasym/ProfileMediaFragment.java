@@ -18,9 +18,9 @@ import org.folg.gedcom.model.Media;
 import org.folg.gedcom.model.MediaContainer;
 import org.folg.gedcom.model.Person;
 
-import com.abazy.otbasym.list.MediaAdapter;
-import com.abazy.otbasym.list.MediaFragment;
-import com.abazy.otbasym.visitor.MediaContainerList;
+import com.abazy.otbasym.Menu.MediaAdapter;
+import com.abazy.otbasym.Menu.MediaFragment;
+import com.abazy.otbasym.Visitors.MediaContainerList;
 
 // Profile media tab
 public class ProfileMediaFragment extends Fragment {

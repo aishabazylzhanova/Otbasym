@@ -24,7 +24,6 @@
     <string name="link_repository">Репозиторийге сілтеме</string>
     <string name="link_source">Сілтеме көзі</string>
     <string name="link_shared_note">Жалпы жазбаға сілтеме</string>
-    <string name="new_shared_note">Жаңа ортақ ескерту</string>
     <string name="link_shared_media">Ортақ медиаға сілтеме</string>
     <string name="new_shared_media">Жаңа ортақ медиа</string>
     <string name="changes_submitter">Өзгерістер беруші</string>
@@ -114,10 +113,10 @@
     <string name="media_type">Медиа түрі</string>
     <string name="italic">Курсив</string>
     <string name="author">Автор</string>
-    <string name="title">Название</string>
-    <string name="abbreviation">Краткое название</string>
-    <string name="text">Текст</string>
-    <string name="page">Страница</string>
+    <string name="title">Аты</string>
+    <string name="abbreviation">Қысқа атау</string>
+    <string name="text">Мәтін</string>
+    <string name="page">Бет</string>
     <string name="source_note">Источник-примечание</string>
     <string name="inexistent_source_citation">Отсутствующее цитирование источника</string>
     <string name="source_citation">Источник цитаты</string>
@@ -275,7 +274,7 @@
     <string name="create_account">Тіркелгі жасау</string>
     <string name="already_have_account">Кіру</string>
     <string name="logout">Шығу</string>
-    <string name="find_errors">Қателерді іздеу</string>
+
     <string name="rename">Атын өзгерту</string>
     <string name="tree_info">Ақпарат</string>
     <string name="open">Особа</string>
@@ -338,7 +337,6 @@
     <string name="and">Және</string>
     <string name="between">Арасында</string>
     <string name="separation">Бөлу</string>
-    <string name="common_law_marriage">Жалпы құқық бойынша</string>
     <string name="religious_marriage">Шіркеу</string>
     <string name="civil_marriage">Азаматтық</string>
     <string name="living_apart_together">Бөлек тұру</string>

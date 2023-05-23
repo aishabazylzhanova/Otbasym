@@ -51,11 +51,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import com.abazy.otbasym.constant.Choice;
-import com.abazy.otbasym.constant.Gender;
-import com.abazy.otbasym.constant.Relation;
-import com.abazy.otbasym.detail.FamilyActivity;
-import com.abazy.otbasym.list.PersonsFragment;
+import com.abazy.otbasym.Constants.Choice;
+import com.abazy.otbasym.Constants.Gender;
+import com.abazy.otbasym.Constants.Relation;
+import com.abazy.otbasym.Details.FamilyActivity;
+import com.abazy.otbasym.Menu.PersonsFragment;
 import graph.gedcom.Bond;
 import graph.gedcom.CurveLine;
 import graph.gedcom.FamilyNode;

@@ -32,7 +32,7 @@
 		android:textStyle="italic" />
 
 	<TextView
-		android:id="@+id/lapide_versione"
+		android:id="@+id/tombstone_version"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_below="@+id/due"

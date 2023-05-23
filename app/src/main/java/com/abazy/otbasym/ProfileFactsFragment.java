@@ -33,9 +33,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.abazy.otbasym.constant.Gender;
-import com.abazy.otbasym.detail.EventActivity;
-import com.abazy.otbasym.detail.NameActivity;
+import com.abazy.otbasym.Constants.Gender;
+import com.abazy.otbasym.Details.EventActivity;
+import com.abazy.otbasym.Details.NameActivity;
 
 public class ProfileFactsFragment extends Fragment {
 

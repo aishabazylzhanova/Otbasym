@@ -23,7 +23,7 @@ import org.folg.gedcom.model.Submitter;
 import java.io.File;
 import java.util.Locale;
 
-import com.abazy.otbasym.visitor.MediaList;
+import com.abazy.otbasym.Visitors.MediaList;
 
 public class InfoActivity extends BaseActivity {
 
@@ -35,7 +35,7 @@ public class InfoActivity extends BaseActivity {
         setContentView(R.layout.info_tree);
         LinearLayout scatola = findViewById(R.id.info_scatola);
 
-        final int treeId = getIntent().getIntExtra("idAlbero", 1);
+        final int treeId = getIntent().getIntExtra("idTree", 1);
         final Settings.Tree tree = Global.settings.getTree(treeId);
         final File file = new File(getFilesDir(), treeId + ".json");
         String i = getText(R.string.title) + ": " + tree.title;

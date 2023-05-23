@@ -50,7 +50,7 @@
 			android:theme="@style/AppTheme.Wheel"/>
 	</LinearLayout>
 	<LinearLayout
-		android:id="@+id/editadata_seconda_avanzate"
+		android:id="@+id/editeddate_second_advanced"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:gravity="end"
@@ -68,7 +68,7 @@
 			android:text="@string/double_date"/>
 	</LinearLayout>
 	<LinearLayout
-		android:id="@+id/editadata_seconda"
+		android:id="@+id/editeddate_second"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginTop="8dp"
@@ -93,7 +93,7 @@
 			android:layout_marginLeft="8dp"
 			android:theme="@style/AppTheme.Wheel"/>
 		<NumberPicker
-			android:id="@+id/seconda_anno"
+			android:id="@+id/second_year"
 			android:layout_width="wrap_content"
 			android:layout_height="100dp"
 			android:layout_marginLeft="8dp"

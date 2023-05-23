@@ -29,10 +29,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.abazy.otbasym.constant.Gender;
-import com.abazy.otbasym.detail.EventActivity;
-import com.abazy.otbasym.detail.FamilyActivity;
-import com.abazy.otbasym.list.FamiliesFragment;
+import com.abazy.otbasym.Constants.Gender;
+import com.abazy.otbasym.Details.EventActivity;
+import com.abazy.otbasym.Details.FamilyActivity;
+import com.abazy.otbasym.Menu.FamiliesFragment;
 
 public class PersonEditorActivity extends AppCompatActivity {
 

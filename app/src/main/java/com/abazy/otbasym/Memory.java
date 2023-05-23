@@ -13,12 +13,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
-import com.abazy.otbasym.detail.EventActivity;
-import com.abazy.otbasym.detail.FamilyActivity;
-import com.abazy.otbasym.detail.MediaActivity;
-import com.abazy.otbasym.detail.NameActivity;
-import com.abazy.otbasym.detail.NoteActivity;
-import com.abazy.otbasym.visitor.FindStack;
+import com.abazy.otbasym.Details.EventActivity;
+import com.abazy.otbasym.Details.FamilyActivity;
+import com.abazy.otbasym.Details.MediaActivity;
+import com.abazy.otbasym.Details.NameActivity;
+import com.abazy.otbasym.Details.NoteActivity;
+import com.abazy.otbasym.Visitors.FindStack;
 
 /**
  * Manager of stacks of hierarchical objects, mainly to display the breadcrumbs in DetailActivity.

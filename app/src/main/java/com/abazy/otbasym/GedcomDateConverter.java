@@ -2,13 +2,12 @@ package com.abazy.otbasym;
 
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import com.abazy.otbasym.constant.Format;
-import com.abazy.otbasym.constant.Kind;
+import com.abazy.otbasym.Constants.Format;
+import com.abazy.otbasym.Constants.Kind;
 
 /**
  * This class receives a Gedcom date, parses it and translates it into a {@link Data}.

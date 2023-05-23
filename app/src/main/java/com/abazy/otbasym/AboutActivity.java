@@ -10,7 +10,7 @@ public class AboutActivity extends BaseActivity {
         super.onCreate(bundle);
         setContentView(R.layout.about);
 
-        TextView version = findViewById(R.id.lapide_versione);
+        TextView version = findViewById(R.id.tombstone_version);
         version.setText(getString(R.string.version_name, com.abazy.otbasym.BuildConfig.VERSION_NAME));
 
 

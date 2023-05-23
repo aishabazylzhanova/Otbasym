@@ -21,9 +21,9 @@ import org.folg.gedcom.model.SpouseFamilyRef;
 import java.util.Collections;
 import java.util.List;
 
-import com.abazy.otbasym.constant.Relation;
-import com.abazy.otbasym.detail.FamilyActivity;
-import com.abazy.otbasym.list.PersonsFragment;
+import com.abazy.otbasym.Constants.Relation;
+import com.abazy.otbasym.Details.FamilyActivity;
+import com.abazy.otbasym.Menu.PersonsFragment;
 
 public class ProfileRelativesFragment extends Fragment {
 
